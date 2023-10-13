@@ -15,7 +15,6 @@ const Inscription = () => {
   } = useForm<Inputs>()
 
   const {
-    data,
     isError,
     error,
     mutateAsync: registerFn,
@@ -24,7 +23,6 @@ const Inscription = () => {
   })
 
   const onSubmit: SubmitHandler<Inputs> = (data: Inputs) => {
-    console.log(typeof data.birthday)
     registerFn({
       name: data.name,
       email: data.email,
