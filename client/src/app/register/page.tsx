@@ -3,13 +3,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { SubmitHandler, useForm } from 'react-hook-form'
-
-type Inputs = {
-  name: string
-  email: string
-  password: string
-  passwordConfirmation: string
-}
+import { Inputs } from '@/types/auth/inputs'
 
 const Inscription = () => {
   const {
