@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
 type Inputs = {
@@ -35,45 +36,73 @@ const Inscription = () => {
         onSubmit={handleSubmit(onSubmit)}
         className="flex flex-col space-y-8"
       >
-        <div className="flex flex-col w-full">
+        <div className="relative m-3">
           <input
             {...register('name', { required: true })}
             type="text"
             placeholder="Name"
-            className="border-b-2 m-3 focus:outline-none border-gray-200"
+            className="w-full py-2 pl-10 pr-4 leading-5 transition-colors duration-150 ease-in-out border-b-2 focus:outline-none"
+          />
+          <Image
+            src="/assets/user.svg"
+            alt="register user icon"
+            width={20}
+            height={20}
+            className="absolute top-2 left-3"
           />
           {errors.name && (
             <span className="m-3 text-red-400">This field is required</span>
           )}
         </div>
-        <div className="flex flex-col space-y-3">
+        <div className="relative m-3">
           <input
             {...register('email', { required: true })}
             type="email"
             placeholder="Email"
-            className="border-b-2 m-3 focus:outline-none border-gray-200"
+            className="w-full py-2 pl-10 pr-4 leading-5 transition-colors duration-150 ease-in-out border-b-2 focus:outline-none"
+          />
+          <Image
+            src="/assets/mail.svg"
+            alt="register email icon"
+            width={20}
+            height={20}
+            className="absolute top-2 left-3"
           />
           {errors.email && (
             <span className="m-3 text-red-400">This field is required</span>
           )}
         </div>
-        <div className="flex flex-col space-y-3">
+        <div className="relative m-3">
           <input
             {...register('password', { required: true })}
             type="password"
             placeholder="Password"
-            className="border-b-2 m-3 focus:outline-none border-gray-200"
+            className="w-full py-2 pl-10 pr-4 leading-5 transition-colors duration-150 ease-in-out border-b-2 focus:outline-none"
+          />
+          <Image
+            src="/assets/password.svg"
+            alt="register password icon"
+            width={20}
+            height={20}
+            className="absolute top-2 left-3"
           />
           {errors.password && (
             <span className="m-3 text-red-400">This field is required</span>
           )}
         </div>
-        <div className="flex flex-col space-y-3">
+        <div className="relative m-3">
           <input
             {...register('passwordConfirmation', { required: true })}
             type="password"
             placeholder="Confirm password"
-            className="border-b-2 m-3 focus:outline-none border-gray-200"
+            className="w-full py-2 pl-10 pr-4 leading-5 transition-colors duration-150 ease-in-out border-b-2 focus:outline-none"
+          />
+          <Image
+            src="/assets/password.svg"
+            alt="register confirm password icon"
+            width={20}
+            height={20}
+            className="absolute top-2 left-3"
           />
           {errors.passwordConfirmation && (
             <span className="m-3 text-red-400">This field is required</span>
