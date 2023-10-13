@@ -4,6 +4,8 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { Inputs } from '@/types/auth/inputs'
+import { useMutation, useQueries, useQueryClient } from 'react-query'
+import postTodo from '../api/register'
 
 const Inscription = () => {
   const {
@@ -12,8 +14,33 @@ const Inscription = () => {
     formState: { errors },
   } = useForm<Inputs>()
 
+  const queryClient = useQueryClient()
+
+  const {
+    data,
+    isError,
+    error,
+    mutate: registerFn,
+  } = useMutation({
+    mutationFn: postTodo,
+  })
+
   const onSubmit: SubmitHandler<Inputs> = (data: any) => {
-    console.log(data)
+    registerFn({
+      name: data.name,
+      email: data.email,
+      password: data.password,
+      passwordConfirmation: data.passwordConfirmation,
+      birthday: data.birthday,
+    })
+  }
+
+  console.log(data)
+
+  if (isError) {
+    return (
+      <div>An error occurred {typeof error === 'string' ? error : null}</div>
+    )
   }
 
   return (
