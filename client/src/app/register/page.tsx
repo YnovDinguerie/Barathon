@@ -4,7 +4,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { Inputs } from '@/types/auth/inputs'
-import { useMutation, useQueries, useQueryClient } from 'react-query'
+import { useMutation } from 'react-query'
 import postTodo from '../api/register'
 
 const Inscription = () => {
@@ -13,8 +13,6 @@ const Inscription = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<Inputs>()
-
-  const queryClient = useQueryClient()
 
   const {
     data,
