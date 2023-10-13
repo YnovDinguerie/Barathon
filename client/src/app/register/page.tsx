@@ -102,6 +102,24 @@ const Inscription = () => {
             <span className="m-3 text-red-400">This field is required</span>
           )}
         </div>
+        <div className="relative m-3">
+          <input
+            {...register('birthday', { required: true })}
+            type="date"
+            placeholder="Confirm password"
+            className="w-full py-2 pl-10 pr-4 leading-5 transition-colors duration-150 ease-in-out border-b-2 focus:outline-none"
+          />
+          <Image
+            src="/assets/birthday.svg"
+            alt="register confirm password icon"
+            width={20}
+            height={20}
+            className="absolute top-2 left-3"
+          />
+          {errors.passwordConfirmation && (
+            <span className="m-3 text-red-400">This field is required</span>
+          )}
+        </div>
         <div className="flex justify-end m-3 font-light text-gray-400 text-sm">
           <Link href="#">Forgot password ?</Link>
         </div>

@@ -3,4 +3,5 @@ export type Inputs = {
   email: string
   password: string
   passwordConfirmation: string
+  birthday: Date
 }
