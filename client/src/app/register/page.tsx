@@ -3,26 +3,26 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { SubmitHandler, useForm } from 'react-hook-form'
-import { Inputs } from '@/types/auth/inputs'
+import { RegisterInputs } from '@/types/auth/inputs'
 import { useMutation } from 'react-query'
-import postTodo from '../api/register'
+import registerUser from '../api/register'
 
-const Inscription = () => {
+const Register = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<Inputs>()
+  } = useForm<RegisterInputs>()
 
   const {
     isError,
     error,
     mutateAsync: registerFn,
   } = useMutation({
-    mutationFn: postTodo,
+    mutationFn: registerUser,
   })
 
-  const onSubmit: SubmitHandler<Inputs> = (data: Inputs) => {
+  const onSubmit: SubmitHandler<RegisterInputs> = (data: RegisterInputs) => {
     registerFn({
       name: data.name,
       email: data.email,
@@ -153,8 +153,16 @@ const Inscription = () => {
         >
           Register
         </button>
-        <div className="flex justify-center">
-          <div>Or login via</div>
+        <div className="flex justify-end">
+          <div className="text-sm ">
+            Already have an account ?{' '}
+            <Link href="/login" className="underline">
+              Login
+            </Link>
+          </div>
+        </div>
+        <div className="flex justify-center text-sm">
+          <div>Or register via</div>
         </div>
         <div className="flex justify-between space-x-10 m-2">
           <button className="rounded-full border p-3 w-full text-red-300 font-medium">
@@ -169,4 +177,4 @@ const Inscription = () => {
   )
 }
 
-export default Inscription
+export default Register
