@@ -18,22 +18,21 @@ const Inscription = () => {
     data,
     isError,
     error,
-    mutate: registerFn,
+    mutateAsync: registerFn,
   } = useMutation({
     mutationFn: postTodo,
   })
 
-  const onSubmit: SubmitHandler<Inputs> = (data: any) => {
+  const onSubmit: SubmitHandler<Inputs> = (data: Inputs) => {
+    console.log(typeof data.birthday)
     registerFn({
       name: data.name,
       email: data.email,
       password: data.password,
-      passwordConfirmation: data.passwordConfirmation,
+      c_password: data.c_password,
       birthday: data.birthday,
     })
   }
-
-  console.log(data)
 
   if (isError) {
     return (
@@ -69,8 +68,8 @@ const Inscription = () => {
             height={20}
             className="absolute top-2 left-3"
           />
-          {errors.name && (
-            <span className="m-3 text-red-400">This field is required</span>
+          {errors?.name && (
+            <span className="m-3 text-red-400">{errors.name.message}</span>
           )}
         </div>
         <div className="relative m-3">
@@ -87,8 +86,8 @@ const Inscription = () => {
             height={20}
             className="absolute top-2 left-3"
           />
-          {errors.email && (
-            <span className="m-3 text-red-400">This field is required</span>
+          {errors?.email && (
+            <span className="m-3 text-red-400">{errors.email.message}</span>
           )}
         </div>
         <div className="relative m-3">
@@ -105,13 +104,13 @@ const Inscription = () => {
             height={20}
             className="absolute top-2 left-3"
           />
-          {errors.password && (
-            <span className="m-3 text-red-400">This field is required</span>
+          {errors?.password && (
+            <span className="m-3 text-red-400">{errors.password.message}</span>
           )}
         </div>
         <div className="relative m-3">
           <input
-            {...register('passwordConfirmation', { required: true })}
+            {...register('c_password', { required: true })}
             type="password"
             placeholder="Confirm password"
             className="w-full py-2 pl-10 pr-4 leading-5 transition-colors duration-150 ease-in-out border-b-2 focus:outline-none"
@@ -123,8 +122,10 @@ const Inscription = () => {
             height={20}
             className="absolute top-2 left-3"
           />
-          {errors.passwordConfirmation && (
-            <span className="m-3 text-red-400">This field is required</span>
+          {errors.c_password && (
+            <span className="m-3 text-red-400">
+              {errors?.c_password.message}
+            </span>
           )}
         </div>
         <div className="relative m-3">
@@ -141,7 +142,7 @@ const Inscription = () => {
             height={20}
             className="absolute top-2 left-3"
           />
-          {errors.passwordConfirmation && (
+          {errors?.birthday && (
             <span className="m-3 text-red-400">This field is required</span>
           )}
         </div>

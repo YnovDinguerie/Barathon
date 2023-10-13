@@ -2,6 +2,6 @@ export type Inputs = {
   name: string
   email: string
   password: string
-  passwordConfirmation: string
-  birthday: Date
+  c_password: string
+  birthday: string
 }
