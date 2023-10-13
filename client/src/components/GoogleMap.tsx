@@ -1,9 +1,6 @@
 'use client'
 import React from 'react'
 import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api'
-import { createContext } from 'react'
-
-//const Context = createContext()
 
 const containerStyle = {
   width: '400px',
