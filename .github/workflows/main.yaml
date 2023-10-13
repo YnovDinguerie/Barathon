@@ -13,16 +13,20 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+        working-directory: ./client
 
       - name: Setup Node.js
         uses: actions/setup-node@v2
+        working-directory: ./client
         with:
           node-version: 18
 
       - name: Install dependencies
+        working-directory: ./client
         run: yarn
 
       - name: Build Next.js app
+        working-directory: ./client
         run: yarn build
 
       # - name: Run tests
