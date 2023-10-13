@@ -20,9 +20,9 @@ jobs:
           node-version: 18
 
       - name: Install dependencies
-        working-directory: ../client
+        working-directory: ./client
         run: yarn
 
       - name: Build Next.js app
-        working-directory: ../client
+        working-directory: ./client
         run: yarn build
