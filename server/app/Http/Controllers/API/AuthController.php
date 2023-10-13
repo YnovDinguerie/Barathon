@@ -38,10 +38,10 @@ class AuthController extends BaseController
  *    required=true,
  *    description="pass user credentials",
  *    @OA\JsonContent(
- *        required={"email", "name", "password", "c_password"},
+ *        required={"email", "name","birthdate", "password", "c_password"},
  *    @OA\Property(property="email", type="string", format="email", example="user1@mail.com"),
  *    @OA\Property(property="name", type="string", example="user1"),
-
+*    @OA\Property(property="birthdate", type="date", example="user1"),
  *    @OA\Property(property="password", type="string", format="password", example="MotdePasse"),
  *  *    @OA\Property(property="c_password", type="string", format="password", example="MotdePasse"),
  * ),
@@ -67,6 +67,7 @@ class AuthController extends BaseController
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required',
+            'birthdate' => 'required|date',
             'email' => 'required|email|unique:users',
             'password' => 'required|min:8',
             'c_password' => 'required|same:password',

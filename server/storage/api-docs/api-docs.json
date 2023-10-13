@@ -36,6 +36,7 @@
                                 "required": [
                                     "email",
                                     "name",
+                                    "birthdate",
                                     "password",
                                     "c_password"
                                 ],
@@ -47,6 +48,11 @@
                                     },
                                     "name": {
                                         "type": "string",
+                                        "example": "user1"
+                                    },
+                                    "birthdate": {
+                                        "type": "string",
+                                        "format": "date",
                                         "example": "user1"
                                     },
                                     "password": {
