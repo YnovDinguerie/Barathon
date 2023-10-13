@@ -87,7 +87,7 @@ const Login = () => {
           Login
         </button>
         <div className="flex justify-end">
-          <div className="text-sm ">
+          <div className="text-sm">
             You don&apos;t have an account ? {''}
             <Link href="/register" className="underline">
               Register

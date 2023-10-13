@@ -17,7 +17,7 @@ const MyApp = () => {
       <h1>Ma Application Google Maps</h1>
       <CitySelector onSelectCity={handleSelectCity} />
       <p>Ville sélectionnée : {selectedCity}</p>
-      <GoogleMapSelectedComponent selectedCity={selectedCity} />
+      <GoogleMapSelectedComponent />
     </div>
   )
 }
