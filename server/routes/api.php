@@ -15,14 +15,26 @@ use App\Http\Controllers\API\AuthController;
 |
 */
 
+
+
+
+
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
 
+use App\Models\User;
+
+Route::get('users', function () {
+    $users = User::all();
+    return response()->json(['users' => $users], 200);
+});
+
 Route::controller(AuthController::class)->group(function(){
     Route::post('register', 'register');
     Route::post('login', 'login');
     Route::post('verify-email/{token}', 'verify');
-    Route::get('test','test');
+    Route::post('send-password-reset-email', 'sendPasswordResetEmail');
+    Route::post('reset-password', 'resetPassword');
 });
