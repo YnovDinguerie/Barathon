@@ -40,36 +40,44 @@ const Inscription = () => {
             {...register('name', { required: true })}
             type="text"
             placeholder="Name"
-            className="border-b-2 m-3 border-gray-200"
+            className="border-b-2 m-3 focus:outline-none border-gray-200"
           />
-          {errors.name && <span>This field is required</span>}
+          {errors.name && (
+            <span className="m-3 text-red-400">This field is required</span>
+          )}
         </div>
         <div className="flex flex-col space-y-3">
           <input
             {...register('email', { required: true })}
             type="email"
             placeholder="Email"
-            className="border-b-2 m-3 border-gray-200"
+            className="border-b-2 m-3 focus:outline-none border-gray-200"
           />
-          {errors.email && <span>This field is required</span>}
+          {errors.email && (
+            <span className="m-3 text-red-400">This field is required</span>
+          )}
         </div>
         <div className="flex flex-col space-y-3">
           <input
             {...register('password', { required: true })}
             type="password"
             placeholder="Password"
-            className="border-b-2 m-3 border-gray-200"
+            className="border-b-2 m-3 focus:outline-none border-gray-200"
           />
-          {errors.password && <span>This field is required</span>}
+          {errors.password && (
+            <span className="m-3 text-red-400">This field is required</span>
+          )}
         </div>
         <div className="flex flex-col space-y-3">
           <input
             {...register('passwordConfirmation', { required: true })}
             type="password"
             placeholder="Confirm password"
-            className="border-b-2 m-3 border-gray-200"
+            className="border-b-2 m-3 focus:outline-none border-gray-200"
           />
-          {errors.passwordConfirmation && <span>This field is required</span>}
+          {errors.passwordConfirmation && (
+            <span className="m-3 text-red-400">This field is required</span>
+          )}
         </div>
         <div className="flex justify-end m-3 font-light text-gray-400 text-sm">
           <Link href="#">Forgot password ?</Link>
