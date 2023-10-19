@@ -13,10 +13,11 @@ return new class extends Migration
     {
         Schema::create('baratons', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('name');
             $table->time('time');
-            $table->bigInteger('rayon');
-            $table->string('ville');
+            $table->bigInteger('radius');
+            $table->string('city');
             $table->timestamps();
         });
     }
