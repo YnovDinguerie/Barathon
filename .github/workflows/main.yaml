@@ -15,17 +15,15 @@ jobs:
         with:
           fetch-depth: 2
       - name: Get changes
-        run: |
-          changed_files=$(git diff --name-only $GITHUB_SHA $GITHUB_SHA^)
+        run:  |
+          changed_files=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }})
           echo "Changed Files: $changed_files"
         continue-on-error: true
 
   client_ci:
     needs: check_changes
     runs-on: ubuntu-latest
-    if: |
-      contains(needs.check_changes.outputs.changed_files, 'client/') &&
-      endsWith(needs.check_changes.outputs.changed_files, '.tsx')
+    if: contains(needs.check_changes.outputs.changed_files, 'client/')
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
