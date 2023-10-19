@@ -3,7 +3,9 @@
 const ResetPassword = () => {
   return (
     <div>
-      <div>Bonjour</div>
+      <div>
+        <input />
+      </div>
     </div>
   )
 }

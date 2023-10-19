@@ -10,9 +10,8 @@ jobs:
   check_changes:
     runs-on: ubuntu-latest
     steps:
-      - name: Use GitHub PAT
-        run: |
-          echo ${{ secrets.GH_PAT }}
+      - name: Checkout code
+        uses: actions/checkout@v2
 
       - name: Check Changed Files
         id: changed_files
