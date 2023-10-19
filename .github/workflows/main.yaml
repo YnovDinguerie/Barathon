@@ -15,7 +15,9 @@ jobs:
         with:
           fetch-depth: 2
       - name: Get changes
-        run: git diff --name-only -r HEAD^1 HEAD
+        run: |
+          changed_files=git diff --name-only -r HEAD^1 HEAD
+          echo "Changed files $changed_files"
 
       # - name: Check Changed Files
       #   id: changed_files
