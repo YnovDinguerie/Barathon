@@ -5,6 +5,7 @@ const ResetPassword = () => {
     <div>
       <div>
         <input type="text" name="input" />
+        Change this file
       </div>
     </div>
   )
