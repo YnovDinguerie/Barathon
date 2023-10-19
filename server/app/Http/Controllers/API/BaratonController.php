@@ -92,6 +92,19 @@ class BaratonController extends BaseController
      */
     public function destroy(Baraton $baraton)
     {
-        //
+
+        $user = Auth::user();
+        if($baraton['user_id'] == $user['id']){
+            try{
+                $baraton->delete();
+                return $this->sendResponse($baraton, 'Baraton supprimé avec succès');
+            } catch (\Exception $e) {
+                return $this->sendError('Error.', ['error' => 'Error']);
+            }
+        }
+        else{
+            return $this->sendError('Unauthorised.', ['error' => 'Unauthorised']);
+        }
+
     }
 }
