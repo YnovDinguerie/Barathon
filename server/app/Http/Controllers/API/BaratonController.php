@@ -9,14 +9,12 @@ use App\Models\Baraton;
 use Illuminate\Support\Facades\Auth;
 use Validator;
 
-
 /**
  * @OA\Tag(
  *     name="Baratons",
  *     description="Operations about Baratons"
  * )
  */
-
 class BaratonController extends BaseController
 {
     public function __construct()
@@ -28,8 +26,7 @@ class BaratonController extends BaseController
      * Display a listing of the resource.
      */
 
-
-     /**
+    /**
      * Display a listing of the resource.
      *
      * @OA\Get(
@@ -37,6 +34,7 @@ class BaratonController extends BaseController
      *     tags={"Baratons"},
      *     summary="Get a list of baratons",
      *     operationId="getBaratons",
+     *
      *     @OA\Response(
      *         response=200,
      *         description="List of baratons"
@@ -61,60 +59,75 @@ class BaratonController extends BaseController
     }
 
     /**
- * Store a newly created Baraton.
- *
- * @OA\Post(
- *     path="/api/baratons",
- *     summary="Create a new Baraton",
- *     description="Create a new Baraton with name, time, radius, and city",
- *     tags={"Baratons"},
- *     @OA\RequestBody(
- *         required=true,
- *         description="Baraton data",
- *         @OA\JsonContent(
- *             required={"name", "time", "radius", "city"},
- *             @OA\Property(property="name", type="string", example="Baraton Name"),
- *             @OA\Property(property="time", type="string", example="Event Time"),
- *             @OA\Property(property="radius", type="string", example="Event Radius"),
- *             @OA\Property(property="city", type="string", example="Event City"),
- *         ),
- *     ),
- *     @OA\Response(
- *         response=201,
- *         description="Baraton created successfully",
- *         @OA\JsonContent(
- *         ),
- *     ),
- *     @OA\Response(
- *         response=401,
- *         description="Unauthorized",
- *     ),
- *     @OA\Response(
- *         response=422,
- *         description="Validation errors",
- *         @OA\JsonContent(
- *             @OA\Property(property="success", type="boolean", example="false"),
- *             @OA\Property(property="message", type="string", example="Validation Errors"),
- *             @OA\Property(property="data", type="object",
- *                 @OA\Property(property="name", type="array", collectionFormat="multi",
- *                     @OA\Items(type="string", example={"The name field is required"}),
- *                 ),
- *                 @OA\Property(property="time", type="array", collectionFormat="multi",
- *                     @OA\Items(type="string", example={"The time field is required"}),
- *                 ),
- *                 @OA\Property(property="radius", type="array", collectionFormat="multi",
- *                     @OA\Items(type="string", example={"The radius field is required"}),
- *                 ),
- *                 @OA\Property(property="city", type="array", collectionFormat="multi",
- *                     @OA\Items(type="string", example={"The city field is required"}),
- *                 ),
- *             ),
- *         ),
- *     ),
-*     security={{"sanctum": {}}}
- *
- * )
- */
+     * Store a newly created Baraton.
+     *
+     * @OA\Post(
+     *     path="/api/baratons",
+     *     summary="Create a new Baraton",
+     *     description="Create a new Baraton with name, time, radius, and city",
+     *     tags={"Baratons"},
+     *
+     *     @OA\RequestBody(
+     *         required=true,
+     *         description="Baraton data",
+     *
+     *         @OA\JsonContent(
+     *             required={"name", "time", "radius", "city"},
+     *
+     *             @OA\Property(property="name", type="string", example="Baraton Name"),
+     *             @OA\Property(property="time", type="string", example="Event Time"),
+     *             @OA\Property(property="radius", type="string", example="Event Radius"),
+     *             @OA\Property(property="city", type="string", example="Event City"),
+     *         ),
+     *     ),
+     *
+     *     @OA\Response(
+     *         response=201,
+     *         description="Baraton created successfully",
+     *
+     *         @OA\JsonContent(
+     *         ),
+     *     ),
+     *
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthorized",
+     *     ),
+     *     @OA\Response(
+     *         response=422,
+     *         description="Validation errors",
+     *
+     *         @OA\JsonContent(
+     *
+     *             @OA\Property(property="success", type="boolean", example="false"),
+     *             @OA\Property(property="message", type="string", example="Validation Errors"),
+     *             @OA\Property(property="data", type="object",
+     *                 @OA\Property(property="name", type="array", collectionFormat="multi",
+     *
+     *                     @OA\Items(type="string", example={"The name field is required"}),
+     *                 ),
+     *
+     *                 @OA\Property(property="time", type="array", collectionFormat="multi",
+     *
+     *                     @OA\Items(type="string", example={"The time field is required"}),
+     *                 ),
+     *
+     *                 @OA\Property(property="radius", type="array", collectionFormat="multi",
+     *
+     *                     @OA\Items(type="string", example={"The radius field is required"}),
+     *                 ),
+     *
+     *                 @OA\Property(property="city", type="array", collectionFormat="multi",
+     *
+     *                     @OA\Items(type="string", example={"The city field is required"}),
+     *                 ),
+     *             ),
+     *         ),
+     *     ),
+     *     security={{"sanctum": {}}}
+     *
+     * )
+     */
     public function store(StoreBaratonRequest $request)
     {
         $validator = Validator::make($request->all(), [
@@ -139,7 +152,7 @@ class BaratonController extends BaseController
 
     }
 
-  /**
+    /**
      * Show the specified resource.
      *
      * @OA\Get(
@@ -147,16 +160,19 @@ class BaratonController extends BaseController
      *     tags={"Baratons"},
      *     summary="Get a specific baraton",
      *     operationId="getBaraton",
+     *
      *     @OA\Parameter(
      *         name="baraton",
      *         in="path",
      *         description="ID of the baraton to retrieve",
      *         required=true,
+     *
      *         @OA\Schema(
      *             type="integer",
      *             format="int64"
      *         )
      *     ),
+     *
      *     @OA\Response(
      *         response=200,
      *         description="Baraton details"
@@ -174,6 +190,7 @@ class BaratonController extends BaseController
         if ($baraton->user_id !== $user->id) {
             return $this->sendError('Unauthorized', ['error' => 'You are not authorized to update this resource.']);
         }
+
         return $baraton;
     }
 
@@ -193,29 +210,36 @@ class BaratonController extends BaseController
      *     tags={"Baratons"},
      *     summary="Update a specific baraton",
      *     operationId="updateBaraton",
+     *
      *     @OA\Parameter(
      *         name="baraton",
      *         in="path",
      *         description="ID of the baraton to update",
      *         required=true,
+     *
      *         @OA\Schema(
      *             type="integer",
      *             format="int64"
      *         )
      *     ),
+     *
      * @OA\RequestBody(
- *         required=true,
- *         description="Baraton data",
- *         @OA\JsonContent(
- *             required={"name", "time", "radius", "city"},
- *             @OA\Property(property="name", type="string", example="Baraton Name"),
- *             @OA\Property(property="time", type="string", example="Event Time"),
- *             @OA\Property(property="radius", type="string", example="Event Radius"),
- *             @OA\Property(property="city", type="string", example="Event City"),
- *         ),
- *     ),
+     *         required=true,
+     *         description="Baraton data",
+     *
+     *         @OA\JsonContent(
+     *             required={"name", "time", "radius", "city"},
+     *
+     *             @OA\Property(property="name", type="string", example="Baraton Name"),
+     *             @OA\Property(property="time", type="string", example="Event Time"),
+     *             @OA\Property(property="radius", type="string", example="Event Radius"),
+     *             @OA\Property(property="city", type="string", example="Event City"),
+     *         ),
+     *     ),
+     *
      *     @OA\RequestBody(
      *     ),
+     *
      *     @OA\Response(
      *         response=200,
      *         description="Baraton updated successfully"
@@ -231,7 +255,8 @@ class BaratonController extends BaseController
      *     security={{"sanctum": {}}}
      * )
      */
-    public function update(UpdateBaratonRequest $request, Baraton $baraton){
+    public function update(UpdateBaratonRequest $request, Baraton $baraton)
+    {
         $user = Auth::user();
 
         if ($baraton->user_id !== $user->id) {
@@ -259,7 +284,7 @@ class BaratonController extends BaseController
         return $this->sendResponse($baraton, 'Baraton updated successfully.');
     }
 
-     /**
+    /**
      * Remove the specified resource from storage.
      *
      * @OA\Delete(
@@ -267,16 +292,19 @@ class BaratonController extends BaseController
      *     tags={"Baratons"},
      *     summary="Delete a specific baraton",
      *     operationId="deleteBaraton",
+     *
      *     @OA\Parameter(
      *         name="baraton",
      *         in="path",
      *         description="ID of the baraton to delete",
      *         required=true,
+     *
      *         @OA\Schema(
      *             type="integer",
      *             format="int64"
      *         )
      *     ),
+     *
      *     @OA\Response(
      *         response=200,
      *         description="Baraton deleted successfully"
