@@ -63,7 +63,7 @@ const ResetPassword = () => {
         </div>
         <button
           type="submit"
-          className="bg-[#DF9928] flex justify-center m-2 p-3 text-white font-medium rounded-lg hover:bg-gray-400"
+          className="bg-[#DF9928] flex justify-center m-2 p-3 text-white font-medium rounded-xl hover:bg-gray-400"
         >
           Login
         </button>

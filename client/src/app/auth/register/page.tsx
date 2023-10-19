@@ -50,9 +50,9 @@ const Register = () => {
       </div>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col space-y-8"
+        className="flex flex-col space-y-6"
       >
-        <div className="relative m-3">
+        <div className="relative mx-3">
           <input
             {...register('name', { required: true })}
             type="text"
@@ -144,16 +144,16 @@ const Register = () => {
             <span className="m-3 text-red-400">This field is required</span>
           )}
         </div>
-        <div className="text-[#DF9928] flex justify-end mr-3 font-light text-sm">
+        {/* <div className="text-[#DF9928] flex justify-end mr-3 font-light text-sm">
           <Link href="/auth/reset">Forgot password ?</Link>
-        </div>
+        </div> */}
         <button
           type="submit"
-          className="bg-[#E9AB47] flex justify-center m-2 p-3 text-white font-medium rounded-lg hover:bg-gray-400"
+          className="bg-[#E9AB47] flex justify-center mx-3 p-3 text-white font-medium rounded-xl hover:bg-gray-400"
         >
           Register
         </button>
-        <div className="flex justify-end">
+        <div className="flex justify-center">
           <div className="text-sm text-[#DF9928] mr-3">
             Already have an account ?{' '}
             <Link href="/auth/login" className="underline">
@@ -164,12 +164,12 @@ const Register = () => {
         <div className="text-[#DF9928] flex justify-center text-sm">
           <div>Or register via</div>
         </div>
-        <div className="flex justify-between space-x-10 m-2">
-          <button className="rounded-full border p-3 w-full text-red-300 font-medium">
-            Google
+        <div className="flex flex-col space-y-3 mx-3">
+          <button className="rounded-full p-3 w-full text-white bg-red-400 font-medium">
+            Connect with Google
           </button>
-          <button className="rounded-full border w-full p-3 text-blue-300 font-medium">
-            Facebook
+          <button className="rounded-full bg-blue-400 w-full p-3 text-white font-medium">
+            Connect with Facebook
           </button>
         </div>
       </form>
