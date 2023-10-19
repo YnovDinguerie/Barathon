@@ -18,7 +18,6 @@ jobs:
         run:  |
           changed_files=$(git diff --name-only ${{ github.event.before }} ${{ github.event.after }})
           echo "Changed Files: $changed_files"
-          echo "::set-output name=changed_files::$changed_files"
       - name: Debug Changed Files
         run: |
           echo "Changed Files: ${{ steps.check_changes.outputs.changed_files }}"
@@ -26,9 +25,7 @@ jobs:
         continue-on-error: true
 
   client_ci:
-    needs: check_changes
     runs-on: ubuntu-latest
-    if: contains(needs.check_changes.outputs.changed_files, 'client/')
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -48,11 +45,7 @@ jobs:
         run: yarn build
 
   server_ci:
-    needs: check_changes
     runs-on: ubuntu-latest
-    if: |
-      contains(needs.check_changes.outputs.changed_files, 'server/') &&
-      endsWith(needs.check_changes.outputs.changed_files, '.php')
     steps:
       - uses: shivammathur/setup-php@15c43e89cdef867065b0213be354c2841860869e
         with:

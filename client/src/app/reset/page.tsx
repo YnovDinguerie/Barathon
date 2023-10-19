@@ -5,7 +5,7 @@ const ResetPassword = () => {
     <div>
       <div>
         <input type="text" name="input" />
-        Change this file rechange this file DFBKkjijb
+        Change this file rechange this file DFBKkjijbded
       </div>
     </div>
   )
