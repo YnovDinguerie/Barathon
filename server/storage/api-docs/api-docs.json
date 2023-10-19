@@ -385,12 +385,311 @@
                     }
                 }
             }
+        },
+        "/api/baratons": {
+            "get": {
+                "tags": [
+                    "Baratons"
+                ],
+                "summary": "Get a list of baratons",
+                "description": "Display a listing of the resource.",
+                "operationId": "getBaratons",
+                "responses": {
+                    "200": {
+                        "description": "List of baratons"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Baratons"
+                ],
+                "summary": "Create a new Baraton",
+                "description": "Create a new Baraton with name, time, radius, and city",
+                "operationId": "5c8b328c36a85cf044e3e1efed70ab7c",
+                "requestBody": {
+                    "description": "Baraton data",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "time",
+                                    "radius",
+                                    "city"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Baraton Name"
+                                    },
+                                    "time": {
+                                        "type": "string",
+                                        "example": "Event Time"
+                                    },
+                                    "radius": {
+                                        "type": "string",
+                                        "example": "Event Radius"
+                                    },
+                                    "city": {
+                                        "type": "string",
+                                        "example": "Event City"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Baraton created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "422": {
+                        "description": "Validation errors",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": "false"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Validation Errors"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "name": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": [
+                                                            "The name field is required"
+                                                        ]
+                                                    },
+                                                    "collectionFormat": "multi"
+                                                },
+                                                "time": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": [
+                                                            "The time field is required"
+                                                        ]
+                                                    },
+                                                    "collectionFormat": "multi"
+                                                },
+                                                "radius": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": [
+                                                            "The radius field is required"
+                                                        ]
+                                                    },
+                                                    "collectionFormat": "multi"
+                                                },
+                                                "city": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": [
+                                                            "The city field is required"
+                                                        ]
+                                                    },
+                                                    "collectionFormat": "multi"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/baratons/{baraton}": {
+            "get": {
+                "tags": [
+                    "Baratons"
+                ],
+                "summary": "Get a specific baraton",
+                "description": "Show the specified resource.",
+                "operationId": "getBaraton",
+                "parameters": [
+                    {
+                        "name": "baraton",
+                        "in": "path",
+                        "description": "ID of the baraton to retrieve",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Baraton details"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Baratons"
+                ],
+                "summary": "Update a specific baraton",
+                "description": "Update the specified resource in storage.",
+                "operationId": "updateBaraton",
+                "parameters": [
+                    {
+                        "name": "baraton",
+                        "in": "path",
+                        "description": "ID of the baraton to update",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Baraton data",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "time",
+                                    "radius",
+                                    "city"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Baraton Name"
+                                    },
+                                    "time": {
+                                        "type": "string",
+                                        "example": "Event Time"
+                                    },
+                                    "radius": {
+                                        "type": "string",
+                                        "example": "Event Radius"
+                                    },
+                                    "city": {
+                                        "type": "string",
+                                        "example": "Event City"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Baraton updated successfully"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Baratons"
+                ],
+                "summary": "Delete a specific baraton",
+                "description": "Remove the specified resource from storage.",
+                "operationId": "deleteBaraton",
+                "parameters": [
+                    {
+                        "name": "baraton",
+                        "in": "path",
+                        "description": "ID of the baraton to delete",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Baraton deleted successfully"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
         }
     },
     "tags": [
         {
+            "name": "Baratons",
+            "description": "Operations about Baratons"
+        },
+        {
             "name": "Projects",
             "description": " Api Endpoints"
         }
-    ]
+    ],
+    "components": {
+        "securitySchemes": {
+            "sanctum": {
+                "type": "apiKey",
+                "description": "Enter token in format (Bearer <token>)",
+                "name": "Authorization",
+                "in": "header"
+            }
+        }
+    }
 }
