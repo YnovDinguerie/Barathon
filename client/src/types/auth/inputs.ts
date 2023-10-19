@@ -14,3 +14,10 @@ export type LoginInputs = {
 export type ResetPasswordInputs = {
   email: string
 }
+
+export type UpdatePasswordInputs = {
+  token: string
+  email: string
+  password: string
+  c_password: string
+}
