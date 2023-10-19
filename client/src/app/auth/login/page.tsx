@@ -30,7 +30,7 @@ const Login = () => {
   }
 
   return (
-    <div className="flex flex-col space-y-10 bg-[#FFFDF9]">
+    <div className="flex h-screen flex-col space-y-10 bg-[#FFFDF9]">
       <div className="flex flex-col items-center">
         <h1 className="font-medium tracking-wider flex justify-center text-2xl mt-14 font-sans text-[#DF9928]">
           Log in into you account
@@ -79,8 +79,8 @@ const Login = () => {
             <span className="m-3 text-red-400">{errors.password.message}</span>
           )}
         </div>
-        <div className="flex justify-end m-3 font-light text-[#DF9928] text-sm">
-          <Link href="#">Forgot password ?</Link>
+        <div className="flex justify-end mr-3 font-light text-[#DF9928] text-sm">
+          <Link href="/auth/reset">Forgot password ?</Link>
         </div>
         <button
           type="submit"
@@ -89,9 +89,9 @@ const Login = () => {
           Login
         </button>
         <div className="flex justify-end">
-          <div className="text-sm text-[#DF9928]">
+          <div className="text-sm mr-3  text-[#DF9928]">
             You don&apos;t have an account ? {''}
-            <Link href="/register" className="underline">
+            <Link href="/auth/register" className="underline">
               Register
             </Link>
           </div>
