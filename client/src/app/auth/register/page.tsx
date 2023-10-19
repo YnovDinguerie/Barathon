@@ -39,7 +39,7 @@ const Register = () => {
   }
 
   return (
-    <div className="bg-[#FFFDF9] flex flex-col space-y-10">
+    <div className="bg-[#FFFDF9] h-screen flex flex-col space-y-10">
       <div className="flex flex-col items-center">
         <h1 className="text-[#DF9928] font-medium tracking-wider flex justify-center text-2xl mt-14 font-sans">
           Create you account
@@ -145,7 +145,7 @@ const Register = () => {
           )}
         </div>
         <div className="text-[#DF9928] flex justify-end mr-3 font-light text-sm">
-          <Link href="#">Forgot password ?</Link>
+          <Link href="/auth/reset">Forgot password ?</Link>
         </div>
         <button
           type="submit"
@@ -156,7 +156,7 @@ const Register = () => {
         <div className="flex justify-end">
           <div className="text-sm text-[#DF9928] mr-3">
             Already have an account ?{' '}
-            <Link href="/login" className="underline">
+            <Link href="/auth/login" className="underline">
               Login
             </Link>
           </div>
