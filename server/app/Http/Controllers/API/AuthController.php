@@ -251,6 +251,8 @@ class AuthController extends BaseController
 
         Mail::to($input['email'])->send(new ResetPasswordEmail($token));
 
+        return $this->sendResponse($input, 'Email envoyé avec succès');
+
     }
 
     /**
