@@ -18,6 +18,7 @@ jobs:
         run: |
           changed_files=git diff --name-only -r HEAD^1 HEAD
           echo "Changed files $changed_files"
+        continue-on-error: true
 
       # - name: Check Changed Files
       #   id: changed_files
