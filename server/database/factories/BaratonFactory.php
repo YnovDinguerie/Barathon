@@ -17,7 +17,11 @@ class BaratonFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'user_id' => 1,
+            'name' => fake()->name(),
+            'time' => fake()->numberBetween(0, 7200),
+            'radius' => fake()->numberBetween(100, 500),
+            'city' => 'Bordeaux',
         ];
     }
 }
