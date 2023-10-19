@@ -1,19 +1,30 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
 
 use App\Http\Requests\StoreBaratonRequest;
 use App\Http\Requests\UpdateBaratonRequest;
 use App\Models\Baraton;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\API\BaseController as BaseController;
+use Validator;
 
-class BaratonController extends Controller
+class BaratonController extends BaseController
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth:sanctum');
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        $user = Auth::user();
+        $baratons = Baraton::where('user_id',$user['id'])->get();
+        return $baratons;
     }
 
     /**
@@ -21,7 +32,7 @@ class BaratonController extends Controller
      */
     public function create()
     {
-        //
+
     }
 
     /**
@@ -29,7 +40,27 @@ class BaratonController extends Controller
      */
     public function store(StoreBaratonRequest $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'time' => 'required',
+            'radius' => 'required',
+            'city' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return $this->sendError('Validation Error.', $validator->errors());
+        }
+
+        $user = Auth::user();
+
+        $input = $request->all();
+        $input['user_id'] = $user['id'];
+
+        $baraton = Baraton::create($input);
+
+        return $this->sendResponse($baraton, 'Baraton created successfully.');
+
+
     }
 
     /**

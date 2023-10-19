@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\API\BaratonController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -33,4 +34,9 @@ Route::controller(AuthController::class)->group(function () {
     Route::post('verify-email/{token}', 'verify');
     Route::post('send-password-reset-email', 'sendPasswordResetEmail');
     Route::post('reset-password', 'resetPassword');
+});
+
+Route::controller(BaratonController::class)->group(function () {
+    Route::get('baratons', 'index');
+    Route::post('baratons', 'store');
 });
