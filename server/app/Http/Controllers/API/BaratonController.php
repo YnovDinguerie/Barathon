@@ -2,16 +2,15 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Http\Controllers\API\BaseController as BaseController;
 use App\Http\Requests\StoreBaratonRequest;
 use App\Http\Requests\UpdateBaratonRequest;
 use App\Models\Baraton;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\API\BaseController as BaseController;
 use Validator;
 
 class BaratonController extends BaseController
 {
-
     public function __construct()
     {
         $this->middleware('auth:sanctum');
@@ -23,7 +22,8 @@ class BaratonController extends BaseController
     public function index()
     {
         $user = Auth::user();
-        $baratons = Baraton::where('user_id',$user['id'])->get();
+        $baratons = Baraton::where('user_id', $user['id'])->get();
+
         return $baratons;
     }
 
@@ -60,7 +60,6 @@ class BaratonController extends BaseController
 
         return $this->sendResponse($baraton, 'Baraton created successfully.');
 
-
     }
 
     /**
@@ -82,9 +81,32 @@ class BaratonController extends BaseController
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateBaratonRequest $request, Baraton $baraton)
-    {
-        //
+    public function update(UpdateBaratonRequest $request, Baraton $baraton){
+        $user = Auth::user();
+
+        if ($baraton->user_id !== $user->id) {
+            return $this->sendError('Unauthorized', ['error' => 'You are not authorized to update this resource.']);
+        }
+
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'time' => 'required',
+            'radius' => 'required',
+            'city' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return $this->sendError('Validation Error.', $validator->errors());
+        }
+
+        $baraton->update([
+            'name' => $request->input('name'),
+            'time' => $request->input('time'),
+            'radius' => $request->input('radius'),
+            'city' => $request->input('city'),
+        ]);
+
+        return $this->sendResponse($baraton, 'Baraton updated successfully.');
     }
 
     /**
@@ -94,15 +116,15 @@ class BaratonController extends BaseController
     {
 
         $user = Auth::user();
-        if($baraton['user_id'] == $user['id']){
-            try{
+        if ($baraton['user_id'] == $user['id']) {
+            try {
                 $baraton->delete();
+
                 return $this->sendResponse($baraton, 'Baraton supprimé avec succès');
             } catch (\Exception $e) {
                 return $this->sendError('Error.', ['error' => 'Error']);
             }
-        }
-        else{
+        } else {
             return $this->sendError('Unauthorised.', ['error' => 'Unauthorised']);
         }
 

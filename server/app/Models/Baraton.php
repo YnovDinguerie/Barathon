@@ -14,6 +14,6 @@ class Baraton extends Model
         'time',
         'radius',
         'city',
-        'user_id'
+        'user_id',
     ];
 }
