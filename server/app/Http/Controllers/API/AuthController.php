@@ -33,10 +33,11 @@ class AuthController extends BaseController
      *    description="pass user credentials",
      *
      *    @OA\JsonContent(
-     *        required={"email", "name", "password", "c_password"},
+     *        required={"email", "name", "birthdate","password", "c_password"},
      *
      *    @OA\Property(property="email", type="string", format="email", example="user1@mail.com"),
      *    @OA\Property(property="name", type="string", example="user1"),
+     *    @OA\Property(property="birthdate", type="date", example="2000-10-11"),
 
      *    @OA\Property(property="password", type="string", format="password", example="MotdePasse"),
      *  *    @OA\Property(property="c_password", type="string", format="password", example="MotdePasse"),

@@ -5,7 +5,7 @@ php artisan key:generate
 
 Create database.sqlite in /database/
 
-php artisan migrate:fresh
+php artisan migrate:fresh --seed
 
 
 
