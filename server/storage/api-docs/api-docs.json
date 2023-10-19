@@ -14,7 +14,7 @@
     },
     "servers": [
         {
-            "url": "http://my-default-host.com",
+            "url": "http://127.0.0.1:8000/",
             "description": " API Server"
         }
     ],
@@ -53,7 +53,7 @@
                                     "birthdate": {
                                         "type": "string",
                                         "format": "date",
-                                        "example": "user1"
+                                        "example": "2000-10-11"
                                     },
                                     "password": {
                                         "type": "string",
