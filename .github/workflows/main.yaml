@@ -15,9 +15,13 @@ jobs:
         with:
           fetch-depth: 2
       - name: Get changes
-        run:  |
+        run: |
           changed_files=$(git diff --name-only ${{ github.event.before }} ${{ github.event.after }})
           echo "Changed Files: $changed_files"
+      - name: Debug Changed Files
+        run: |
+          echo "Changed Files: ${{ steps.check_changes.outputs.changed_files }}"
+
         continue-on-error: true
 
   client_ci:
