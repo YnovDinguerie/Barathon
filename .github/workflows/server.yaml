@@ -12,7 +12,7 @@ jobs:
   laravel-ci:
 
     runs-on: ubuntu-latest
-
+  
     steps:
     - uses: shivammathur/setup-php@15c43e89cdef867065b0213be354c2841860869e
       with:
@@ -35,6 +35,8 @@ jobs:
       run: |
         mkdir -p database
         touch database/database.sqlite
+    - name: run linter
+      run: ./vendor/bin/pint 
     - name: Execute tests (Unit and Feature tests) via PHPUnit
       working-directory: ./server
       env:
