@@ -30,12 +30,14 @@ const Login = () => {
   }
 
   return (
-    <div className="flex flex-col space-y-10">
+    <div className="flex flex-col space-y-10 bg-[#FFFDF9]">
       <div className="flex flex-col items-center">
-        <h1 className="font-medium tracking-wider flex justify-center text-2xl mt-14 font-sans">
+        <h1 className="font-medium tracking-wider flex justify-center text-2xl mt-14 font-sans text-[#DF9928]">
           Log in into you account
         </h1>
-        <h2 className="text-md font-light">Please enter infos to log in</h2>
+        <h2 className="text-md font-light text-[#DF9928]">
+          Please enter infos to log in
+        </h2>
       </div>
       <form
         onSubmit={handleSubmit(onSubmit)}
@@ -46,7 +48,7 @@ const Login = () => {
             {...register('email', { required: true })}
             type="text"
             placeholder="Email"
-            className="w-full py-2 pl-10 pr-4 leading-5 transition-colors duration-150 ease-in-out border-b-2 focus:outline-none"
+            className="bg-[#FFFDF9] w-full py-2 pl-10 pr-4 leading-5 transition-colors duration-150 ease-in-out border-b-2 focus:outline-none"
           />
           <Image
             src="/assets/mail.svg"
@@ -64,7 +66,7 @@ const Login = () => {
             {...register('password', { required: true })}
             type="password"
             placeholder="Password"
-            className="w-full py-2 pl-10 pr-4 leading-5 transition-colors duration-150 ease-in-out border-b-2 focus:outline-none"
+            className="bg-[#FFFDF9] w-full py-2 pl-10 pr-4 leading-5 transition-colors duration-150 ease-in-out border-b-2 focus:outline-none"
           />
           <Image
             src="/assets/password.svg"
@@ -77,24 +79,24 @@ const Login = () => {
             <span className="m-3 text-red-400">{errors.password.message}</span>
           )}
         </div>
-        <div className="flex justify-end m-3 font-light text-gray-400 text-sm">
+        <div className="flex justify-end m-3 font-light text-[#DF9928] text-sm">
           <Link href="#">Forgot password ?</Link>
         </div>
         <button
           type="submit"
-          className="flex justify-center m-2 p-3 text-white font-medium rounded-lg bg-indigo-300 hover:bg-gray-400"
+          className="flex justify-center m-2 p-3 text-white font-medium rounded-lg bg-[#E9AB47] hover:bg-gray-400"
         >
           Login
         </button>
         <div className="flex justify-end">
-          <div className="text-sm">
+          <div className="text-sm text-[#DF9928]">
             You don&apos;t have an account ? {''}
             <Link href="/register" className="underline">
               Register
             </Link>
           </div>
         </div>
-        <div className="flex justify-center">
+        <div className="flex justify-center text-[#DF9928]">
           <div>Or login via</div>
         </div>
         <div className="flex justify-between space-x-10 m-2">

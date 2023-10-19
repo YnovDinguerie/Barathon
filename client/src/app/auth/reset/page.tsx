@@ -30,12 +30,14 @@ const ResetPassword = () => {
   }
 
   return (
-    <div className="flex flex-col space-y-10">
+    <div className="flex flex-col space-y-10 bg-[#FFFDF9]">
       <div className="flex flex-col items-center">
-        <h1 className="font-medium tracking-wider flex justify-center text-2xl mt-14 font-sans">
+        <h1 className="text-[#DF9928] font-medium tracking-wider flex justify-center text-2xl mt-14 font-sans">
           Reset your password
         </h1>
-        <h2 className="text-md font-light">Please enter your email address</h2>
+        <h2 className="text-[#DF9928] text-md font-light">
+          Please enter your email address
+        </h2>
       </div>
       <form
         onSubmit={handleSubmit(onSubmit)}
@@ -46,7 +48,7 @@ const ResetPassword = () => {
             {...register('email', { required: true })}
             type="text"
             placeholder="Email"
-            className="w-full py-2 pl-10 pr-4 leading-5 transition-colors duration-150 ease-in-out border-b-2 focus:outline-none"
+            className="bg-[#FFFDF9] w-full py-2 pl-10 pr-4 leading-5 transition-colors duration-150 ease-in-out border-b-2 focus:outline-none"
           />
           <Image
             src="/assets/mail.svg"
@@ -61,7 +63,7 @@ const ResetPassword = () => {
         </div>
         <button
           type="submit"
-          className="flex justify-center m-2 p-3 text-white font-medium rounded-lg bg-indigo-300 hover:bg-gray-400"
+          className="bg-[#DF9928] flex justify-center m-2 p-3 text-white font-medium rounded-lg hover:bg-gray-400"
         >
           Login
         </button>
