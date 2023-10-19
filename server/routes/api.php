@@ -38,6 +38,7 @@ Route::controller(AuthController::class)->group(function () {
 
 Route::controller(BaratonController::class)->group(function () {
     Route::get('baratons', 'index');
+    Route::get('baratons/{baraton}', 'show');
     Route::post('baratons', 'store');
     Route::delete('baratons/{baraton}', 'destroy');
     Route::put('baratons/{baraton}', 'update');

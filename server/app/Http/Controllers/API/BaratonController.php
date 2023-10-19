@@ -67,7 +67,11 @@ class BaratonController extends BaseController
      */
     public function show(Baraton $baraton)
     {
-        //
+        $user = Auth::user();
+        if ($baraton->user_id !== $user->id) {
+            return $this->sendError('Unauthorized', ['error' => 'You are not authorized to update this resource.']);
+        }
+        return $baraton;
     }
 
     /**
