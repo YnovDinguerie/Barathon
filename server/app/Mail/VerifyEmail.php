@@ -3,7 +3,6 @@
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
@@ -12,8 +11,8 @@ class VerifyEmail extends Mailable
     use Queueable, SerializesModels;
 
     public $token;
-    public $rawToken;
 
+    public $rawToken;
 
     /**
      * Create a new message instance.
@@ -22,7 +21,7 @@ class VerifyEmail extends Mailable
      */
     public function __construct($token)
     {
-        $this->token = env("FRONT_URL", "") . '/auth/verify-email/' . $token;
+        $this->token = env('FRONT_URL', '').'/auth/verify-email/'.$token;
         $this->rawToken = $token;
     }
 

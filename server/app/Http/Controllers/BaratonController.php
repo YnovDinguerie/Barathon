@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Baraton;
 use App\Http\Requests\StoreBaratonRequest;
 use App\Http\Requests\UpdateBaratonRequest;
+use App\Models\Baraton;
 
 class BaratonController extends Controller
 {
