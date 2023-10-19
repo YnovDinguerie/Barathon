@@ -1,78 +1,77 @@
-check_changes:
-  runs-on: ubuntu-latest
-  steps:
-    - name: Check Changed Files
-      id: changed_files
-      run: |
-        changed_files=$(git diff --name-only $GITHUB_SHA $GITHUB_SHA^)
-        echo "Changed Files: $changed_files"
-      continue-on-error: true
+name: CI/CD Pipeline
 
-client_ci:
-  needs: check_changes
-  on:
-    push:
-      branches:
-        - main
-        - feature/*
-  runs-on: ubuntu-latest
-  if: contains(steps.check_changes.outputs.changed_files, 'client/')
-  steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-        
-    - name: Setup Node.js
-      uses: actions/setup-node@v2
-      with:
-        node-version: 18
+on:
+  push:
+    branches:
+      - main
+      - 'feature/*'
 
-    - name: Install dependencies
-      run: yarn
-      
-    - name: Lint
-      run: yarn lint
+jobs:
+  check_changes:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check Changed Files
+        id: changed_files
+        run: |
+          changed_files=$(git diff --name-only $GITHUB_SHA $GITHUB_SHA^)
+          echo "Changed Files: $changed_files"
+        continue-on-error: true
 
-    - name: Build Next.js app
-      run: yarn build
+  client_ci:
+    needs: check_changes
+    runs-on: ubuntu-latest
+    if: contains(needs.check_changes.outputs.changed_files, 'client/')
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-server_ci:
-  needs: check_changes
-  on:
-    push:
-      branches:
-        - main
-        - feature/*
-  runs-on: ubuntu-latest
-  if: contains(steps.check_changes.outputs.changed_files, 'server/')
-  steps:
-    - uses: shivammathur/setup-php@15c43e89cdef867065b0213be354c2841860869e
-      with:
-        php-version: '8.0'
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 18
 
-    - uses: actions/checkout@v3
+      - name: Install dependencies
+        run: yarn
 
-    - name: Copy .env
-      working-directory: ./server
-      run: php -r "file_exists('.env') || copy('.env.example', '.env');"
+      - name: Lint
+        run: yarn lint
 
-    - name: Install Dependencies
-      working-directory: ./server
-      run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+      - name: Build Next.js app
+        run: yarn build
 
-    - name: Generate key
-      working-directory: ./server
-      run: php artisan key:generate
+  server_ci:
+    needs: check_changes
+    runs-on: ubuntu-latest
+    if: contains(needs.check_changes.outputs.changed_files, 'server/')
+    steps:
+      - uses: shivammathur/setup-php@15c43e89cdef867065b0213be354c2841860869e
+        with:
+          php-version: '8.0'
 
-    - name: Directory Permissions
-      working-directory: ./server
-      run: chmod -R 777 storage bootstrap/cache
+      - uses: actions/checkout@v3
 
-    - name: Create Database
-      working-directory: ./server
-      run: |
-        mkdir -p database
-        touch database/database.sqlite
+      - name: Copy .env
+        working-directory: ./server
+        run: php -r "file_exists('.env') || copy('.env.example', '.env');"
 
-    - name: Run linter
-      working-directory: ./server
-      run: ./vendor/bin/phpunit 
+      - name: Install Dependencies
+        working-directory: ./server
+        run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+
+      - name: Generate key
+        working-directory: ./server
+        run: php artisan key:generate
+
+      - name: Directory Permissions
+        working-directory: ./server
+        run: chmod -R 777 storage bootstrap/cache
+
+      - name: Create Database
+        working-directory: ./server
+        run: |
+          mkdir -p database
+          touch database/database.sqlite
+
+      - name: Run linter
+        working-directory: ./server
+        run: ./vendor/bin/phpunit
