@@ -5,7 +5,7 @@ import Image from 'next/image'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { RegisterInputs } from '@/types/auth/inputs'
 import { useMutation } from 'react-query'
-import registerUser from '../api/register'
+import registerUser from '../../api/auth/register'
 
 const Register = () => {
   const {

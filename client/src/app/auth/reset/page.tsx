@@ -2,7 +2,7 @@
 
 import { ResetPasswordInputs } from '@/types/auth/inputs'
 import { SubmitHandler, useForm } from 'react-hook-form'
-import resetPassword from '../api/resetPassword'
+import resetPassword from '../../api/auth/resetPassword'
 import { useMutation } from 'react-query'
 import Image from 'next/image'
 

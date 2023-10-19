@@ -3,7 +3,7 @@
 import { LoginInputs } from '@/types/auth/inputs'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { useMutation } from 'react-query'
-import loginUser from '../api/login'
+import loginUser from '../../api/auth/login'
 import Image from 'next/image'
 import Link from 'next/link'
 
