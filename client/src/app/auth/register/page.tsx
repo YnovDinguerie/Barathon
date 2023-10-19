@@ -39,12 +39,12 @@ const Register = () => {
   }
 
   return (
-    <div className="flex flex-col space-y-10">
+    <div className="bg-[#FFFDF9] flex flex-col space-y-10">
       <div className="flex flex-col items-center">
-        <h1 className="font-medium tracking-wider flex justify-center text-2xl mt-14 font-sans">
+        <h1 className="text-[#DF9928] font-medium tracking-wider flex justify-center text-2xl mt-14 font-sans">
           Create you account
         </h1>
-        <h2 className="text-md font-light">
+        <h2 className="text-md font-light text-[#DF9928]">
           Please enter infos to create account
         </h2>
       </div>
@@ -57,7 +57,7 @@ const Register = () => {
             {...register('name', { required: true })}
             type="text"
             placeholder="Name"
-            className="w-full py-2 pl-10 pr-4 leading-5 transition-colors duration-150 ease-in-out border-b-2 focus:outline-none"
+            className="bg-[#FFFDF9] w-full py-2 pl-10 pr-4 leading-5 transition-colors duration-150 ease-in-out border-b-2 focus:outline-none"
           />
           <Image
             src="/assets/user.svg"
@@ -75,7 +75,7 @@ const Register = () => {
             {...register('email', { required: true })}
             type="email"
             placeholder="Email"
-            className="w-full py-2 pl-10 pr-4 leading-5 transition-colors duration-150 ease-in-out border-b-2 focus:outline-none"
+            className=" bg-[#FFFDF9] w-full py-2 pl-10 pr-4 leading-5 transition-colors duration-150 ease-in-out border-b-2 focus:outline-none"
           />
           <Image
             src="/assets/mail.svg"
@@ -93,7 +93,7 @@ const Register = () => {
             {...register('password', { required: true })}
             type="password"
             placeholder="Password"
-            className="w-full py-2 pl-10 pr-4 leading-5 transition-colors duration-150 ease-in-out border-b-2 focus:outline-none"
+            className="bg-[#FFFDF9] w-full py-2 pl-10 pr-4 leading-5 transition-colors duration-150 ease-in-out border-b-2 focus:outline-none"
           />
           <Image
             src="/assets/password.svg"
@@ -111,7 +111,7 @@ const Register = () => {
             {...register('c_password', { required: true })}
             type="password"
             placeholder="Confirm password"
-            className="w-full py-2 pl-10 pr-4 leading-5 transition-colors duration-150 ease-in-out border-b-2 focus:outline-none"
+            className="bg-[#FFFDF9] w-full py-2 pl-10 pr-4 leading-5 transition-colors duration-150 ease-in-out border-b-2 focus:outline-none"
           />
           <Image
             src="/assets/password.svg"
@@ -131,7 +131,7 @@ const Register = () => {
             {...register('birthday', { required: true })}
             type="date"
             placeholder="Confirm password"
-            className="w-full py-2 pl-10 pr-4 leading-5 transition-colors duration-150 ease-in-out border-b-2 focus:outline-none"
+            className="bg-[#FFFDF9] text-gray-400 text- w-full py-2 pl-10 pr-4 leading-5 transition-colors duration-150 ease-in-out border-b-2 focus:outline-none"
           />
           <Image
             src="/assets/birthday.svg"
@@ -144,24 +144,24 @@ const Register = () => {
             <span className="m-3 text-red-400">This field is required</span>
           )}
         </div>
-        <div className="flex justify-end m-3 font-light text-gray-400 text-sm">
+        <div className="text-[#DF9928] flex justify-end mr-3 font-light text-sm">
           <Link href="#">Forgot password ?</Link>
         </div>
         <button
           type="submit"
-          className="flex justify-center m-2 p-3 text-white font-medium rounded-lg bg-indigo-300 hover:bg-gray-400"
+          className="bg-[#E9AB47] flex justify-center m-2 p-3 text-white font-medium rounded-lg hover:bg-gray-400"
         >
           Register
         </button>
         <div className="flex justify-end">
-          <div className="text-sm ">
+          <div className="text-sm text-[#DF9928] mr-3">
             Already have an account ?{' '}
             <Link href="/login" className="underline">
               Login
             </Link>
           </div>
         </div>
-        <div className="flex justify-center text-sm">
+        <div className="text-[#DF9928] flex justify-center text-sm">
           <div>Or register via</div>
         </div>
         <div className="flex justify-between space-x-10 m-2">
