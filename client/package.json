@@ -10,11 +10,14 @@
     "format": "eslint --fix 'src/**/*.{js,jsx,ts,tsx}'"
   },
   "dependencies": {
+    "axios": "^1.5.1",
     "@react-google-maps/api": "^2.19.2",
     "@types/googlemaps": "^3.43.3",
     "next": "13.5.4",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "react-hook-form": "^7.47.0",
+    "react-query": "^3.39.3"
   },
   "devDependencies": {
     "@types/node": "^20",
