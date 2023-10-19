@@ -12,13 +12,17 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 2
+      - name: Get changes
+        run: git diff --name-only -r HEAD^1 HEAD
 
-      - name: Check Changed Files
-        id: changed_files
-        run: |
-          changed_files=$(git diff --name-only $GITHUB_SHA $GITHUB_SHA^)
-          echo "Changed Files: $changed_files"
-        continue-on-error: true
+      # - name: Check Changed Files
+      #   id: changed_files
+      #   run: |
+      #     changed_files=$(git diff --name-only $GITHUB_SHA $GITHUB_SHA^)
+      #     echo "Changed Files: $changed_files"
+      #   continue-on-error: true
 
   client_ci:
     needs: check_changes
