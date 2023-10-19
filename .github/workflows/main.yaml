@@ -16,7 +16,7 @@ jobs:
           fetch-depth: 2
       - name: Get changes
         run: |
-          changed_files=git diff --name-only -r HEAD^1 HEAD
+          changed_files=$(git diff --name-only -r HEAD^1 HEAD)
           echo "Changed files $changed_files"
         continue-on-error: true
 
