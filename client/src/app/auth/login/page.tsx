@@ -41,7 +41,7 @@ const Login = () => {
       </div>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col space-y-8"
+        className="flex flex-col space-y-5"
       >
         <div className="relative m-3">
           <input
@@ -84,11 +84,11 @@ const Login = () => {
         </div>
         <button
           type="submit"
-          className="flex justify-center m-2 p-3 text-white font-medium rounded-lg bg-[#E9AB47] hover:bg-gray-400"
+          className="flex justify-center m-2 p-3 text-white font-medium rounded-xl bg-[#E9AB47] hover:bg-gray-400"
         >
           Login
         </button>
-        <div className="flex justify-end">
+        <div className="flex justify-center">
           <div className="text-sm mr-3  text-[#DF9928]">
             You don&apos;t have an account ? {''}
             <Link href="/auth/register" className="underline">
@@ -99,12 +99,12 @@ const Login = () => {
         <div className="flex justify-center text-[#DF9928]">
           <div>Or login via</div>
         </div>
-        <div className="flex justify-between space-x-10 m-2">
-          <button className="rounded-full border p-3 w-full text-red-300 font-medium">
-            Google
+        <div className="flex flex-col space-y-3 mx-3">
+          <button className="rounded-full p-3 w-full text-white bg-red-400 font-medium">
+            Connect with Google
           </button>
-          <button className="rounded-full border w-full p-3 text-blue-300 font-medium">
-            Facebook
+          <button className="rounded-full bg-blue-400 w-full p-3 text-white font-medium">
+            Connect with Facebook
           </button>
         </div>
       </form>
