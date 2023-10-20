@@ -6,6 +6,8 @@ import { useMutation } from 'react-query'
 import loginUser from '../../api/auth/login'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useSetAtom } from 'jotai'
+import { userAtom } from '@/state'
 
 const Login = () => {
   const {
@@ -13,6 +15,8 @@ const Login = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<LoginInputs>()
+
+  const setUser = useSetAtom(userAtom)
 
   const { isError, mutateAsync: loginFn } = useMutation({
     mutationFn: loginUser,
@@ -22,6 +26,8 @@ const Login = () => {
     loginFn({
       email: data.email,
       password: data.password,
+    }).then((response) => {
+      setUser(response)
     })
   }
 

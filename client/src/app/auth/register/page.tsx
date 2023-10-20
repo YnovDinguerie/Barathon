@@ -6,6 +6,8 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 import { RegisterInputs } from '@/types/auth/inputs'
 import { useMutation } from 'react-query'
 import registerUser from '../../api/auth/register'
+import { useSetAtom } from 'jotai'
+import { userAtom } from '@/state'
 
 const Register = () => {
   const {
@@ -13,6 +15,8 @@ const Register = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<RegisterInputs>()
+
+  const setUser = useSetAtom(userAtom)
 
   const {
     isError,
@@ -28,7 +32,9 @@ const Register = () => {
       email: data.email,
       password: data.password,
       c_password: data.c_password,
-      birthday: data.birthday,
+      birthdate: data.birthdate,
+    }).then((response) => {
+      setUser(response.data.user)
     })
   }
 
@@ -128,7 +134,7 @@ const Register = () => {
         </div>
         <div className="relative m-3">
           <input
-            {...register('birthday', { required: true })}
+            {...register('birthdate', { required: true })}
             type="date"
             placeholder="Confirm password"
             className="bg-[#FFFDF9] text-gray-400 text- w-full py-2 pl-10 pr-4 leading-5 transition-colors duration-150 ease-in-out border-b-2 focus:outline-none"
@@ -140,7 +146,7 @@ const Register = () => {
             height={20}
             className="absolute top-2 left-3"
           />
-          {errors?.birthday && (
+          {errors?.birthdate && (
             <span className="m-3 text-red-400">This field is required</span>
           )}
         </div>
