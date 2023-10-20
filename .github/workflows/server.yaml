@@ -5,7 +5,7 @@ on:
     branches:
       - feature/*
     paths:
-      - server/**
+      - Barathon/server/**
 
 jobs:
   server_ci:
