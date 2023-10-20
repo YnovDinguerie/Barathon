@@ -157,7 +157,7 @@ const Register = () => {
           type="submit"
           className="bg-[#E9AB47] flex justify-center mx-3 p-3 text-white font-medium rounded-xl hover:bg-gray-400"
         >
-          Register now
+          Register
         </button>
         <div className="flex justify-center">
           <div className="text-sm text-[#DF9928] mr-3">
