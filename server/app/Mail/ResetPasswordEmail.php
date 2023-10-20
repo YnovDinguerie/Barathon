@@ -23,7 +23,7 @@ class ResetPasswordEmail extends Mailable
     {
 
         $this->rawToken = $token;
-        $this->url = env('FRONT_URL', '').'/auth/reset-password/'.$token;
+        $this->url = env('FRONT_URL', '').'/auth/reset/'.$token;
     }
 
     /**

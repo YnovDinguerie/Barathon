@@ -1,11 +1,23 @@
 # Project Setup
-composer install
-cp .env.example .env
-php artisan key:generate
+
+```composer install```
+
+```cp .env.example .env```
+
+```php artisan key:generate```
 
 Create database.sqlite in /database/
 
-php artisan migrate:fresh --seed
+
+To run seeder you need some python package
+
+``` pip install mysql-connector-python ```
+
+``` pip install python-dotenv ```
+
+
+
+```php artisan migrate:fresh --seed```
 
 
 

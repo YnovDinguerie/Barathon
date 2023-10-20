@@ -8,4 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Baraton extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'name',
+        'time',
+        'radius',
+        'city',
+        'user_id',
+    ];
 }
