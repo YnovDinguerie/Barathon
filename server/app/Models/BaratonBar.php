@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class BaratonBar extends Model
 {
@@ -14,4 +15,13 @@ class BaratonBar extends Model
         'bar_id',
         'status',
     ];
+
+    public function bar(): BelongsTo
+    {
+        return $this->belongsTo(Bar::class);
+    }
+    public function baraton(): BelongsTo
+    {
+        return $this->belongsTo(Baraton::class);
+    }
 }

@@ -50,6 +50,19 @@ class BaratonController extends BaseController
         return $baratons;
     }
 
+
+    public function getBaratonBars(Baraton $baraton){
+        $user = Auth::user();
+        if ($baraton->user_id !== $user->id) {
+            return $this->sendError('Unauthorized', ['error' => 'You are not authorized to access this resource.']);
+        }
+        $baratonBars = $baraton->baratonBars;
+        foreach ($baratonBars as $baratonBar) {
+            $baratonBar['bar'] = $baratonBar->bar;
+        }
+        return $baratonBars;
+    }
+
     /**
      * Show the form for creating a new resource.
      */
