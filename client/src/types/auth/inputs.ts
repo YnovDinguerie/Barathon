@@ -3,7 +3,7 @@ export type RegisterInputs = {
   email: string
   password: string
   c_password: string
-  birthday: string
+  birthdate: string
 }
 
 export type LoginInputs = {
