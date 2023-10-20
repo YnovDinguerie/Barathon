@@ -7,45 +7,49 @@ on:
       - feature/*
 
 jobs:
-  # check_changes:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Checkout code
-  #       uses: actions/checkout@v3
-  #       with:
-  #         fetch-depth: 2
-  #     - name: Get changes
-  #       run:  |
-  #         changed_files=$(git diff --name-only ${{ github.event.before }} ${{ github.event.after }})
-  #         echo "Changed Files: $changed_files"
-  #     - name: Debug Changed Files
-  #       run: |
-  #         echo "Changed Files: ${{ steps.check_changes.outputs.changed_files }}"
+  check_changes:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 2
+      - name: Get changes
+        run:  |
+          changed_files=$(git diff --name-only ${{ github.event.before }} ${{ github.event.after }})
+          echo "Changed Files: $changed_files"
+      - name: Debug Changed Files
+        run: |
+          echo "Changed Files: ${{ steps.check_changes.outputs.changed_files }}"
 
-  #       continue-on-error: true
+        continue-on-error: true
 
-  # client_ci:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Checkout code
-  #       uses: actions/checkout@v3
+  client_ci:
+    needs: check_changes
+    runs-on: ubuntu-latest
+    if: steps.check_changes.outputs.changed_files == 'client/**'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-  #     - name: Setup Node.js
-  #       uses: actions/setup-node@v3
-  #       with:
-  #         node-version: 18
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
 
-  #     - name: Install dependencies
-  #       run: yarn
+      - name: Install dependencies
+        run: yarn
 
-  #     - name: Lint
-  #       run: yarn lint
+      - name: Lint
+        run: yarn lint
 
-  #     - name: Build Next.js app
-  #       run: yarn build
+      - name: Build Next.js app
+        run: yarn build
 
   server_ci:
+    needs: check_changes
     runs-on: ubuntu-latest
+    if: steps.check_changes.outputs.changed_files == 'server/**'
     steps:
       - uses: shivammathur/setup-php@15c43e89cdef867065b0213be354c2841860869e
         with:
