@@ -13,11 +13,6 @@ const ResetPassword = () => {
     formState: { errors },
   } = useForm<ResetPasswordInputs>()
 
-  // const user = useAtomValue(userAtom)
-  // if (!user.token) {
-  //   redirect('/auth/login')
-  // }
-
   const { isError, mutateAsync: resetFn } = useMutation({
     mutationFn: resetPassword,
   })
