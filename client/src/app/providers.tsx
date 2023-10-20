@@ -10,10 +10,3 @@ export function Providers({ children }: { children: React.ReactNode }) {
     <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
   )
 }
-
-// export function AuthProvider() {
-//   const user = useAtomValue(userAtom)
-//   if (user.token === '') {
-//     redirect('/unauthenticated')
-//   }
-// }
