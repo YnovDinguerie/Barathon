@@ -1,40 +1,75 @@
 import React, { useState } from 'react'
 import './Bottom.scss'
 import './Filter.scss'
+import RangeInput from './Input/RangeInput'
 
 const Bottom = () => {
   const [setupBarathon, setSetupBarathon] = useState(false)
-  const [barsToVisit, setBarsToVisit] = useState(5) // État pour stocker la valeur du range
+  const [barsToVisit, setBarsToVisit] = useState(5)
+  const [radiusBars, setRadiusBars] = useState(3)
 
   const startBarathon = () => {
     setSetupBarathon(true)
   }
 
-  const handleBarsToVisitChange = (e) => {
-    setBarsToVisit(parseInt(e.target.value, 10))
+  const backToMenu = () => {
+    setSetupBarathon(false)
+  }
+
+  const handleRangeBarNumberChange = (barsToVisit: number) => {
+    setBarsToVisit(barsToVisit)
+  }
+
+  const handleRangeRadiusChange = (barsRadius: number) => {
+    setRadiusBars(barsRadius)
+  }
+
+  const startSearchBarathon = () => {
+    console.log(barsToVisit)
+    console.log(radiusBars)
   }
 
   return (
     <div className="container-bottom bg-white">
       {setupBarathon ? (
         <div>
-          <h1>Démarrer le Barathon</h1>
+          <h1 className="title">Démarrer le Barathon</h1>
           <h2 className="section">Nombre de bars à visiter</h2>
           <div className="container-slider">
-            <input
-              type="range"
-              min="1"
-              max="10"
-              value={barsToVisit}
-              onChange={handleBarsToVisitChange}
+            <RangeInput
+              min={2}
+              max={10}
+              onRangeChange={handleRangeBarNumberChange}
             />
-            <p>{barsToVisit} bars à visiter</p>
+            <p className="number-information">{barsToVisit} bars </p>
           </div>
           <h2 className="section">Rayon du Barathon (en km)</h2>
+          <div className="container-slider">
+            <RangeInput
+              min={2}
+              max={10}
+              onRangeChange={handleRangeRadiusChange}
+            />
+            <p className="number-information">{radiusBars} km </p>
+          </div>
           <h2 className="section">Paramètres avancés</h2>
-          <button className="bg-orange text-white start-barathon">
+          <button
+            onClick={startSearchBarathon}
+            className="bg-orange text-white start-barathon"
+          >
             Démarrer la recherche
           </button>
+
+          <div className="container-back-menu">
+            <img
+              className="back-menu"
+              src="assets/arrow-left.svg"
+              alt="back to menu"
+            />
+            <p onClick={backToMenu} className="text-back-menu">
+              Revenir en arrière
+            </p>
+          </div>
         </div>
       ) : (
         <div>

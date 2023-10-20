@@ -26,3 +26,28 @@
 .beer-icon{
     width: 2rem;
 }
+
+.title{
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.number-information{
+    text-align: center;
+    font-weight: bold;
+}
+
+.back-menu{
+    width: 1.3rem;
+}
+.container-back-menu{
+    cursor: pointer;
+    margin-top: 1rem;
+    display: flex;
+    align-items:center ;
+}
+.text-back-menu{
+    font-size: 0.9rem;
+    margin: 0rem 0.5rem;
+}

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import mapboxgl from 'mapbox-gl'
+import mapboxgl, { LngLatLike, Marker } from 'mapbox-gl'
 import { useAtom } from 'jotai'
 import { latitudeAtom, longitudeAtom } from './atoms'
 import './MapboxMap.scss'
@@ -19,7 +19,6 @@ const MapboxMap = () => {
       zoom: 12,
     })
 
-    // Ajouter le contrôle de géolocalisation
     const geolocateControl = new mapboxgl.GeolocateControl({
       positionOptions: {
         enableHighAccuracy: true,
@@ -30,10 +29,33 @@ const MapboxMap = () => {
 
     map.addControl(geolocateControl)
 
-    // ... le reste du code
+    const createCustomMarker = (lngLat: any, imagePath: any) => {
+      const markerElement = document.createElement('div')
+      markerElement.className = 'custom-marker'
+      const markerImg = document.createElement('img')
+      markerImg.src = imagePath
+      markerElement.appendChild(markerImg)
+
+      return new Marker(markerElement).setLngLat(lngLat).addTo(map)
+    }
+
+    createCustomMarker([longitude, latitude], './assets/beer.svg')
+    createCustomMarker([longitude + 0.01, latitude + 0.01], './assets/beer.svg')
+    createCustomMarker(
+      [longitude + 0.012, latitude + 0.012],
+      './assets/beer.svg',
+    )
+    createCustomMarker(
+      [longitude + 0.0112, latitude + 0.0132],
+      './assets/beer.svg',
+    )
+    createCustomMarker(
+      [longitude + 0.0112, latitude + 0.0122],
+      './assets/beer.svg',
+    )
+
 
     return () => {
-      // Nettoyer les ressources lorsque le composant est démonté
       map.remove()
     }
   }, [latitude, longitude])
