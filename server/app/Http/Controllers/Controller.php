@@ -33,7 +33,7 @@ use Illuminate\Routing\Controller as BaseController;
  *     description=" Api Endpoints"
  * )
  *
- * @OA\Schemes(format="http")
+ * @OA\Schemes(format="http") 
  *
  * @OAS\SecurityScheme(
  *      securityScheme="bearer_token",
