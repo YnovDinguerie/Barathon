@@ -27,7 +27,7 @@ jobs:
   client_ci:
     needs: check_changes
     runs-on: ubuntu-latest
-    if: steps.check_changes.outputs.changed_files == 'client/**'
+    if: check_changes.outputs.changed_files == 'client/**'
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -49,7 +49,7 @@ jobs:
   server_ci:
     needs: check_changes
     runs-on: ubuntu-latest
-    if: steps.check_changes.outputs.changed_files == 'server/**'
+    if: check_changes.outputs.changed_files == 'server/**'
     steps:
       - uses: shivammathur/setup-php@15c43e89cdef867065b0213be354c2841860869e
         with:
