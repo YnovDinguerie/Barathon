@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\BaratonController;
+use App\Http\Controllers\API\BarController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -42,4 +43,9 @@ Route::controller(BaratonController::class)->group(function () {
     Route::post('baratons', 'store');
     Route::delete('baratons/{baraton}', 'destroy');
     Route::put('baratons/{baraton}', 'update');
+});
+
+Route::controller(BarController::class)->group(function () {
+
+    Route::get('bars/{userLatitude}&{userLongitude}&{radius}', 'index');
 });
