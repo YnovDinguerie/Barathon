@@ -38,8 +38,6 @@ conn = mysql.connector.connect(
     database=database
 )
 
-print(conn)
-
 
 # Création d'un curseur
 cursor = conn.cursor()

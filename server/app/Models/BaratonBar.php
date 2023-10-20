@@ -11,9 +11,7 @@ class BaratonBar extends Model
 
     protected $fillable = [
         'baraton_id',
-        'bar_name',
+        'bar_id',
         'status',
-        'latitude',
-        'longitude',
     ];
 }
