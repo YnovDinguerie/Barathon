@@ -32,7 +32,19 @@ const Login = () => {
   }
 
   if (isError) {
-    return <div>An error occured</div>
+    return (
+      <>
+        <div className="flex flex-col items-center">
+          <h1 className="font-medium tracking-wider flex justify-center text-2xl mt-14 font-sans text-[#DF9928]">
+            Log in into you account
+          </h1>
+          <h2 className="text-md font-light text-[#DF9928]">
+            Please enter infos to log in
+          </h2>
+        </div>
+        <div>An errror occured</div>
+      </>
+    )
   }
 
   return (
