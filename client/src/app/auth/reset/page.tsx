@@ -65,7 +65,7 @@ const ResetPassword = () => {
           type="submit"
           className="bg-[#DF9928] flex justify-center m-2 p-3 text-white font-medium rounded-xl hover:bg-gray-400"
         >
-          Login reset
+          Reset
         </button>
       </form>
     </div>
