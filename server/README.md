@@ -6,7 +6,6 @@
 
 ```php artisan key:generate```
 
-Create database.sqlite in /database/
 
 
 To run seeder you need some python package

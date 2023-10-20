@@ -44,6 +44,7 @@ Route::controller(BaratonController::class)->group(function () {
     Route::post('baratons', 'store');
     Route::delete('baratons/{baraton}', 'destroy');
     Route::put('baratons/{baraton}', 'update');
+    Route::get('baratons/bars/{baraton}', 'getBaratonBars');
 });
 
 Route::controller(BarController::class)->group(function () {
