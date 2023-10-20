@@ -41,6 +41,6 @@ jobs:
           mkdir -p database
           touch database/database.sqlite
 
-      - name: Run Linter
+      - name: Lint code
         working-directory: ./server
-        run: ./vendor/bin/phpunit
+        run: ./vendor/bin/pint
