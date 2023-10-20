@@ -122,7 +122,7 @@ const Login = () => {
             Connect with Google
           </button>
           <button className="rounded-full bg-blue-400 w-full p-3 text-white font-medium">
-            Connect with Facebook
+            Connect with Facebook Provider
           </button>
         </div>
       </form>
