@@ -25,7 +25,7 @@ jobs:
 
       - name: Install Dependencies
         working-directory: ./server
-        run: composer update
+        run: composer install
 
       - name: Generate key
         working-directory: ./server
