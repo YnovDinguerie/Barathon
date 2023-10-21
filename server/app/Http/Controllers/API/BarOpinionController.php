@@ -145,14 +145,76 @@ class BarOpinionController extends BaseController
      */
     public function update(UpdateBarOpinionRequest $request, BarOpinion $barOpinion)
     {
-        //
+
+        $user = Auth::user();
+        if ($barOpinion->user_id !== $user->id) {
+            return $this->sendError('Unauthorized', ['error' => 'You are not authorized to update this resource.']);
+        }
+        $validator = Validator::make($request->all(), [
+            'opinion' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return $this->sendError('Validation Error.', $validator->errors());
+        }
+
+        $barOpinion->update([
+            'opinion' => $request->input('opinion'),
+        ]);
+
+        return $this->sendResponse($barOpinion, 'BarOpinion updated successfully.');
     }
 
     /**
      * Remove the specified resource from storage.
      */
+
+     /**
+ * @OA\Delete(
+ *     path="/api/bar-opinions/{barOpinion}",
+ *     operationId="deleteBarOpinion",
+ *     tags={"Bar Opinions"},
+ *     summary="Delete a Bar Opinion",
+ *     @OA\Parameter(
+ *         name="barOpinion",
+ *         in="path",
+ *         description="ID of the Bar Opinion to delete",
+ *         required=true,
+ *         @OA\Schema(type="integer", format="int64")
+ *     ),
+ *     @OA\Response(
+ *         response=200,
+ *         description="BarOpinion deleted successfully",
+ *     ),
+ *     @OA\Response(
+ *         response=401,
+ *         description="Unauthenticated",
+ *     ),
+ *     @OA\Response(
+ *         response=403,
+ *         description="Unauthorized",
+ *     ),
+ *     @OA\Response(
+ *         response=404,
+ *         description="Not Found",
+ *     ),
+     *     security={{"sanctum": {}}}
+ *
+ * )
+ */
     public function destroy(BarOpinion $barOpinion)
     {
-        //
+        $user = Auth::user();
+        if ($barOpinion['user_id'] !== $user['id']) {
+            return $this->sendError('Unauthorised.', ['error' => 'Unauthorised']);
+        }
+        try {
+
+            $barOpinion->delete();
+
+            return $this->sendResponse($barOpinion, 'BarOpinion supprimé avec succès');
+        } catch (\Exception $e) {
+            return $this->sendError('Error.', ['error' => 'Error']);
+        }
     }
 }
