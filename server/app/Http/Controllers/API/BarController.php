@@ -12,6 +12,45 @@ class BarController extends BaseController
     /**
      * Display a listing of the resource.
      */
+
+
+     /**
+ * @OA\Get(
+ *     path="/api/bars/{latitude}&{longitude}&{radius}",
+ *     operationId="getBars",
+ *     tags={"Bars"},
+ *     summary="Get a list of bars within a certain radius.",
+ *     @OA\Parameter(
+ *         name="latitude",
+ *         in="path",
+ *         description="Latitude",
+ *         required=true,
+ *         @OA\Schema(type="number", format="float")
+ *     ),
+ *     @OA\Parameter(
+ *         name="longitude",
+ *         in="path",
+ *         description="Longitude",
+ *         required=true,
+ *         @OA\Schema(type="number", format="float")
+ *     ),
+ *     @OA\Parameter(
+ *         name="radius",
+ *         in="path",
+ *         description="Search radius in kilometers",
+ *         required=true,
+ *         @OA\Schema(type="number", format="float")
+ *     ),
+ *     @OA\Response(
+ *         response=200,
+ *         description="Successful operation",
+ *     ),
+ *     @OA\Response(
+ *         response=400,
+ *         description="Invalid input",
+ *     )
+ * )
+ */
     public function index($latitude, $longitude, $radius)
     {
         $latitude = deg2rad($latitude);
@@ -33,51 +72,5 @@ class BarController extends BaseController
 
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreBarRequest $request)
-    {
-
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Bar $bar)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Bar $bar)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateBarRequest $request, Bar $bar)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Bar $bar)
-    {
-        //
-    }
 }
