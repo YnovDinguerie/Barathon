@@ -143,6 +143,57 @@ class BarOpinionController extends BaseController
     /**
      * Update the specified resource in storage.
      */
+    /**
+     * @OA\Put(
+     *     path="/api/bar-opinions/{barOpinion}",
+     *     operationId="updateBarOpinion",
+     *     tags={"Bar Opinions"},
+     *     summary="Update a Bar Opinion",
+     *
+     *     @OA\Parameter(
+     *     name="barOpinion",
+     *     in="path",
+     *     description="ID of the Bar Opinion to update",
+     *     required=true,
+     *
+     *     @OA\Schema(type="integer", format="int64")
+     *     ),
+     *
+     *     @OA\RequestBody(
+     *     required=true,
+     *     description="Bar Opinion data",
+     *
+     *     @OA\JsonContent(
+     *
+     *         @OA\Property(property="opinion", type="string", description="Updated opinion text"),
+     *     )
+     *     ),
+     *
+     *     @OA\Response(
+     *     response=200,
+     *     description="BarOpinion updated successfully",
+     *
+     *     ),
+     *     @OA\Response(
+     *     response=400,
+     *     description="Validation Error",
+     *     ),
+     *     @OA\Response(
+     *     response=401,
+     *     description="Unauthenticated",
+     *     ),
+     *     @OA\Response(
+     *     response=403,
+     *     description="Unauthorized",
+     *     ),
+     *     @OA\Response(
+     *     response=404,
+     *     description="Not Found",
+     *     ),
+     *     security={{"sanctum": {}}}
+     *
+     * )
+     */
     public function update(UpdateBarOpinionRequest $request, BarOpinion $barOpinion)
     {
 
@@ -169,39 +220,42 @@ class BarOpinionController extends BaseController
      * Remove the specified resource from storage.
      */
 
-     /**
- * @OA\Delete(
- *     path="/api/bar-opinions/{barOpinion}",
- *     operationId="deleteBarOpinion",
- *     tags={"Bar Opinions"},
- *     summary="Delete a Bar Opinion",
- *     @OA\Parameter(
- *         name="barOpinion",
- *         in="path",
- *         description="ID of the Bar Opinion to delete",
- *         required=true,
- *         @OA\Schema(type="integer", format="int64")
- *     ),
- *     @OA\Response(
- *         response=200,
- *         description="BarOpinion deleted successfully",
- *     ),
- *     @OA\Response(
- *         response=401,
- *         description="Unauthenticated",
- *     ),
- *     @OA\Response(
- *         response=403,
- *         description="Unauthorized",
- *     ),
- *     @OA\Response(
- *         response=404,
- *         description="Not Found",
- *     ),
+    /**
+     * @OA\Delete(
+     *     path="/api/bar-opinions/{barOpinion}",
+     *     operationId="deleteBarOpinion",
+     *     tags={"Bar Opinions"},
+     *     summary="Delete a Bar Opinion",
+     *
+     *     @OA\Parameter(
+     *         name="barOpinion",
+     *         in="path",
+     *         description="ID of the Bar Opinion to delete",
+     *         required=true,
+     *
+     *         @OA\Schema(type="integer", format="int64")
+     *     ),
+     *
+     *     @OA\Response(
+     *         response=200,
+     *         description="BarOpinion deleted successfully",
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthenticated",
+     *     ),
+     *     @OA\Response(
+     *         response=403,
+     *         description="Unauthorized",
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Not Found",
+     *     ),
      *     security={{"sanctum": {}}}
- *
- * )
- */
+     *
+     * )
+     */
     public function destroy(BarOpinion $barOpinion)
     {
         $user = Auth::user();
