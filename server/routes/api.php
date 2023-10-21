@@ -60,7 +60,6 @@ Route::controller(BaratonBarController::class)->group(function () {
     Route::delete('baraton-bars/{baratonBar}', 'destroy');
 });
 
-
 Route::controller(BarOpinionController::class)->group(function () {
 
     Route::get('baraton-opinions/{barId}', 'index');
