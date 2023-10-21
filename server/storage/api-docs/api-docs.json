@@ -531,6 +531,70 @@
                     }
                 ]
             },
+            "put": {
+                "tags": [
+                    "BaratonBars"
+                ],
+                "summary": "Update a Baraton Bar",
+                "operationId": "updateBaratonBar",
+                "parameters": [
+                    {
+                        "name": "baratonBar",
+                        "in": "path",
+                        "description": "ID of the Baraton Bar to update",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Baraton Bar data",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "baraton_id": {
+                                        "description": "ID of the Baraton",
+                                        "type": "integer",
+                                        "format": "int64"
+                                    },
+                                    "bar_id": {
+                                        "description": "ID of the Bar",
+                                        "type": "integer",
+                                        "format": "int64"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Baraton Bar updated successfully"
+                    },
+                    "400": {
+                        "description": "Validation Error"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            },
             "delete": {
                 "tags": [
                     "BaratonBars"
