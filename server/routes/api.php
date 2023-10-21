@@ -62,6 +62,9 @@ Route::controller(BaratonBarController::class)->group(function () {
 
 Route::controller(BarOpinionController::class)->group(function () {
 
-    Route::get('baraton-opinions/{barId}', 'index');
-    Route::post('baraton-opinions', 'store');
+    Route::get('bar-opinions/{barId}', 'index');
+    Route::post('bar-opinions', 'store');
+    Route::put('bar-opinions/{barOpinion}', 'update');
+    Route::delete('bar-opinions/{barOpinion}', 'destroy');
+
 });
