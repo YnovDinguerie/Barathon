@@ -166,51 +166,57 @@ class BaratonBarController extends BaseController
      * Update the specified resource in storage.
      */
 
-     /**
- * @OA\Put(
- *     path="/api/baraton-bars/{baratonBar}",
- *     operationId="updateBaratonBar",
- *     tags={"BaratonBars"},
- *     summary="Update a Baraton Bar",
- *     security={{"passport": {}}},
- *     @OA\Parameter(
- *         name="baratonBar",
- *         in="path",
- *         description="ID of the Baraton Bar to update",
- *         required=true,
- *         @OA\Schema(type="integer", format="int64")
- *     ),
- *     @OA\RequestBody(
- *         required=true,
- *         description="Baraton Bar data",
- *         @OA\JsonContent(
- *             @OA\Property(property="baraton_id", type="integer", format="int64", description="ID of the Baraton"),
- *             @OA\Property(property="bar_id", type="integer", format="int64", description="ID of the Bar"),
- *         )
- *     ),
- *     @OA\Response(
- *         response=200,
- *         description="Baraton Bar updated successfully",
- *
- *     ),
- *     @OA\Response(
- *         response=400,
- *         description="Validation Error",
- *     ),
- *     @OA\Response(
- *         response=401,
- *         description="Unauthenticated",
- *     ),
- *     @OA\Response(
- *         response=403,
- *         description="Unauthorized",
- *     ),
- *     @OA\Response(
- *         response=404,
- *         description="Not Found",
- *     )
- * )
- */
+    /**
+     * @OA\Put(
+     *     path="/api/baraton-bars/{baratonBar}",
+     *     operationId="updateBaratonBar",
+     *     tags={"BaratonBars"},
+     *     summary="Update a Baraton Bar",
+     *     security={{"passport": {}}},
+     *
+     *     @OA\Parameter(
+     *         name="baratonBar",
+     *         in="path",
+     *         description="ID of the Baraton Bar to update",
+     *         required=true,
+     *
+     *         @OA\Schema(type="integer", format="int64")
+     *     ),
+     *
+     *     @OA\RequestBody(
+     *         required=true,
+     *         description="Baraton Bar data",
+     *
+     *         @OA\JsonContent(
+     *
+     *             @OA\Property(property="baraton_id", type="integer", format="int64", description="ID of the Baraton"),
+     *             @OA\Property(property="bar_id", type="integer", format="int64", description="ID of the Bar"),
+     *         )
+     *     ),
+     *
+     *     @OA\Response(
+     *         response=200,
+     *         description="Baraton Bar updated successfully",
+     *
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Validation Error",
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthenticated",
+     *     ),
+     *     @OA\Response(
+     *         response=403,
+     *         description="Unauthorized",
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Not Found",
+     *     )
+     * )
+     */
     public function update(UpdateBaratonBarRequest $request, BaratonBar $baratonBar)
     {
         $user = Auth::user();
