@@ -39,6 +39,39 @@ class BaratonBarController extends BaseController
     /**
      * Store a newly created resource in storage.
      */
+    /**
+ * @OA\Post(
+ *     path="/api/baraton-bars",
+ *     operationId="storeBaratonBar",
+ *     tags={"BaratonBars"},
+ *     summary="Create a new Baraton Bar",
+ *     @OA\RequestBody(
+ *         required=true,
+ *         description="Baraton Bar data",
+ *         @OA\JsonContent(
+ *             @OA\Property(property="baraton_id", type="integer", format="int64", description="ID of the Baraton"),
+ *             @OA\Property(property="bar_id", type="integer", format="int64", description="ID of the Bar"),
+ *         )
+ *     ),
+ *     @OA\Response(
+ *         response=201,
+ *         description="Baraton Bar created successfully",
+ *     ),
+ *     @OA\Response(
+ *         response=400,
+ *         description="Validation Error",
+ *     ),
+ *     @OA\Response(
+ *         response=401,
+ *         description="Unauthenticated",
+ *     ),
+ *     @OA\Response(
+ *         response=403,
+ *         description="Unauthorized",
+ *     ),
+ *  security={{"sanctum": {}}}
+ * )
+ */
     public function store(StoreBaratonBarRequest $request)
     {
         $validator = Validator::make($request->all(), [
@@ -91,6 +124,39 @@ class BaratonBarController extends BaseController
     /**
      * Remove the specified resource from storage.
      */
+
+     /**
+ * @OA\Delete(
+ *     path="/api/baraton-bars/{baratonBar}",
+ *     operationId="destroyBaratonBar",
+ *     tags={"BaratonBars"},
+ *     summary="Delete a Baraton Bar",
+ *     @OA\Parameter(
+ *         name="baratonBar",
+ *         in="path",
+ *         description="ID of the Baraton Bar to delete",
+ *         required=true,
+ *         @OA\Schema(type="integer", format="int64")
+ *     ),
+ *     @OA\Response(
+ *         response=200,
+ *         description="Baraton Bar deleted successfully",
+ *     ),
+ *     @OA\Response(
+ *         response=401,
+ *         description="Unauthenticated",
+ *     ),
+ *     @OA\Response(
+ *         response=403,
+ *         description="Unauthorized",
+ *     ),
+ *     @OA\Response(
+ *         response=404,
+ *         description="Not Found",
+ *     ),
+ *  security={{"sanctum": {}}}
+ * )
+ */
     public function destroy(BaratonBar $baratonBar)
     {
 
