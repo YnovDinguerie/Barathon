@@ -16,7 +16,6 @@ class BarOpinion extends Model
         'opinion',
     ];
 
-
     public function bar(): BelongsTo
     {
         return $this->belongsTo(Bar::class);
