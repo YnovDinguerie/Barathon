@@ -6,14 +6,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class BaratonBar extends Model
+class BarOpinion extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'baraton_id',
+        'user_id',
         'bar_id',
-        'status',
+        'opinion',
     ];
 
     public function bar(): BelongsTo
@@ -21,8 +21,8 @@ class BaratonBar extends Model
         return $this->belongsTo(Bar::class);
     }
 
-    public function baraton(): BelongsTo
+    public function user(): BelongsTo
     {
-        return $this->belongsTo(Baraton::class);
+        return $this->belongsTo(User::class);
     }
 }
