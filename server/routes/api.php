@@ -1,9 +1,9 @@
 <?php
 
 use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\API\BaratonBarController;
 use App\Http\Controllers\API\BaratonController;
 use App\Http\Controllers\API\BarController;
-use App\Http\Controllers\API\BaratonBarController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -51,7 +51,6 @@ Route::controller(BarController::class)->group(function () {
 
     Route::get('bars/{userLatitude}&{userLongitude}&{radius}', 'index');
 });
-
 
 Route::controller(BaratonBarController::class)->group(function () {
 
