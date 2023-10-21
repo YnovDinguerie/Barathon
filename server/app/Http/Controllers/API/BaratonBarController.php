@@ -100,9 +100,54 @@ class BaratonBarController extends BaseController
     /**
      * Display the specified resource.
      */
+    /**
+ * @OA\Get(
+ *     path="/api/baraton-bars/{baratonBar}",
+ *     operationId="showBaratonBar",
+ *     tags={"BaratonBars"},
+ *     summary="Get details of a Baraton Bar",
+ *     @OA\Parameter(
+ *         name="baratonBar",
+ *         in="path",
+ *         description="ID of the Baraton Bar to retrieve",
+ *         required=true,
+ *         @OA\Schema(type="integer", format="int64")
+ *     ),
+ *     @OA\Response(
+ *         response=200,
+ *         description="Baraton Bar details retrieved successfully",
+ *     ),
+ *     @OA\Response(
+ *         response=401,
+ *         description="Unauthenticated",
+ *     ),
+ *     @OA\Response(
+ *         response=403,
+ *         description="Unauthorized",
+ *     ),
+ *     @OA\Response(
+ *         response=404,
+ *         description="Not Found",
+ *     ),
+ *  security={{"sanctum": {}}}
+ *
+ * )
+ */
     public function show(BaratonBar $baratonBar)
     {
-        //
+        $user = Auth::user();
+
+        $baraton = Baraton::findOrFail($baratonBar['baraton_id']);
+
+        if($baraton->user['id'] != $user['id']){
+            return $this->sendError('Unauthorised.', ['error' => 'not your resource']);
+        }
+
+
+        $baratonBar['bar'] = $baratonBar->bar;
+        $baratonBar['baraton'] = $baratonBar->baraton;
+        return $this->sendResponse($baratonBar, 'success.');
+
     }
 
     /**

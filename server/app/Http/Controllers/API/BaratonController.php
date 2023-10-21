@@ -204,7 +204,8 @@ class BaratonController extends BaseController
             return $this->sendError('Unauthorized', ['error' => 'You are not authorized to update this resource.']);
         }
 
-        return $baraton;
+        return $this->sendResponse($baraton, 'success.');
+
     }
 
     /**
