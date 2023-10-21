@@ -5,21 +5,18 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\API\BaseController as BaseController;
 use App\Http\Requests\StoreBaratonBarRequest;
 use App\Http\Requests\UpdateBaratonBarRequest;
-use App\Models\BaratonBar;
 use App\Models\Baraton;
-use Validator;
+use App\Models\BaratonBar;
 use Illuminate\Support\Facades\Auth;
-
-
+use Validator;
 
 class BaratonBarController extends BaseController
 {
-
-
     public function __construct()
     {
         $this->middleware('auth:sanctum');
     }
+
     /**
      * Display a listing of the resource.
      */
@@ -40,38 +37,42 @@ class BaratonBarController extends BaseController
      * Store a newly created resource in storage.
      */
     /**
- * @OA\Post(
- *     path="/api/baraton-bars",
- *     operationId="storeBaratonBar",
- *     tags={"BaratonBars"},
- *     summary="Create a new Baraton Bar",
- *     @OA\RequestBody(
- *         required=true,
- *         description="Baraton Bar data",
- *         @OA\JsonContent(
- *             @OA\Property(property="baraton_id", type="integer", format="int64", description="ID of the Baraton"),
- *             @OA\Property(property="bar_id", type="integer", format="int64", description="ID of the Bar"),
- *         )
- *     ),
- *     @OA\Response(
- *         response=201,
- *         description="Baraton Bar created successfully",
- *     ),
- *     @OA\Response(
- *         response=400,
- *         description="Validation Error",
- *     ),
- *     @OA\Response(
- *         response=401,
- *         description="Unauthenticated",
- *     ),
- *     @OA\Response(
- *         response=403,
- *         description="Unauthorized",
- *     ),
- *  security={{"sanctum": {}}}
- * )
- */
+     * @OA\Post(
+     *     path="/api/baraton-bars",
+     *     operationId="storeBaratonBar",
+     *     tags={"BaratonBars"},
+     *     summary="Create a new Baraton Bar",
+     *
+     *     @OA\RequestBody(
+     *         required=true,
+     *         description="Baraton Bar data",
+     *
+     *         @OA\JsonContent(
+     *
+     *             @OA\Property(property="baraton_id", type="integer", format="int64", description="ID of the Baraton"),
+     *             @OA\Property(property="bar_id", type="integer", format="int64", description="ID of the Bar"),
+     *         )
+     *     ),
+     *
+     *     @OA\Response(
+     *         response=201,
+     *         description="Baraton Bar created successfully",
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Validation Error",
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthenticated",
+     *     ),
+     *     @OA\Response(
+     *         response=403,
+     *         description="Unauthorized",
+     *     ),
+     *  security={{"sanctum": {}}}
+     * )
+     */
     public function store(StoreBaratonBarRequest $request)
     {
         $validator = Validator::make($request->all(), [
@@ -88,7 +89,7 @@ class BaratonBarController extends BaseController
         $input = $request->all();
         $baraton = Baraton::find($input['baraton_id']);
 
-        if($baraton->user['id'] != $user['id']){
+        if ($baraton->user['id'] != $user['id']) {
             return $this->sendError('Unauthorised.', ['error' => 'not your resource']);
         }
 
@@ -101,51 +102,54 @@ class BaratonBarController extends BaseController
      * Display the specified resource.
      */
     /**
- * @OA\Get(
- *     path="/api/baraton-bars/{baratonBar}",
- *     operationId="showBaratonBar",
- *     tags={"BaratonBars"},
- *     summary="Get details of a Baraton Bar",
- *     @OA\Parameter(
- *         name="baratonBar",
- *         in="path",
- *         description="ID of the Baraton Bar to retrieve",
- *         required=true,
- *         @OA\Schema(type="integer", format="int64")
- *     ),
- *     @OA\Response(
- *         response=200,
- *         description="Baraton Bar details retrieved successfully",
- *     ),
- *     @OA\Response(
- *         response=401,
- *         description="Unauthenticated",
- *     ),
- *     @OA\Response(
- *         response=403,
- *         description="Unauthorized",
- *     ),
- *     @OA\Response(
- *         response=404,
- *         description="Not Found",
- *     ),
- *  security={{"sanctum": {}}}
- *
- * )
- */
+     * @OA\Get(
+     *     path="/api/baraton-bars/{baratonBar}",
+     *     operationId="showBaratonBar",
+     *     tags={"BaratonBars"},
+     *     summary="Get details of a Baraton Bar",
+     *
+     *     @OA\Parameter(
+     *         name="baratonBar",
+     *         in="path",
+     *         description="ID of the Baraton Bar to retrieve",
+     *         required=true,
+     *
+     *         @OA\Schema(type="integer", format="int64")
+     *     ),
+     *
+     *     @OA\Response(
+     *         response=200,
+     *         description="Baraton Bar details retrieved successfully",
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthenticated",
+     *     ),
+     *     @OA\Response(
+     *         response=403,
+     *         description="Unauthorized",
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Not Found",
+     *     ),
+     *  security={{"sanctum": {}}}
+     *
+     * )
+     */
     public function show(BaratonBar $baratonBar)
     {
         $user = Auth::user();
 
         $baraton = Baraton::findOrFail($baratonBar['baraton_id']);
 
-        if($baraton->user['id'] != $user['id']){
+        if ($baraton->user['id'] != $user['id']) {
             return $this->sendError('Unauthorised.', ['error' => 'not your resource']);
         }
 
-
         $baratonBar['bar'] = $baratonBar->bar;
         $baratonBar['baraton'] = $baratonBar->baraton;
+
         return $this->sendResponse($baratonBar, 'success.');
 
     }
@@ -170,44 +174,47 @@ class BaratonBarController extends BaseController
      * Remove the specified resource from storage.
      */
 
-     /**
- * @OA\Delete(
- *     path="/api/baraton-bars/{baratonBar}",
- *     operationId="destroyBaratonBar",
- *     tags={"BaratonBars"},
- *     summary="Delete a Baraton Bar",
- *     @OA\Parameter(
- *         name="baratonBar",
- *         in="path",
- *         description="ID of the Baraton Bar to delete",
- *         required=true,
- *         @OA\Schema(type="integer", format="int64")
- *     ),
- *     @OA\Response(
- *         response=200,
- *         description="Baraton Bar deleted successfully",
- *     ),
- *     @OA\Response(
- *         response=401,
- *         description="Unauthenticated",
- *     ),
- *     @OA\Response(
- *         response=403,
- *         description="Unauthorized",
- *     ),
- *     @OA\Response(
- *         response=404,
- *         description="Not Found",
- *     ),
- *  security={{"sanctum": {}}}
- * )
- */
+    /**
+     * @OA\Delete(
+     *     path="/api/baraton-bars/{baratonBar}",
+     *     operationId="destroyBaratonBar",
+     *     tags={"BaratonBars"},
+     *     summary="Delete a Baraton Bar",
+     *
+     *     @OA\Parameter(
+     *         name="baratonBar",
+     *         in="path",
+     *         description="ID of the Baraton Bar to delete",
+     *         required=true,
+     *
+     *         @OA\Schema(type="integer", format="int64")
+     *     ),
+     *
+     *     @OA\Response(
+     *         response=200,
+     *         description="Baraton Bar deleted successfully",
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthenticated",
+     *     ),
+     *     @OA\Response(
+     *         response=403,
+     *         description="Unauthorized",
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Not Found",
+     *     ),
+     *  security={{"sanctum": {}}}
+     * )
+     */
     public function destroy(BaratonBar $baratonBar)
     {
 
         $user = Auth::user();
         $baraton = Baraton::find($baratonBar['baraton_id']);
-        if($baraton->user['id'] == $user['id']){
+        if ($baraton->user['id'] == $user['id']) {
             try {
                 $baratonBar->delete();
 
@@ -215,6 +222,7 @@ class BaratonBarController extends BaseController
             } catch (\Exception $e) {
                 return $this->sendError('Error.', ['error' => 'Error']);
             }
+
             return $this->sendError('Unauthorised.', ['error' => 'Unauthorised']);
         } else {
             return $this->sendError('Unauthorised.', ['error' => 'Unauthorised']);

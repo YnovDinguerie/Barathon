@@ -20,6 +20,7 @@ class BaratonBar extends Model
     {
         return $this->belongsTo(Bar::class);
     }
+
     public function baraton(): BelongsTo
     {
         return $this->belongsTo(Baraton::class);

@@ -28,9 +28,7 @@ use Illuminate\Routing\Controller as BaseController;
  * )
 
  *
-
- *
- * @OA\Schemes(format="http") 
+ * @OA\Schemes(format="http")
  *
  * @OAS\SecurityScheme(
  *      securityScheme="bearer_token",
