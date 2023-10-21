@@ -5,12 +5,8 @@ import { UpdatePasswordInputs } from '@/types/auth/inputs'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { useMutation } from 'react-query'
 import Image from 'next/image'
-import { useRouter, useSearchParams } from 'next/navigation'
-import { useEffect } from 'react'
-import { parse } from 'url';
+
 const ChangePassword = ({ params }: { params: { token: string } }) => {
-
-
   const {
     register,
     handleSubmit,
@@ -35,7 +31,6 @@ const ChangePassword = ({ params }: { params: { token: string } }) => {
   if (isError) {
     return <div>An error occured</div>
   }
-
 
   return (
     <div className="flex flex-col space-y-10 bg-[#FFFDF9]">
