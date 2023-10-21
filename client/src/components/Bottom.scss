@@ -51,3 +51,47 @@
     font-size: 0.9rem;
     margin: 0rem 0.5rem;
 }
+.container-button-game{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #F0E9D9;
+    padding: 1rem;
+    border-radius: 50%;
+}
+
+.count-bar-left{
+    font-size: 1.2rem;
+    transform: rotate(15deg);
+}
+.container-bar-left{
+    margin-top: 0.5rem;
+    display: flex;
+    justify-content: center;
+
+    img{
+        width: 2rem;
+        transform: rotate(-15deg);
+    }
+}
+
+.section-title{
+    font-weight: bold;
+}
+
+.stop-image{
+    width: 1.5rem;
+}
+.total-time{
+    margin-top: 0.5rem;
+    text-align: center;
+    font-size: 1.2rem;
+}
+.loading-bar{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 0.2rem;
+    width: 100%;
+    background-color: orange;
+}
