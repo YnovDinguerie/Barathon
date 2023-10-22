@@ -21,7 +21,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         \App\Models\User::factory(10)->create();
-        \App\Models\Baraton::factory(5)->create();
+
 
         $command = 'python '.'database/seeders/get_bars.py';
         exec($command, $output, $return_var);
@@ -33,5 +33,9 @@ class DatabaseSeeder extends Seeder
             $this->command->error("Erreur lors de l'exécution du script.");
             $this->command->error(implode(PHP_EOL, $output));
         }
+
+        \App\Models\BarOpinion::factory(500)->create();
+        \App\Models\Baraton::factory(5)->create();
+
     }
 }

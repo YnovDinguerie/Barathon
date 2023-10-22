@@ -17,7 +17,9 @@ class BarOpinionFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'user_id' => fake()->numberBetween(1, 5),
+            'bar_id' => fake()->numberBetween(1, 500),
+            'opinion' => fake()->paragraph(),
         ];
     }
 }
