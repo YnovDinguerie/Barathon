@@ -11,7 +11,8 @@ import '../../styles/MapboxMap.scss'
 import axios from 'axios'
 import '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions.css'
 
-mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN ?? ''
+mapboxgl.accessToken =
+  'pk.eyJ1IjoiZXhvc2xhc2gzMyIsImEiOiJjbG53dTkzcGgwOXRnMmpsZWplcXIxeGt1In0.vE7rIXLdqq640qg8Otz2Pw'
 
 const MapboxMap = () => {
   const [latitude] = useAtom(latitudeAtom)
