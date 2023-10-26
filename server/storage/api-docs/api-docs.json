@@ -392,6 +392,422 @@
                 }
             }
         },
+        "/api/bars/{latitude}&{longitude}&{radius}": {
+            "get": {
+                "tags": [
+                    "Bars"
+                ],
+                "summary": "Get a list of bars within a certain radius.",
+                "operationId": "getBars",
+                "parameters": [
+                    {
+                        "name": "latitude",
+                        "in": "path",
+                        "description": "Latitude",
+                        "required": true,
+                        "schema": {
+                            "type": "number",
+                            "format": "float"
+                        }
+                    },
+                    {
+                        "name": "longitude",
+                        "in": "path",
+                        "description": "Longitude",
+                        "required": true,
+                        "schema": {
+                            "type": "number",
+                            "format": "float"
+                        }
+                    },
+                    {
+                        "name": "radius",
+                        "in": "path",
+                        "description": "Search radius in kilometers",
+                        "required": true,
+                        "schema": {
+                            "type": "number",
+                            "format": "float"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "400": {
+                        "description": "Invalid input"
+                    }
+                }
+            }
+        },
+        "/api/bar-opinions/{barId}": {
+            "get": {
+                "tags": [
+                    "Bar Opinions"
+                ],
+                "summary": "Get Bar Opinions by Bar ID",
+                "operationId": "getBarOpinions",
+                "parameters": [
+                    {
+                        "name": "barId",
+                        "in": "path",
+                        "description": "ID of the Bar to retrieve opinions for",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Bar Opinions retrieved successfully"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        },
+        "/api/bar-opinions": {
+            "post": {
+                "tags": [
+                    "Bar Opinions"
+                ],
+                "summary": "Create a new Bar Opinion",
+                "operationId": "storeBarOpinion",
+                "requestBody": {
+                    "description": "Bar Opinion data",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "bar_id": {
+                                        "description": "ID of the Bar",
+                                        "type": "integer",
+                                        "format": "int64"
+                                    },
+                                    "opinion": {
+                                        "description": "Opinion text",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "BarOpinion created successfully"
+                    },
+                    "400": {
+                        "description": "Validation Error"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/bar-opinions/{barOpinion}": {
+            "put": {
+                "tags": [
+                    "Bar Opinions"
+                ],
+                "summary": "Update a Bar Opinion",
+                "operationId": "updateBarOpinion",
+                "parameters": [
+                    {
+                        "name": "barOpinion",
+                        "in": "path",
+                        "description": "ID of the Bar Opinion to update",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Bar Opinion data",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "opinion": {
+                                        "description": "Updated opinion text",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "BarOpinion updated successfully"
+                    },
+                    "400": {
+                        "description": "Validation Error"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Bar Opinions"
+                ],
+                "summary": "Delete a Bar Opinion",
+                "operationId": "deleteBarOpinion",
+                "parameters": [
+                    {
+                        "name": "barOpinion",
+                        "in": "path",
+                        "description": "ID of the Bar Opinion to delete",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "BarOpinion deleted successfully"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/baraton-bars": {
+            "post": {
+                "tags": [
+                    "BaratonBars"
+                ],
+                "summary": "Create a new Baraton Bar",
+                "operationId": "storeBaratonBar",
+                "requestBody": {
+                    "description": "Baraton Bar data",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "baraton_id": {
+                                        "description": "ID of the Baraton",
+                                        "type": "integer",
+                                        "format": "int64"
+                                    },
+                                    "bar_id": {
+                                        "description": "ID of the Bar",
+                                        "type": "integer",
+                                        "format": "int64"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Baraton Bar created successfully"
+                    },
+                    "400": {
+                        "description": "Validation Error"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/baraton-bars/{baratonBar}": {
+            "get": {
+                "tags": [
+                    "BaratonBars"
+                ],
+                "summary": "Get details of a Baraton Bar",
+                "operationId": "showBaratonBar",
+                "parameters": [
+                    {
+                        "name": "baratonBar",
+                        "in": "path",
+                        "description": "ID of the Baraton Bar to retrieve",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Baraton Bar details retrieved successfully"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "BaratonBars"
+                ],
+                "summary": "Update a Baraton Bar",
+                "operationId": "updateBaratonBar",
+                "parameters": [
+                    {
+                        "name": "baratonBar",
+                        "in": "path",
+                        "description": "ID of the Baraton Bar to update",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Baraton Bar data",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "baraton_id": {
+                                        "description": "ID of the Baraton",
+                                        "type": "integer",
+                                        "format": "int64"
+                                    },
+                                    "bar_id": {
+                                        "description": "ID of the Bar",
+                                        "type": "integer",
+                                        "format": "int64"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Baraton Bar updated successfully"
+                    },
+                    "400": {
+                        "description": "Validation Error"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "BaratonBars"
+                ],
+                "summary": "Delete a Baraton Bar",
+                "operationId": "destroyBaratonBar",
+                "parameters": [
+                    {
+                        "name": "baratonBar",
+                        "in": "path",
+                        "description": "ID of the Baraton Bar to delete",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Baraton Bar deleted successfully"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
         "/api/baratons": {
             "get": {
                 "tags": [
@@ -538,6 +954,41 @@
                 ]
             }
         },
+        "/api/baratons/{baraton}/bars": {
+            "get": {
+                "tags": [
+                    "Baratons"
+                ],
+                "summary": "Get Baraton Bars",
+                "operationId": "getBaratonBars",
+                "parameters": [
+                    {
+                        "name": "baraton",
+                        "in": "path",
+                        "description": "ID of the Baraton",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Baraton Bars retrieved successfully"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        },
         "/api/baratons/{baraton}": {
             "get": {
                 "tags": [
@@ -682,10 +1133,6 @@
         {
             "name": "Baratons",
             "description": "Operations about Baratons"
-        },
-        {
-            "name": "Projects",
-            "description": " Api Endpoints"
         }
     ],
     "components": {

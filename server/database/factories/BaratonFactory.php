@@ -19,7 +19,7 @@ class BaratonFactory extends Factory
         return [
             'user_id' => 1,
             'name' => fake()->name(),
-            'time' => fake()->numberBetween(0, 7200),
+            'time' => fake()->time(),
             'radius' => fake()->numberBetween(100, 500),
             'city' => 'Bordeaux',
         ];
