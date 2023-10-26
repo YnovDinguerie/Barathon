@@ -59,7 +59,7 @@ class BarController extends BaseController
     {
         $latitude = deg2rad($latitude);
         $longitude = deg2rad($longitude);
-        $bars = Bar::select('bars.*')
+        $bar = Bar::select('bars.*')
             ->selectRaw('(
             6371 * 2 * asin(
                 sqrt(
@@ -72,7 +72,7 @@ class BarController extends BaseController
             ->havingRaw('distance < ?', [$radius])
             ->get();
 
-        return $this->sendResponse($bars, 'success.');
+        return $bar;
 
     }
 }
