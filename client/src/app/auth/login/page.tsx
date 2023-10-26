@@ -8,8 +8,6 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useSetAtom } from 'jotai'
 import { userAtom } from '@/state'
-import { useRouter } from 'next/navigation'
-import { useState } from 'react'
 
 const Login = () => {
   const {
@@ -18,13 +16,9 @@ const Login = () => {
     formState: { errors },
   } = useForm<LoginInputs>()
 
-  const [submitError, setSubmitError] = useState<boolean>(false)
-
-  const router = useRouter()
-
   const setUser = useSetAtom(userAtom)
 
-  const { mutateAsync: loginFn } = useMutation({
+  const { isError, mutateAsync: loginFn } = useMutation({
     mutationFn: loginUser,
   })
 
@@ -32,14 +26,25 @@ const Login = () => {
     loginFn({
       email: data.email,
       password: data.password,
+    }).then((response) => {
+      setUser(response)
     })
-      .then((response) => {
-        setUser(response)
-        router.push('/home')
-      })
-      .catch(() => {
-        setSubmitError(true)
-      })
+  }
+
+  if (isError) {
+    return (
+      <>
+        <div className="flex flex-col items-center">
+          <h1 className="font-medium tracking-wider flex justify-center text-2xl mt-14 font-sans text-[#DF9928]">
+            Log in into you account
+          </h1>
+          <h2 className="text-md font-light text-[#DF9928]">
+            Please enter infos to log in
+          </h2>
+        </div>
+        <div>An errror occured</div>
+      </>
+    )
   }
 
   return (
@@ -52,13 +57,6 @@ const Login = () => {
           Please enter infos to log in
         </h2>
       </div>
-      {submitError && (
-        <div className="flex justify-center">
-          <div className="text-red-400 w-full mx-3 px-2 py-2 rounded-[5px] bg-red-100">
-            Nous n&apos;avons pas pu vous connecter, veuillez réessayez
-          </div>
-        </div>
-      )}
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="flex flex-col space-y-5"

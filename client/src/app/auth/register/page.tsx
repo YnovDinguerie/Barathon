@@ -8,7 +8,6 @@ import { useMutation } from 'react-query'
 import registerUser from '../../api/auth/register'
 import { useSetAtom } from 'jotai'
 import { userAtom } from '@/state'
-import { useRouter } from 'next/navigation'
 
 const Register = () => {
   const {
@@ -16,8 +15,6 @@ const Register = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<RegisterInputs>()
-
-  const router = useRouter()
 
   const setUser = useSetAtom(userAtom)
 
@@ -38,7 +35,6 @@ const Register = () => {
       birthdate: data.birthdate,
     }).then((response) => {
       setUser(response.data.user)
-      router.push('/home')
     })
   }
 
