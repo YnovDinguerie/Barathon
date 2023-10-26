@@ -1,0 +1,97 @@
+.container-bottom{
+    padding: 1rem 2rem;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+}
+.start-barathon{
+    padding: 1rem 2rem;
+    border-radius: 1rem;
+    width: 100%;
+    margin-top: 1.5rem;
+}
+.section-container{
+    display: flex;
+    justify-content: space-around;
+}
+.section{
+    font-weight: bold;
+    margin-top: 1.5rem;
+    margin-bottom: 0.7rem;
+}
+.localisation-container{
+    margin: 0rem 1rem;
+}
+.bar-name{
+    font-weight: bold;
+}
+.beer-icon{
+    width: 2rem;
+}
+
+.title{
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.number-information{
+    text-align: center;
+    font-weight: bold;
+}
+
+.back-menu{
+    width: 1.3rem;
+}
+.container-back-menu{
+    cursor: pointer;
+    margin-top: 1rem;
+    display: flex;
+    align-items:center ;
+}
+.text-back-menu{
+    font-size: 0.9rem;
+    margin: 0rem 0.5rem;
+}
+.container-button-game{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #F0E9D9;
+    padding: 1rem;
+    border-radius: 50%;
+}
+
+.count-bar-left{
+    font-size: 1.2rem;
+    transform: rotate(15deg);
+}
+.container-bar-left{
+    margin-top: 0.5rem;
+    display: flex;
+    justify-content: center;
+
+    img{
+        width: 2rem;
+        transform: rotate(-15deg);
+    }
+}
+
+.section-title{
+    font-weight: bold;
+}
+
+.stop-image{
+    width: 1.5rem;
+}
+.total-time{
+    margin-top: 0.5rem;
+    text-align: center;
+    font-size: 1.2rem;
+}
+.loading-bar{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 0.2rem;
+    width: 100%;
+    background-color: orange;
+}
