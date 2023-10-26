@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 import mapboxgl, { Marker } from 'mapbox-gl'
 import { useAtom } from 'jotai'
 import {
@@ -6,9 +6,10 @@ import {
   latitudeAtom,
   longitudeAtom,
   radiusAtom,
-} from '../../state/map/atoms'
-import '../../styles/MapboxMap.scss'
+} from './atoms'
+import './MapboxMap.scss'
 import axios from 'axios'
+import MapboxDirections from '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions'
 import '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions.css'
 
 mapboxgl.accessToken =
