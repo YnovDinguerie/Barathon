@@ -1,7 +1,5 @@
-//import AppComponent from '@/components/App'
-// import GoogleMapComponent from '@/components/GoogleMap'
-import MyApp from '@/components/App'
+import Login from './auth/login/page'
 
 export default function Home() {
-  return <MyApp />
+  return <Login />
 }

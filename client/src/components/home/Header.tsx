@@ -1,6 +1,7 @@
 'use client'
 import React from 'react'
-import './Header.scss'
+import '../../styles/Header.scss'
+import Image from 'next/image'
 
 const Header = () => {
   return (
@@ -11,15 +12,19 @@ const Header = () => {
           <p className="text-orange"> Connected User </p>
         </div>
         <div className="relative">
-          <img
+          <Image
             src="/assets/user.jpg"
             alt="image profile"
             className="user-profile"
+            width={50}
+            height={50}
           />
-          <img
+          <Image
             src="/assets/trophy.png"
             alt="image profile"
             className="image-profile"
+            width={20}
+            height={20}
           />
         </div>
       </div>

@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react'
-import { useAtom } from 'jotai'
-import { latitudeAtom, longitudeAtom } from './atoms'
+import { useSetAtom } from 'jotai'
+import { latitudeAtom, longitudeAtom } from '../../state/map/atoms'
 
 const LocalisationTracker = () => {
-  const [latitude, setLatitude] = useAtom(latitudeAtom)
-  const [longitude, setLongitude] = useAtom(longitudeAtom)
+  const setLatitude = useSetAtom(latitudeAtom)
+  const setLongitude = useSetAtom(longitudeAtom)
 
   useEffect(() => {
     const getLocation = () => {
@@ -30,7 +30,7 @@ const LocalisationTracker = () => {
 
     // Clear interval on component unmount
     return () => clearInterval(intervalId)
-  }, []) // Empty dependency array means this effect runs once when the component mounts
+  }, [setLatitude, setLongitude]) // Empty dependency array means this effect runs once when the component mounts
 
   return <div></div>
 }

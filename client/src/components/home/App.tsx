@@ -5,7 +5,7 @@ import LocalisationTracker from './LocalisationTracker'
 import Header from './Header'
 import Map from './MapboxMap'
 import Bottom from './Bottom'
-import './App.scss'
+import '../../styles/App.scss'
 import 'mapbox-gl/dist/mapbox-gl.css'
 
 const MyApp = () => {

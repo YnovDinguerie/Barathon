@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
-import './Bottom.scss'
-import './Filter.scss'
-import RangeInput from './Input/RangeInput'
+import '../../styles/Bottom.scss'
+import RangeInput from '../Input/RangeInput'
 import { useAtom } from 'jotai'
-import { barsToVisitAtom, radiusAtom } from './atoms'
+import { barsToVisitAtom, radiusAtom } from '../../state/map/atoms'
+import Image from 'next/image'
 
 const Bottom = () => {
   const [setupBarathon, setSetupBarathon] = useState(false)
@@ -70,10 +70,12 @@ const Bottom = () => {
         </button>
 
         <div className="container-back-menu">
-          <img
-            className="back-menu"
-            src="assets/arrow-left.svg"
+          <Image
+            src="/assets/arrow-left.svg"
             alt="back to menu"
+            className="back-menu"
+            width={20}
+            height={20}
           />
           <p onClick={backToMenu} className="text-back-menu">
             Revenir en arrière
@@ -90,13 +92,24 @@ const Bottom = () => {
             <p className="total-time"> 2h30 </p>
           </div>
           <div onClick={stopGame} className="container-button-game">
-            <img className="stop-image" src="assets/stop.svg" alt="stop" />
+            <Image
+              src="/assets/stop.svg"
+              alt="stop"
+              className="stop-image"
+              width={20}
+              height={20}
+            />
             <p className="count-element">Arrêter</p>
           </div>
           <div>
             <p className="section-title">Bars restant</p>
             <div className="container-bar-left">
-              <img src="assets/beer2.svg" alt="bars left" />
+              <Image
+                src="/assets/beer2.svg"
+                alt="bars left"
+                width={20}
+                height={20}
+              />
               <p className="count-bar-left"> 2 </p>
             </div>
           </div>
@@ -108,21 +121,30 @@ const Bottom = () => {
     content = (
       <div>
         <div className="filter-container">
-          <img
-            className="search-icon"
-            src="assets/search.svg"
+          <Image
+            src="/assets/search.svg"
             alt="search icon"
+            width={20}
+            height={20}
           />
           <input type="text" placeholder="Où va t-on ?" />
-          <img
+          <Image
+            src="/assets/microphone.svg"
             className="microphone-icon"
-            src="assets/microphone.svg"
             alt="Microphone"
+            width={20}
+            height={20}
           />
         </div>
         <h2 className="section"> Favories </h2>
         <div className="section-container">
-          <img className="beer-icon" src="assets/beer.svg" alt="beer icon" />
+          <Image
+            src="/assets/beer.svg"
+            className="beer-icon"
+            alt="beer icon"
+            width={20}
+            height={20}
+          />
           <div className="localisation-container">
             <h3 className="bar-name"> La Cervoiserie </h3>
             <p> 17 Pl. du Palais, 33000 Bordeaux </p>
@@ -131,7 +153,13 @@ const Bottom = () => {
         </div>
         <h2 className="section"> Récents </h2>
         <div className="section-container">
-          <img className="beer-icon" src="assets/beer.svg" alt="beer icon" />
+          <Image
+            src="/assets/beer.svg"
+            alt="beer icon"
+            className="beer-icon"
+            width={20}
+            height={20}
+          />
           <div className="localisation-container">
             <h3 className="bar-name"> La Cervoiserie </h3>
             <p> 17 Pl. du Palais, 33000 Bordeaux </p>
