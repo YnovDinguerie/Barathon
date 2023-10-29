@@ -93,6 +93,47 @@ const MapboxMap = () => {
         for (const bar of barsSliced) {
           createCustomMarker([bar.longitude, bar.latitude], './assets/beer.svg')
         }
+
+        if (barsSliced.length > 0) {
+          const directions = new MapboxDirections({
+            accessToken: mapboxgl.accessToken,
+            unit: 'metric',
+            profile: 'mapbox/walking',
+            controls: {
+              instructions: false,
+              inputs: false,
+              profileSwitcher: false,
+            },
+          })
+
+          map.addControl(directions, 'top-left')
+
+          directions.setOrigin([longitude, latitude])
+
+          console.log(barsSliced)
+
+          barsSliced.forEach((bar: { longitude: string; latitude: string }) => {
+            const coordinates = [bar.longitude, bar.latitude]
+            console.log(directions)
+
+            if (coordinates[0] && coordinates[1]) {
+              directions.addWaypoint(
+                directions.getWaypoints().length,
+                coordinates,
+              )
+            }
+
+            directions.setOrigin(coordinates)
+          })
+
+          // Set the destination for the first bar
+          directions.setDestination([
+            barsSliced[0].longitude,
+            barsSliced[0].latitude,
+          ])
+        }
+
+        // ...
       } catch (error) {
         console.error('Error fetching data:', error)
       }
@@ -110,6 +151,14 @@ const MapboxMap = () => {
 
     getBars()
   }, [latitude, longitude, radius, barsToVisit])
+
+  // const closestBar = (position:Array, remainingBars:Array) => {
+
+  // // Met a jour la liste des bar a chaque itération + relancer la fonction d'itinéraire.
+  // // Le bar 1 doit savoir quel est le Bar 2 le plus proche pour y aller.
+  //   const closestBar =
+  //   return closestBar
+  // }
 
   return <div id="map-container" className="map-container"></div>
 }
