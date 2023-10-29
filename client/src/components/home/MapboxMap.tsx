@@ -1,25 +1,33 @@
 'use client'
 
-import Map, { Marker } from 'react-map-gl'
+// import Map { Marker } from 'react-map-gl'
+import Map, {
+  Marker,
+  GeolocateControl,
+  NavigationControl,
+  FullscreenControl,
+} from 'react-map-gl'
 import { useAtom } from 'jotai'
 import { barsToVisitAtom, radiusAtom } from '../../state/map/atoms'
 import '../../styles/MapboxMap.scss'
-import 'mapbox-gl/dist/mapbox-gl.css'
 import { useLocalisationTracker } from './useLocalisationTracker'
 import { useQuery } from 'react-query'
 import getBars from '@/app/api/home/getBars'
+import Image from 'next/image'
+import CustomMarker from './Marker'
+import { BordeauxLatitude, BordeauxLongitude } from '@/constant'
 
 const MapboxMap = () => {
   const [radius] = useAtom(radiusAtom)
   const [barsToVisit] = useAtom(barsToVisitAtom)
 
-  const coordinates = useLocalisationTracker()
+  const { latitude, longitude } = useLocalisationTracker()
 
   const { data: bars, error } = useQuery({
     queryFn: () =>
       getBars({
-        latitude: coordinates.latitude,
-        longitude: coordinates.longitude,
+        latitude: latitude,
+        longitude: longitude,
         radius: radius,
         barsToVisit: barsToVisit,
       }),
@@ -33,16 +41,24 @@ const MapboxMap = () => {
     <div className="map-container">
       <Map
         mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN}
+        initialViewState={{
+          longitude: BordeauxLongitude,
+          latitude: BordeauxLatitude,
+          zoom: 10,
+        }}
         mapStyle="mapbox://styles/mapbox/streets-v12"
-        zoom={12}
-        {...coordinates}
       >
-        <Marker
-          longitude={coordinates.longitude}
-          latitude={coordinates.latitude}
-          color="red"
+        <GeolocateControl
+          positionOptions={{ enableHighAccuracy: true }}
+          trackUserLocation={true}
         />
-        <Marker longitude={44} latitude={-0.5} color="blue" />
+        <CustomMarker
+          longitude={longitude}
+          latitude={latitude}
+          color="red"
+          imgRef="/assets/beer.svg"
+        />
+        <CustomMarker longitude={-0.57699} latitude={44.84138} color="blue" />
         {bars &&
           bars.map((bar, index: number) => (
             <Marker
@@ -51,6 +67,8 @@ const MapboxMap = () => {
               latitude={bar.latitude}
             />
           ))}
+        <NavigationControl />
+        <FullscreenControl />
       </Map>
     </div>
   )
