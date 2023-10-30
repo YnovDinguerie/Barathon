@@ -4,13 +4,16 @@ import '../../styles/App.scss'
 import 'mapbox-gl/dist/mapbox-gl.css'
 import Bottom from '@/components/home/Bottom'
 import Header from '@/components/home/Header'
+import { MapProvider } from 'react-map-gl'
 
 const Home = () => {
   return (
     <div className="container-app">
-      <Header />
-      <Map />
-      <Bottom />
+      <MapProvider>
+        <Header />
+        <Map />
+        <Bottom />
+      </MapProvider>
     </div>
   )
 }
