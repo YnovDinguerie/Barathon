@@ -26,15 +26,15 @@ const MapboxMap = () => {
 
   const { latitude, longitude } = useLocalisationTracker()
 
-  // const { data: bars, error } = useQuery({
-  //   queryFn: () =>
-  //     getBars({
-  //       latitude: latitude,
-  //       longitude: longitude,
-  //       radius: radius,
-  //       barsToVisit: barsToVisit,
-  //     }),
-  // })
+  const { data: bars, error } = useQuery({
+    queryFn: () =>
+      getBars({
+        latitude: 44.8389801,
+        longitude: -0.5775018,
+        radius: 10,
+        barsToVisit: 10,
+      }),
+  })
 
   const { data: direction } = useQuery({
     queryFn: () =>
@@ -121,14 +121,14 @@ const MapboxMap = () => {
         />
         <CustomMarker longitude={longitude} latitude={latitude} />
         <CustomMarker longitude={-0.57699} latitude={44.84138} />
-        {/* {bars &&
+        {bars &&
           bars.map((bar, index: number) => (
             <Marker
               key={`bar-${index}`}
               longitude={bar.longitude}
               latitude={bar.latitude}
             />
-          ))} */}
+          ))}
         <Source id="routeSource" type="geojson" data={geojson}>
           <Layer {...lineStyle} />
         </Source>
