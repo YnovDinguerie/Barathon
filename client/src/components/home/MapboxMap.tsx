@@ -37,7 +37,7 @@ const MapboxMap = () => {
   // })
 
   const { data: direction } = useQuery({
-    queryFn: () => {
+    queryFn: () =>
       getDirections({
         pointA: {
           longitude: -0.57699,
@@ -47,12 +47,11 @@ const MapboxMap = () => {
           longitude: -0.5775018,
           latitude: 44.8389801,
         },
-        service: 'walking',
-      })
-    },
+        service: 'cycling',
+      }),
   })
 
-  console.log(direction)
+  // console.log(direction)
 
   // if (error) {
   //   console.log(error)
@@ -83,10 +82,7 @@ const MapboxMap = () => {
         properties: {},
         geometry: {
           type: 'LineString',
-          coordinates: [
-            [longitude, latitude],
-            [-0.57699, 44.84138],
-          ],
+          coordinates: direction,
         },
       },
     ],
