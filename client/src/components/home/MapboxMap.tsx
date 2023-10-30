@@ -1,6 +1,5 @@
 'use client'
 
-// import Map { Marker } from 'react-map-gl'
 import Map, {
   Marker,
   GeolocateControl,
@@ -13,7 +12,6 @@ import '../../styles/MapboxMap.scss'
 import { useLocalisationTracker } from './useLocalisationTracker'
 import { useQuery } from 'react-query'
 import getBars from '@/app/api/home/getBars'
-import Image from 'next/image'
 import CustomMarker from './Marker'
 import { BordeauxLatitude, BordeauxLongitude } from '@/constant'
 
@@ -52,13 +50,8 @@ const MapboxMap = () => {
           positionOptions={{ enableHighAccuracy: true }}
           trackUserLocation={true}
         />
-        <CustomMarker
-          longitude={longitude}
-          latitude={latitude}
-          color="red"
-          imgRef="/assets/beer.svg"
-        />
-        <CustomMarker longitude={-0.57699} latitude={44.84138} color="blue" />
+        <CustomMarker longitude={longitude} latitude={latitude} />
+        <CustomMarker longitude={-0.57699} latitude={44.84138} />
         {bars &&
           bars.map((bar, index: number) => (
             <Marker
