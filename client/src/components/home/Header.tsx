@@ -2,8 +2,10 @@
 import React from 'react'
 import '../../styles/Header.scss'
 import Image from 'next/image'
+import { useRouter } from 'next/navigation'
 
 const Header = () => {
+  const router = useRouter()
   return (
     <div>
       <div className="container-header bg-white">
@@ -11,7 +13,7 @@ const Header = () => {
           <p> Bonjour </p>
           <p className="text-orange"> Connected User </p>
         </div>
-        <div className="relative">
+        <div className="relative" onClick={() => router.push('profile')}>
           <Image
             src="/assets/user.jpg"
             alt="image profile"
