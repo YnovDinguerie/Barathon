@@ -166,28 +166,24 @@ const MapboxMap = () => {
 
           console.log(barsSliced)
 
-          barsSliced.forEach((bar: { longitude: string; latitude: string }) => {
-            const coordinates = [bar.longitude, bar.latitude]
-            console.log(directions)
+          barsSliced.forEach(
+            (bar: { longitude: string; latitude: string }, index: number) => {
+              const coordinates = [
+                parseFloat(bar.longitude),
+                parseFloat(bar.latitude),
+              ]
 
-            if (coordinates[0] && coordinates[1]) {
-              directions.addWaypoint(
-                directions.getWaypoints().length,
-                coordinates,
-              )
-            }
+              if (coordinates[0] && coordinates[1]) {
+                directions.addWaypoint(index, coordinates)
+              }
+            },
+          )
 
-            directions.setOrigin(coordinates)
-          })
-
-          // Set the destination for the first bar
           directions.setDestination([
-            barsSliced[0].longitude,
-            barsSliced[0].latitude,
+            parseFloat(barsSliced[0].longitude),
+            parseFloat(barsSliced[0].latitude),
           ])
         }
-
-        // ...
       } catch (error) {
         console.error('Error fetching data:', error)
       }
@@ -205,14 +201,6 @@ const MapboxMap = () => {
 
     getBars()
   }, [latitude, longitude, radius, barsToVisit])
-
-  // const closestBar = (position:Array, remainingBars:Array) => {
-
-  // // Met a jour la liste des bar a chaque itération + relancer la fonction d'itinéraire.
-  // // Le bar 1 doit savoir quel est le Bar 2 le plus proche pour y aller.
-  //   const closestBar =
-  //   return closestBar
-  // }
 
   return <div id="map-container" className="map-container"></div>
 }
