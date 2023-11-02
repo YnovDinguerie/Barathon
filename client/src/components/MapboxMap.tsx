@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect } from 'react'
 import mapboxgl, { Marker } from 'mapbox-gl'
 import { useAtom } from 'jotai'
 import {
@@ -29,24 +29,13 @@ const MapboxMap = () => {
       zoom: 12,
     })
 
-    const geolocateControl = new mapboxgl.GeolocateControl({
-      positionOptions: {
-        enableHighAccuracy: true,
-      },
-      trackUserLocation: true,
-      showUserHeading: true,
-    })
-
-    map.addControl(geolocateControl)
-
-    // Fonction pour calculer la distance entre deux points
     function calculateDistance(
       lat1: number,
       lon1: number,
       lat2: number,
       lon2: number,
     ) {
-      const R = 6371 // Rayon de la Terre en kilomètres
+      const R = 6371
       const dLat = (lat2 - lat1) * (Math.PI / 180)
       const dLon = (lon2 - lon1) * (Math.PI / 180)
       const a =
@@ -56,10 +45,9 @@ const MapboxMap = () => {
           Math.sin(dLon / 2) *
           Math.sin(dLon / 2)
       const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
-      const distance = R * c // Distance en kilomètres
+      const distance = R * c
       return distance
     }
-
     const getBars = async () => {
       try {
         const res = await axios.get(
@@ -68,7 +56,6 @@ const MapboxMap = () => {
 
         const datas = res.data.data
 
-        // Calculer la distance pour chaque bar
         const barsWithDistance = datas.map(
           (bar: { latitude: string; longitude: string }) => ({
             ...bar,
@@ -81,19 +68,18 @@ const MapboxMap = () => {
           }),
         )
 
-        // Trier les bars par distance croissante
         const sortedBars = barsWithDistance.sort(
           (a: { distance: number }, b: { distance: number }) =>
             a.distance - b.distance,
         )
 
-        // Garder seulement les 3 premiers éléments
         const barsSliced = sortedBars.slice(0, barsToVisit)
 
-        console.log(barsSliced)
-
         for (const bar of barsSliced) {
-          createCustomMarker([bar.longitude, bar.latitude], './assets/beer.svg')
+          createCustomMarker(
+            [parseFloat(bar.longitude), parseFloat(bar.latitude)],
+            './assets/beer.svg',
+          )
         }
 
         if (barsSliced.length > 0) {
@@ -114,34 +100,30 @@ const MapboxMap = () => {
 
           console.log(barsSliced)
 
-          barsSliced.forEach((bar: { longitude: string; latitude: string }) => {
-            const coordinates = [bar.longitude, bar.latitude]
-            console.log(directions)
+          barsSliced.forEach(
+            (bar: { longitude: string; latitude: string }, index: number) => {
+              const coordinates = [
+                parseFloat(bar.longitude),
+                parseFloat(bar.latitude),
+              ]
 
-            if (coordinates[0] && coordinates[1]) {
-              directions.addWaypoint(
-                directions.getWaypoints().length,
-                coordinates,
-              )
-            }
+              if (coordinates[0] && coordinates[1]) {
+                directions.addWaypoint(index, coordinates)
+              }
+            },
+          )
 
-            directions.setOrigin(coordinates)
-          })
-
-          // Set the destination for the first bar
           directions.setDestination([
-            barsSliced[0].longitude,
-            barsSliced[0].latitude,
+            parseFloat(barsSliced[0].longitude),
+            parseFloat(barsSliced[0].latitude),
           ])
         }
-
-        // ...
       } catch (error) {
         console.error('Error fetching data:', error)
       }
     }
 
-    const createCustomMarker = (lngLat: any, imagePath: any) => {
+    const createCustomMarker = (lngLat: any, imagePath: string) => {
       const markerElement = document.createElement('div')
       markerElement.className = 'custom-marker'
       const markerImg = document.createElement('img')
@@ -153,14 +135,6 @@ const MapboxMap = () => {
 
     getBars()
   }, [latitude, longitude, radius, barsToVisit])
-
-  // const closestBar = (position:Array, remainingBars:Array) => {
-
-  // // Met a jour la liste des bar a chaque itération + relancer la fonction d'itinéraire.
-  // // Le bar 1 doit savoir quel est le Bar 2 le plus proche pour y aller.
-  //   const closestBar =
-  //   return closestBar
-  // }
 
   return <div id="map-container" className="map-container"></div>
 }
