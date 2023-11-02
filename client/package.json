@@ -10,6 +10,7 @@
     "format": "eslint --fix 'src/**/*.{js,jsx,ts,tsx}'"
   },
   "dependencies": {
+    "@mapbox/mapbox-gl-directions": "^4.1.1",
     "@react-google-maps/api": "^2.19.2",
     "@react-leaflet/core": "^2.1.0",
     "@types/googlemaps": "^3.43.3",

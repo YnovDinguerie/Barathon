@@ -47,7 +47,56 @@ class BaratonController extends BaseController
         $user = Auth::user();
         $baratons = Baraton::where('user_id', $user['id'])->get();
 
-        return $baratons;
+        return $this->sendResponse($baratons, 'success.');
+    }
+
+    /**
+     * @OA\Get(
+     *     path="/api/baratons/{baraton}/bars",
+     *     operationId="getBaratonBars",
+     *     tags={"Baratons"},
+     *     summary="Get Baraton Bars",
+     *
+     *     @OA\Parameter(
+     *         name="baraton",
+     *         in="path",
+     *         description="ID of the Baraton",
+     *         required=true,
+     *
+     *         @OA\Schema(type="integer", format="int64")
+     *     ),
+     *
+     *     @OA\Response(
+     *         response=200,
+     *         description="Baraton Bars retrieved successfully",
+     *
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthenticated",
+     *     ),
+     *     @OA\Response(
+     *         response=403,
+     *         description="Unauthorized",
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Not Found",
+     *     )
+     * )
+     */
+    public function getBaratonBars(Baraton $baraton)
+    {
+        $user = Auth::user();
+        if ($baraton->user_id !== $user->id) {
+            return $this->sendError('Unauthorized', ['error' => 'You are not authorized to access this resource.']);
+        }
+        $baratonBars = $baraton->baratonBars;
+        foreach ($baratonBars as $baratonBar) {
+            $baratonBar['bar'] = $baratonBar->bar;
+        }
+
+        return $this->sendResponse($baratonBars, 'success.');
     }
 
     /**
@@ -191,7 +240,8 @@ class BaratonController extends BaseController
             return $this->sendError('Unauthorized', ['error' => 'You are not authorized to update this resource.']);
         }
 
-        return $baraton;
+        return $this->sendResponse($baraton, 'success.');
+
     }
 
     /**

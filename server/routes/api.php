@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\API\BaratonBarController;
 use App\Http\Controllers\API\BaratonController;
 use App\Http\Controllers\API\BarController;
+use App\Http\Controllers\API\BarOpinionController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -43,9 +45,26 @@ Route::controller(BaratonController::class)->group(function () {
     Route::post('baratons', 'store');
     Route::delete('baratons/{baraton}', 'destroy');
     Route::put('baratons/{baraton}', 'update');
+    Route::get('baratons/{baraton}/bars', 'getBaratonBars');
 });
 
 Route::controller(BarController::class)->group(function () {
 
     Route::get('bars/{userLatitude}&{userLongitude}&{radius}', 'index');
+});
+
+Route::controller(BaratonBarController::class)->group(function () {
+    Route::post('baraton-bars/', 'store');
+    Route::get('baraton-bars/{baratonBar}', 'show');
+    Route::put('baraton-bars/{baratonBar}', 'update');
+    Route::delete('baraton-bars/{baratonBar}', 'destroy');
+});
+
+Route::controller(BarOpinionController::class)->group(function () {
+
+    Route::get('bar-opinions/{barId}', 'index');
+    Route::post('bar-opinions', 'store');
+    Route::put('bar-opinions/{barOpinion}', 'update');
+    Route::delete('bar-opinions/{barOpinion}', 'destroy');
+
 });

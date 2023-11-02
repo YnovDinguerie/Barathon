@@ -6,7 +6,6 @@
 
 ```php artisan key:generate```
 
-Create database.sqlite in /database/
 
 
 To run seeder you need some python package
@@ -22,7 +21,7 @@ To run seeder you need some python package
 
 
 # Laravel Pint code style fixer
-./vendor/bin/pint
+```./vendor/bin/pint```
 
 # Generate swagger
-php artisan l5-swagger:generate
+```php artisan l5-swagger:generate```

@@ -28,11 +28,6 @@ use Illuminate\Routing\Controller as BaseController;
  * )
 
  *
- * @OA\Tag(
- *     name="Projects",
- *     description=" Api Endpoints"
- * )
- *
  * @OA\Schemes(format="http")
  *
  * @OAS\SecurityScheme(
