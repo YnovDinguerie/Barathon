@@ -165,14 +165,6 @@ const MapboxMap = () => {
     getBars()
   }, [latitude, longitude, radius, barsToVisit])
 
-  // const closestBar = (position:Array, remainingBars:Array) => {
-
-  // // Met a jour la liste des bar a chaque itération + relancer la fonction d'itinéraire.
-  // // Le bar 1 doit savoir quel est le Bar 2 le plus proche pour y aller.
-  //   const closestBar =
-  //   return closestBar
-  // }
-
   return <div id="map-container" className="map-container"></div>
 }
 
