@@ -147,43 +147,6 @@ const MapboxMap = () => {
 
           directions.setDestination(currentPosition)
         }
-
-        if (barsSliced.length > 0) {
-          const directions = new MapboxDirections({
-            accessToken: mapboxgl.accessToken,
-            unit: 'metric',
-            profile: 'mapbox/walking',
-            controls: {
-              instructions: false,
-              inputs: false,
-              profileSwitcher: false,
-            },
-          })
-
-          map.addControl(directions, 'top-left')
-
-          directions.setOrigin([longitude, latitude])
-
-          console.log(barsSliced)
-
-          barsSliced.forEach(
-            (bar: { longitude: string; latitude: string }, index: number) => {
-              const coordinates = [
-                parseFloat(bar.longitude),
-                parseFloat(bar.latitude),
-              ]
-
-              if (coordinates[0] && coordinates[1]) {
-                directions.addWaypoint(index, coordinates)
-              }
-            },
-          )
-
-          directions.setDestination([
-            parseFloat(barsSliced[0].longitude),
-            parseFloat(barsSliced[0].latitude),
-          ])
-        }
       } catch (error) {
         console.error('Error fetching data:', error)
       }
