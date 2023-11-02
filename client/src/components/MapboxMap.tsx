@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect } from 'react'
 import mapboxgl, { Marker } from 'mapbox-gl'
 import { useAtom } from 'jotai'
 import {
@@ -29,7 +29,12 @@ const MapboxMap = () => {
       zoom: 12,
     })
 
-    function calculateDistance(lat1, lon1, lat2, lon2) {
+    function calculateDistance(
+      lat1: number,
+      lon1: number,
+      lat2: number,
+      lon2: number,
+    ) {
       const R = 6371
       const dLat = (lat2 - lat1) * (Math.PI / 180)
       const dLon = (lon2 - lon1) * (Math.PI / 180)
@@ -44,7 +49,10 @@ const MapboxMap = () => {
       return distance
     }
 
-    const getClosestBar = (position, remainingBars) => {
+    const getClosestBar = (
+      position: [number, number],
+      remainingBars: Array<any>,
+    ) => {
       let minDistance = Number.MAX_VALUE
       let closestBar = null
 
@@ -74,22 +82,25 @@ const MapboxMap = () => {
         const datas = res.data.data
 
         for (const data of datas) {
-          data.latitude = parseFloat(data.latitude)
-          data.longitude = parseFloat(data.longitude)
+          ;(data.latitude = parseFloat(data.latitude)),
+            (data.longitude = parseFloat(data.longitude))
         }
 
-        const barsWithDistance = datas.map((bar) => ({
-          ...bar,
-          distance: calculateDistance(
-            latitude,
-            longitude,
-            bar.latitude,
-            bar.longitude,
-          ),
-        }))
+        const barsWithDistance = datas.map(
+          (bar: { latitude: number; longitude: number }) => ({
+            ...bar,
+            distance: calculateDistance(
+              latitude,
+              longitude,
+              bar.latitude,
+              bar.longitude,
+            ),
+          }),
+        )
 
         const sortedBars = barsWithDistance.sort(
-          (a, b) => a.distance - b.distance,
+          (a: { distance: number }, b: { distance: number }) =>
+            a.distance - b.distance,
         )
 
         const barsSliced = sortedBars.slice(0, barsToVisit)
@@ -102,8 +113,6 @@ const MapboxMap = () => {
         }
 
         if (barsSliced.length > 0) {
-          const directionsRef = useRef(null) // Créez une référence pour le composant MapboxDirections
-
           const directions = new MapboxDirections({
             accessToken: mapboxgl.accessToken,
             unit: 'metric',
@@ -114,18 +123,15 @@ const MapboxMap = () => {
               profileSwitcher: false,
             },
           })
-
-          // Stockez la référence dans la variable directionsRef
-          directionsRef.current = directions
+          directions.removeRoutes()
+          directions.removeWaypoint()
 
           map.addControl(directions, 'top-left')
 
           directions.setOrigin([longitude, latitude])
 
-          console.log(barsSliced)
-
           let remainingBars = [...barsSliced]
-          let currentPosition = [longitude, latitude]
+          let currentPosition: [number, number] = [longitude, latitude]
 
           let i = 0
           while (remainingBars.length > 0) {
@@ -147,7 +153,7 @@ const MapboxMap = () => {
       }
     }
 
-    const createCustomMarker = (lngLat, imagePath) => {
+    const createCustomMarker = (lngLat: any, imagePath: string) => {
       const markerElement = document.createElement('div')
       markerElement.className = 'custom-marker'
       const markerImg = document.createElement('img')
