@@ -48,6 +48,9 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
+
+
+
     public function baratons(): HasMany
     {
         return $this->hasMany(Baratons::class);
