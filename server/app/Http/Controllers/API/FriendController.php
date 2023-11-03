@@ -74,6 +74,7 @@ class FriendController extends BaseController
     {
 
         $friends = Auth::user()->pendingFriends;
+
         return $this->sendResponse($friends, 'success.');
 
     }

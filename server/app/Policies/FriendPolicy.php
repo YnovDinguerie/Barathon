@@ -4,10 +4,7 @@ namespace App\Policies;
 
 use App\Models\Friend;
 use App\Models\User;
-<<<<<<< HEAD
-=======
 use Illuminate\Auth\Access\Response;
->>>>>>> 2f0cc9a (:sparkles: feat: crud friend)
 
 class FriendPolicy
 {
