@@ -10,6 +10,9 @@ interface PopupProps {
 }
 
 const Popup: React.FC<PopupProps> = ({ isOpen, onRequestClose }) => {
+  const gifUrl =
+    'https://gifdb.com/images/high/colorful-easter-egg-roll-hb7ervh5hnj1q9wn.gif'
+
   return (
     <Modal
       className="container-popup"
@@ -18,14 +21,16 @@ const Popup: React.FC<PopupProps> = ({ isOpen, onRequestClose }) => {
       contentLabel="Popup"
       ariaHideApp={false} // Pour éviter une erreur de style
     >
-      <Image
-        src="../../../assets/popup.svg"
-        alt="Image popup"
-        width={400}
-        height={400}
-      />
-      <p>Ceci est un easter egg</p>
-      <button onClick={onRequestClose}>Fermer</button>
+      <div className="pop-up">
+        <Image
+          src={gifUrl} //"../../public/assets/popup.svg"
+          alt=""
+          width={400}
+          height={400}
+        />
+        <p>Ceci est un easter egg</p>
+        <button onClick={onRequestClose}>Fermer</button>
+      </div>
     </Modal>
   )
 }
