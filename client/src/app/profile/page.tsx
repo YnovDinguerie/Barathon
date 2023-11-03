@@ -25,7 +25,7 @@ const Profile = () => {
         </div>
         <div
           className="bg-[#FFFDF9] h-20 rounded border mb-2 p-2 flex items-center"
-          onClick={() => router.push('/profile/barathons')}
+          onClick={() => router.push('/profile/barathon')}
         >
           <h1 className="font-medium flex-grow">Gestion des Barathons</h1>
           <Image
