@@ -2,6 +2,7 @@
 import React from 'react'
 import Modal from 'react-modal'
 import Image from 'next/image'
+import '../styles/Popup.scss'
 
 interface PopupProps {
   isOpen: boolean
@@ -11,6 +12,7 @@ interface PopupProps {
 const Popup: React.FC<PopupProps> = ({ isOpen, onRequestClose }) => {
   return (
     <Modal
+      className="container-popup"
       isOpen={isOpen}
       onRequestClose={onRequestClose}
       contentLabel="Popup"

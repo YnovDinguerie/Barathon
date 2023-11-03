@@ -12,7 +12,7 @@ import Popup from '@/components/Popup'
 const Home: React.FC = () => {
   const [isPopupOpen, setIsPopupOpen] = useState(false)
   const [clickCount, setClickCount] = useState(0)
-  const resetTime = 1000
+  const resetTime = 200
   const resetCounter = () => {
     setClickCount(0)
   }
