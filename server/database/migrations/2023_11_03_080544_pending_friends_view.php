@@ -1,9 +1,10 @@
 <?php
 
-use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
-use Staudenmeir\LaravelMergedRelations\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use App\Models\User;
 
+use Staudenmeir\LaravelMergedRelations\Facades\Schema;
 return new class extends Migration
 {
     /**
