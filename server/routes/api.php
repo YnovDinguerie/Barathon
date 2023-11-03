@@ -38,6 +38,7 @@ Route::controller(AuthController::class)->group(function () {
     Route::post('verify-email/{token}', 'verify');
     Route::post('send-password-reset-email', 'sendPasswordResetEmail');
     Route::post('reset-password', 'resetPassword');
+    Route::put('update-profile', 'updateProfile');
 });
 
 Route::controller(BaratonController::class)->group(function () {
@@ -74,5 +75,4 @@ Route::controller(FriendController::class)->group(function () {
     Route::post('friends', 'store');
     Route::put('friends/{id}', 'update');
     Route::delete('friends/{id}', 'destroy');
-
 });

@@ -392,6 +392,57 @@
                 }
             }
         },
+        "/api/update-profile": {
+            "put": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Mettre à jour le profil de l'utilisateur",
+                "description": "Cette API permet à l'utilisateur connecté de mettre à jour son profil en modifiant son nom, sa date de naissance et son adresse e-mail.",
+                "operationId": "updateProfile",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "description": "Nom de l'utilisateur",
+                                        "type": "string",
+                                        "example": "John Doe"
+                                    },
+                                    "birthdate": {
+                                        "description": "Date de naissance de l'utilisateur (au format 'AAAA-MM-JJ')",
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "1990-05-15"
+                                    },
+                                    "email": {
+                                        "description": "Nouvelle adresse e-mail de l'utilisateur",
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "john@example.com"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Profil mis à jour avec succès"
+                    },
+                    "400": {
+                        "description": "Erreur de validation ou adresse e-mail déjà utilisée par un autre utilisateur"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
         "/api/bars/{latitude}&{longitude}&{radius}": {
             "get": {
                 "tags": [
