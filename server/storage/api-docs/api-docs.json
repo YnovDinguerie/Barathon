@@ -1127,14 +1127,159 @@
                     }
                 ]
             }
+        },
+        "/api/friends": {
+            "get": {
+                "tags": [
+                    "Friends"
+                ],
+                "summary": "Récupérer la liste des amis de l'utilisateur actuel",
+                "operationId": "getFriends",
+                "responses": {
+                    "200": {
+                        "description": "Liste des amis de l'utilisateur actuel"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Friends"
+                ],
+                "summary": "Ajouter un ami",
+                "operationId": "addFriend",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "friend_code": {
+                                        "description": "Code ami de l'ami à ajouter",
+                                        "type": "string",
+                                        "example": "ABC12345"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Ami ajouté avec succès"
+                    },
+                    "400": {
+                        "description": "Erreur de validation ou ami déjà ajouté"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/friends/pending": {
+            "get": {
+                "tags": [
+                    "Friends"
+                ],
+                "summary": "Récupérer la liste des amis en attente de confirmation",
+                "operationId": "getPendingFriends",
+                "responses": {
+                    "200": {
+                        "description": "Liste des amis en attente de confirmation"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/friends/{friend}": {
+            "put": {
+                "tags": [
+                    "Friends"
+                ],
+                "summary": "Mettre à jour l'état de l'ami (accepté ou non)",
+                "operationId": "updateFriend",
+                "parameters": [
+                    {
+                        "name": "friend",
+                        "in": "path",
+                        "description": "ID de l'ami à mettre à jour",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "accepted": {
+                                        "description": "État de l'ami (0 pour non accepté, 1 pour accepté)",
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Ami mis à jour avec succès"
+                    },
+                    "400": {
+                        "description": "Erreur de validation ou droits insuffisants"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Friends"
+                ],
+                "summary": "Supprimer un ami",
+                "operationId": "deleteFriend",
+                "parameters": [
+                    {
+                        "name": "friend",
+                        "in": "path",
+                        "description": "ID de l'ami à supprimer",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ami supprimé avec succès"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
         }
     },
-    "tags": [
-        {
-            "name": "Baratons",
-            "description": "Operations about Baratons"
-        }
-    ],
     "components": {
         "securitySchemes": {
             "sanctum": {
@@ -1144,5 +1289,11 @@
                 "in": "header"
             }
         }
-    }
+    },
+    "tags": [
+        {
+            "name": "Baratons",
+            "description": "Operations about Baratons"
+        }
+    ]
 }

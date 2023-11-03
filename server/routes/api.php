@@ -5,6 +5,7 @@ use App\Http\Controllers\API\BaratonBarController;
 use App\Http\Controllers\API\BaratonController;
 use App\Http\Controllers\API\BarController;
 use App\Http\Controllers\API\BarOpinionController;
+use App\Http\Controllers\API\FriendController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -61,10 +62,17 @@ Route::controller(BaratonBarController::class)->group(function () {
 });
 
 Route::controller(BarOpinionController::class)->group(function () {
-
     Route::get('bar-opinions/{barId}', 'index');
     Route::post('bar-opinions', 'store');
     Route::put('bar-opinions/{barOpinion}', 'update');
     Route::delete('bar-opinions/{barOpinion}', 'destroy');
+});
+
+Route::controller(FriendController::class)->group(function () {
+    Route::get('friends', 'index');
+    Route::get('friends/pending', 'pendingFriends');
+    Route::post('friends', 'store');
+    Route::put('friends/{id}', 'update');
+    Route::delete('friends/{id}', 'destroy');
 
 });
