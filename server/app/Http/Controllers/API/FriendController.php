@@ -34,20 +34,21 @@ class FriendController extends BaseController
     /**
      * Display a listing of the resource.
      */
-        /**
-         * @OA\Get(
-         *     path="/api/friends",
-         *     operationId="getFriends",
-         *     tags={"Friends"},
-         *     summary="Récupérer la liste des amis de l'utilisateur actuel",
-         *     security={{"sanctum":{}}},
-         *     @OA\Response(
-         *         response=200,
-         *         description="Liste des amis de l'utilisateur actuel"
-         *     )
-         * )
-         *
-         * */
+    /**
+     * @OA\Get(
+     *     path="/api/friends",
+     *     operationId="getFriends",
+     *     tags={"Friends"},
+     *     summary="Récupérer la liste des amis de l'utilisateur actuel",
+     *     security={{"sanctum":{}}},
+     *
+     *     @OA\Response(
+     *         response=200,
+     *         description="Liste des amis de l'utilisateur actuel"
+     *     )
+     * )
+     *
+     * */
     public function index()
     {
         $friends = Auth::user()->friends;
@@ -171,40 +172,46 @@ class FriendController extends BaseController
      */
 
     /**
-         * @OA\Put(
-         *     path="/api/friends/{friend}",
-         *     operationId="updateFriend",
-         *     tags={"Friends"},
-         *     summary="Mettre à jour l'état de l'ami (accepté ou non)",
-         *     security={{"sanctum":{}}},
-         *     @OA\Parameter(
-         *         name="friend",
-         *         in="path",
-         *         description="ID de l'ami à mettre à jour",
-         *         required=true,
-         *         @OA\Schema(type="integer")
-         *     ),
-         *     @OA\RequestBody(
-         *         @OA\JsonContent(
-         *             type="object",
-         *             @OA\Property(
-         *                 property="accepted",
-         *                 type="integer",
-         *                 description="État de l'ami (0 pour non accepté, 1 pour accepté)",
-         *                 example=1
-         *             )
-         *         )
-         *     ),
-         *     @OA\Response(
-         *         response=200,
-         *         description="Ami mis à jour avec succès"
-         *     ),
-         *     @OA\Response(
-         *         response=400,
-         *         description="Erreur de validation ou droits insuffisants"
-         *     )
-         * )
-         * */
+     * @OA\Put(
+     *     path="/api/friends/{friend}",
+     *     operationId="updateFriend",
+     *     tags={"Friends"},
+     *     summary="Mettre à jour l'état de l'ami (accepté ou non)",
+     *     security={{"sanctum":{}}},
+     *
+     *     @OA\Parameter(
+     *         name="friend",
+     *         in="path",
+     *         description="ID de l'ami à mettre à jour",
+     *         required=true,
+     *
+     *         @OA\Schema(type="integer")
+     *     ),
+     *
+     *     @OA\RequestBody(
+     *
+     *         @OA\JsonContent(
+     *             type="object",
+     *
+     *             @OA\Property(
+     *                 property="accepted",
+     *                 type="integer",
+     *                 description="État de l'ami (0 pour non accepté, 1 pour accepté)",
+     *                 example=1
+     *             )
+     *         )
+     *     ),
+     *
+     *     @OA\Response(
+     *         response=200,
+     *         description="Ami mis à jour avec succès"
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Erreur de validation ou droits insuffisants"
+     *     )
+     * )
+     * */
     public function update(UpdateFriendRequest $request, $id)
     {
         $user = Auth::user();
@@ -240,26 +247,28 @@ class FriendController extends BaseController
      * Remove the specified resource from storage.
      */
     /**
-         * @OA\Delete(
-         *     path="/api/friends/{friend}",
-         *     operationId="deleteFriend",
-         *     tags={"Friends"},
-         *     summary="Supprimer un ami",
-         *     security={{"sanctum":{}}},
-         *     @OA\Parameter(
-         *         name="friend",
-         *         in="path",
-         *         description="ID de l'ami à supprimer",
-         *         required=true,
-         *         @OA\Schema(type="integer")
-         *     ),
-         *     @OA\Response(
-         *         response=200,
-         *         description="Ami supprimé avec succès"
-         *     )
-         * )
-         */
-
+     * @OA\Delete(
+     *     path="/api/friends/{friend}",
+     *     operationId="deleteFriend",
+     *     tags={"Friends"},
+     *     summary="Supprimer un ami",
+     *     security={{"sanctum":{}}},
+     *
+     *     @OA\Parameter(
+     *         name="friend",
+     *         in="path",
+     *         description="ID de l'ami à supprimer",
+     *         required=true,
+     *
+     *         @OA\Schema(type="integer")
+     *     ),
+     *
+     *     @OA\Response(
+     *         response=200,
+     *         description="Ami supprimé avec succès"
+     *     )
+     * )
+     */
     public function destroy($id)
     {
         $user = Auth::user();
