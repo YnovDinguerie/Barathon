@@ -16,12 +16,11 @@ use Validator;
 
 class AuthController extends BaseController
 {
-
-
     public function __construct()
     {
-        $this->middleware('auth:sanctum')->except(['login','register','verify','sendPasswordResetEmail','resetPassword']);
+        $this->middleware('auth:sanctum')->except(['login', 'register', 'verify', 'sendPasswordResetEmail', 'resetPassword']);
     }
+
     /**
      * Register api
      *
@@ -369,51 +368,56 @@ class AuthController extends BaseController
     }
 
     /**
- * @OA\Put(
- *     path="/api/update-profile",
- *     operationId="updateProfile",
- *     tags={"User"},
- *     summary="Mettre à jour le profil de l'utilisateur",
- *     description="Cette API permet à l'utilisateur connecté de mettre à jour son profil en modifiant son nom, sa date de naissance et son adresse e-mail.",
- *     security={{"sanctum":{}}},
- *     @OA\RequestBody(
- *         @OA\JsonContent(
- *             type="object",
- *             @OA\Property(
- *                 property="name",
- *                 type="string",
- *                 description="Nom de l'utilisateur",
- *                 example="John Doe"
- *             ),
- *             @OA\Property(
- *                 property="birthdate",
- *                 type="string",
- *                 format="date",
- *                 description="Date de naissance de l'utilisateur (au format 'AAAA-MM-JJ')",
- *                 example="1990-05-15"
- *             ),
- *             @OA\Property(
- *                 property="email",
- *                 type="string",
- *                 format="email",
- *                 description="Nouvelle adresse e-mail de l'utilisateur",
- *                 example="john@example.com"
- *             )
- *         )
- *     ),
- *     @OA\Response(
- *         response=200,
- *         description="Profil mis à jour avec succès",
- *     ),
- *     @OA\Response(
- *         response=400,
- *         description="Erreur de validation ou adresse e-mail déjà utilisée par un autre utilisateur",
- *     )
- * )
- */
-    public function updateProfile(Request $request){
+     * @OA\Put(
+     *     path="/api/update-profile",
+     *     operationId="updateProfile",
+     *     tags={"User"},
+     *     summary="Mettre à jour le profil de l'utilisateur",
+     *     description="Cette API permet à l'utilisateur connecté de mettre à jour son profil en modifiant son nom, sa date de naissance et son adresse e-mail.",
+     *     security={{"sanctum":{}}},
+     *
+     *     @OA\RequestBody(
+     *
+     *         @OA\JsonContent(
+     *             type="object",
+     *
+     *             @OA\Property(
+     *                 property="name",
+     *                 type="string",
+     *                 description="Nom de l'utilisateur",
+     *                 example="John Doe"
+     *             ),
+     *             @OA\Property(
+     *                 property="birthdate",
+     *                 type="string",
+     *                 format="date",
+     *                 description="Date de naissance de l'utilisateur (au format 'AAAA-MM-JJ')",
+     *                 example="1990-05-15"
+     *             ),
+     *             @OA\Property(
+     *                 property="email",
+     *                 type="string",
+     *                 format="email",
+     *                 description="Nouvelle adresse e-mail de l'utilisateur",
+     *                 example="john@example.com"
+     *             )
+     *         )
+     *     ),
+     *
+     *     @OA\Response(
+     *         response=200,
+     *         description="Profil mis à jour avec succès",
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Erreur de validation ou adresse e-mail déjà utilisée par un autre utilisateur",
+     *     )
+     * )
+     */
+    public function updateProfile(Request $request)
+    {
 
-        if(!Auth::check()){
+        if (! Auth::check()) {
             return $this->sendError('Unauthorised.', ['error' => 'Unauthorised']);
         }
         $user = Auth::user();
