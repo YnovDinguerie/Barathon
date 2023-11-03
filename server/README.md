@@ -16,7 +16,7 @@ To run seeder you need some python package
 
 
 
-```php artisan migrate:fresh --seed```
+```php artisan migrate:fresh --seed --drop-views```
 
 
 
