@@ -68,10 +68,9 @@ Route::controller(BarOpinionController::class)->group(function () {
     Route::delete('bar-opinions/{barOpinion}', 'destroy');
 });
 
-
 Route::controller(FriendController::class)->group(function () {
     Route::get('friends', 'index');
-    Route::get('pending-friends', 'pendingFriends');
+    Route::get('friends/pending', 'pendingFriends');
     Route::post('friends', 'store');
     Route::put('friends/{id}', 'update');
     Route::delete('friends/{id}', 'destroy');

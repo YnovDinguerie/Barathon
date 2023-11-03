@@ -7,13 +7,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Support\Str;
+use Laravel\Sanctum\HasApiTokens;
 use Staudenmeir\LaravelMergedRelations\Eloquent\HasMergedRelationships;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable,HasMergedRelationships;
+    use HasApiTokens, HasFactory, HasMergedRelationships,Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -48,15 +48,10 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-
-
-
     public function baratons(): HasMany
     {
         return $this->hasMany(Baratons::class);
     }
-
-
 
     // Friend system
 
@@ -71,7 +66,6 @@ class User extends Authenticatable
 
         return $code;
     }
-
 
     public function friendsTo()
     {
@@ -88,32 +82,32 @@ class User extends Authenticatable
     }
 
     public function pendingFriendsTo()
-{
-    return $this->friendsTo()->wherePivot('accepted', false);
-}
+    {
+        return $this->friendsTo()->wherePivot('accepted', false);
+    }
 
-public function pendingFriendsFrom()
-{
-    return $this->friendsFrom()->wherePivot('accepted', false);
-}
+    public function pendingFriendsFrom()
+    {
+        return $this->friendsFrom()->wherePivot('accepted', false);
+    }
 
-public function acceptedFriendsTo()
-{
-    return $this->friendsTo()->wherePivot('accepted', true);
-}
+    public function acceptedFriendsTo()
+    {
+        return $this->friendsTo()->wherePivot('accepted', true);
+    }
 
-public function acceptedFriendsFrom()
-{
-    return $this->friendsFrom()->wherePivot('accepted', true);
-}
+    public function acceptedFriendsFrom()
+    {
+        return $this->friendsFrom()->wherePivot('accepted', true);
+    }
 
-public function friends()
-{
-    return $this->mergedRelationWithModel(User::class, 'friends_view');
-}
+    public function friends()
+    {
+        return $this->mergedRelationWithModel(User::class, 'friends_view');
+    }
 
-public function pendingFriends()
-{
-    return $this->mergedRelationWithModel(User::class, 'pending_friends_view');
-}
+    public function pendingFriends()
+    {
+        return $this->mergedRelationWithModel(User::class, 'pending_friends_view');
+    }
 }
