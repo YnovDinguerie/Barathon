@@ -1,39 +1,54 @@
+'use client'
+
 import Header from '@/components/home/Header'
 import Image from 'next/image'
+import { useRouter } from 'next/navigation'
 
 const Profile = () => {
+  const router = useRouter()
   return (
     <div>
-      {/* <div className="bg-gray-50 p-3 container-header flex justify-between">
-        <div className="flex flex-col">
-          <p> Bonjour </p>
-          <p className="text-orange"> Connected User </p>
-        </div>
-        <div className="flex">
-          <div className="relative">
-            <Image
-              src="/assets/user.jpg"
-              alt="image profile"
-              className="user-profile"
-              width={50}
-              height={50}
-            />
-            <Image
-              src="/assets/trophy.png"
-              alt="image profile"
-              className="image-profile"
-              width={20}
-              height={20}
-            />
-          </div>
-        </div>
-      </div> */}
       <Header />
-      <div>
-        <div>Profile settings</div>
-        <div>Profile settings</div>
-        <div>Profile settings</div>
-        <div>Profile settings</div>
+      <div className="m-3">
+        <div
+          className="bg-[#FFFDF9] h-20 rounded border mb-2 p-2 flex items-center"
+          onClick={() => router.push('/profile/profile-info')}
+        >
+          <h1 className="font-medium flex-grow">Modification du profil</h1>
+          <Image
+            src="/assets/chevron-right.svg"
+            alt="arrow"
+            width={20}
+            height={20}
+            className="flex"
+          />
+        </div>
+        <div
+          className="bg-[#FFFDF9] h-20 rounded border mb-2 p-2 flex items-center"
+          onClick={() => router.push('/profile/barathons')}
+        >
+          <h1 className="font-medium flex-grow">Gestion des Barathons</h1>
+          <Image
+            src="/assets/chevron-right.svg"
+            alt="arrow"
+            width={20}
+            height={20}
+            className="flex"
+          />
+        </div>
+        <div
+          className="bg-[#FFFDF9] h-20 rounded border mb-2 p-2 flex items-center"
+          onClick={() => router.push('/profile/stats')}
+        >
+          <h1 className="font-medium flex-grow">Statistiques</h1>
+          <Image
+            src="/assets/chevron-right.svg"
+            alt="arrow"
+            width={20}
+            height={20}
+            className="flex"
+          />
+        </div>
       </div>
     </div>
   )
