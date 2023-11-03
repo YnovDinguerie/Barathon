@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::createMergeView(
             'pending_friends_view',
-            [(new User())->pendingFriendsFrom()]
+            [(new User())->pendingFriendsTo(), (new User())->pendingFriendsFrom()]
         );
     }
 
