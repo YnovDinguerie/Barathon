@@ -16,6 +16,11 @@ use Validator;
 
 class AuthController extends BaseController
 {
+    public function __construct()
+    {
+        $this->middleware('auth:sanctum')->except(['login', 'register', 'verify', 'sendPasswordResetEmail', 'resetPassword']);
+    }
+
     /**
      * Register api
      *
@@ -360,5 +365,74 @@ class AuthController extends BaseController
             // Une exception s'est produite lors de la mise à jour du mot de passe
             return $this->sendError('Unauthorised.', ['error' => 'Unauthorised']);
         }
+    }
+
+    /**
+     * @OA\Put(
+     *     path="/api/update-profile",
+     *     operationId="updateProfile",
+     *     tags={"User"},
+     *     summary="Mettre à jour le profil de l'utilisateur",
+     *     description="Cette API permet à l'utilisateur connecté de mettre à jour son profil en modifiant son nom, sa date de naissance et son adresse e-mail.",
+     *     security={{"sanctum":{}}},
+     *
+     *     @OA\RequestBody(
+     *
+     *         @OA\JsonContent(
+     *             type="object",
+     *
+     *             @OA\Property(
+     *                 property="name",
+     *                 type="string",
+     *                 description="Nom de l'utilisateur",
+     *                 example="John Doe"
+     *             ),
+     *             @OA\Property(
+     *                 property="birthdate",
+     *                 type="string",
+     *                 format="date",
+     *                 description="Date de naissance de l'utilisateur (au format 'AAAA-MM-JJ')",
+     *                 example="1990-05-15"
+     *             ),
+     *             @OA\Property(
+     *                 property="email",
+     *                 type="string",
+     *                 format="email",
+     *                 description="Nouvelle adresse e-mail de l'utilisateur",
+     *                 example="john@example.com"
+     *             )
+     *         )
+     *     ),
+     *
+     *     @OA\Response(
+     *         response=200,
+     *         description="Profil mis à jour avec succès",
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Erreur de validation ou adresse e-mail déjà utilisée par un autre utilisateur",
+     *     )
+     * )
+     */
+    public function updateProfile(Request $request)
+    {
+
+        if (! Auth::check()) {
+            return $this->sendError('Unauthorised.', ['error' => 'Unauthorised']);
+        }
+        $user = Auth::user();
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'birthdate' => 'required|date',
+            'email' => 'required|email|unique:users',
+        ]);
+
+        if ($validator->fails()) {
+            return $this->sendError('Validation Error.', $validator->errors());
+        }
+        $input = $request->all();
+        $user->update($input);
+
+        return $this->sendResponse($user, 'Information mise à jour avec succès');
     }
 }
