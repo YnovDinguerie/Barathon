@@ -7,8 +7,6 @@ use App\Http\Controllers\API\BarController;
 use App\Http\Controllers\API\BarOpinionController;
 use App\Http\Controllers\API\FriendController;
 use App\Http\Controllers\API\SocketTestController;
-
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -80,7 +78,6 @@ Route::controller(FriendController::class)->group(function () {
     Route::delete('friends/{id}', 'destroy');
 });
 
-
-Route::controller(SocketTestController::class)->group(function(){
-    Route::get('test','index');
+Route::controller(SocketTestController::class)->group(function () {
+    Route::get('test', 'index');
 });
