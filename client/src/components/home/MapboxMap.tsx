@@ -9,6 +9,7 @@ import {
 } from '../../state/map/atoms'
 import '../../styles/MapboxMap.scss'
 import axios from 'axios'
+import MapboxDirections from '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions'
 import '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions.css'
 
 mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN ?? ''

@@ -4,6 +4,7 @@ import RangeInput from '../Input/RangeInput'
 import { useAtom } from 'jotai'
 import { barsToVisitAtom, radiusAtom } from '../../state/map/atoms'
 import Image from 'next/image'
+import '../../styles/Filter.scss'
 
 const Bottom = () => {
   const [setupBarathon, setSetupBarathon] = useState(false)
