@@ -1,6 +1,8 @@
 'use client'
 
+import { userAtom } from '@/state'
 import { ProfileInfo } from '@/types/auth/inputs'
+import { useAtomValue } from 'jotai'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
@@ -13,6 +15,8 @@ const ProfileInfos = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<ProfileInfo>()
+
+  const { name } = useAtomValue(userAtom)
 
   const onSubmit: SubmitHandler<ProfileInfo> = (data: ProfileInfo) => {
     console.log(data)
@@ -51,7 +55,8 @@ const ProfileInfos = () => {
                 value: true,
               },
             })}
-            placeholder="name"
+            // placeholder={name}
+            value={name}
             className="border-2 bg-[#FFFDF9] rounded-lg h-10 mx-3 mt-5 focus:border-[#DF9928]"
           />
           {errors?.name && (

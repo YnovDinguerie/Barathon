@@ -4,10 +4,10 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { RegisterInputs } from '@/types/auth/inputs'
-import { useMutation } from 'react-query'
 import registerUser from '../../api/auth/register'
 import { useSetAtom } from 'jotai'
 import { userAtom } from '@/state'
+import { useRouter } from 'next/navigation'
 
 const Register = () => {
   const {
@@ -17,31 +17,23 @@ const Register = () => {
   } = useForm<RegisterInputs>()
 
   const setUser = useSetAtom(userAtom)
-
-  const {
-    isError,
-    error,
-    mutateAsync: registerFn,
-  } = useMutation({
-    mutationFn: registerUser,
-  })
+  const router = useRouter()
 
   const onSubmit: SubmitHandler<RegisterInputs> = (data: RegisterInputs) => {
-    registerFn({
+    registerUser({
       name: data.name,
       email: data.email,
       password: data.password,
       c_password: data.c_password,
       birthdate: data.birthdate,
     }).then((response) => {
-      setUser(response.data.user)
+      setUser({
+        email: response.email,
+        name: response.name,
+        token: response.token,
+      })
+      router.push('/home')
     })
-  }
-
-  if (isError) {
-    return (
-      <div>An error occurred {typeof error === 'string' ? error : null}</div>
-    )
   }
 
   return (

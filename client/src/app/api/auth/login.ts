@@ -8,10 +8,10 @@ type Data = {
   token: string
 }
 
-export default async function loginUser(loginData: LoginInputs): Promise<Data> {
-  const response: Data = await axios.post(
+export default async function loginUser(loginData: LoginInputs) {
+  const response = await axios.post(
     'http://127.0.0.1:8000/api/login',
     loginData,
   )
-  return response
+  return response.data.data as Data
 }

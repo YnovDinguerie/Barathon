@@ -2,12 +2,13 @@
 
 import { LoginInputs } from '@/types/auth/inputs'
 import { SubmitHandler, useForm } from 'react-hook-form'
-import { useMutation } from 'react-query'
 import loginUser from '../../api/auth/login'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useSetAtom } from 'jotai'
 import { userAtom } from '@/state'
+import { useRouter } from 'next/navigation'
+import { useState } from 'react'
 
 const Login = () => {
   const {
@@ -16,35 +17,26 @@ const Login = () => {
     formState: { errors },
   } = useForm<LoginInputs>()
 
+  const router = useRouter()
+
   const setUser = useSetAtom(userAtom)
 
-  const { isError, mutateAsync: loginFn } = useMutation({
-    mutationFn: loginUser,
-  })
+  const [error, setIsError] = useState<boolean>(false)
 
   const onSubmit: SubmitHandler<LoginInputs> = (data: LoginInputs) => {
-    loginFn({
-      email: data.email,
-      password: data.password,
-    }).then((response) => {
-      setUser(response)
-    })
-  }
-
-  if (isError) {
-    return (
-      <>
-        <div className="flex flex-col items-center">
-          <h1 className="font-medium tracking-wider flex justify-center text-2xl mt-14 font-sans text-[#DF9928]">
-            Log in into you account
-          </h1>
-          <h2 className="text-md font-light text-[#DF9928]">
-            Please enter infos to log in
-          </h2>
-        </div>
-        <div>An errror occured</div>
-      </>
-    )
+    loginUser({ email: data.email, password: data.password })
+      .then((response) => {
+        console.log(response)
+        setUser({
+          email: response.email,
+          name: response.name,
+          token: response.token,
+        })
+        router.push('/home')
+      })
+      .catch(() => {
+        setIsError(true)
+      })
   }
 
   return (
@@ -57,6 +49,11 @@ const Login = () => {
           Please enter infos to log in
         </h2>
       </div>
+      {error && (
+        <div className="text-center bg-red-100 h-20 m-2 p-5 rounded-lg font-medium font-sans">
+          Une erreur est survenue, veuillez réessayer
+        </div>
+      )}
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="flex flex-col space-y-5"

@@ -5,11 +5,16 @@ import { useRouter } from 'next/navigation'
 import { useQuery } from '@tanstack/react-query'
 import { getBarathonsType } from '@/types/barathon/input'
 import BarathonCard from '@/components/barathon/BarathonCard'
+import { useAtomValue } from 'jotai'
+import { userAtom } from '@/state'
+
 const BarathonManagement = () => {
   const router = useRouter()
+  const user = useAtomValue(userAtom)
+  console.log(user)
   const { data: barathons, error } = useQuery({
     queryKey: ['barathons'],
-    queryFn: getBarathons,
+    queryFn: () => getBarathons({ userToken: user.token }),
   })
   if (error) {
     return <div>There was an error</div>

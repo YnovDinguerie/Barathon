@@ -1,10 +1,14 @@
 import { getBarathonsType } from '@/types/barathon/input'
 import axios from 'axios'
 
-export default async function getBarathons() {
+export default async function getBarathons({
+  userToken,
+}: {
+  userToken: string
+}) {
   const response = await axios.get('http://127.0.0.1:8000/api/baratons', {
     headers: {
-      Authorization: `Bearer 2|WwySVk0ZuTGi4ZQ6De0QhXqAV8oV4sf9WWjDocEV1cd5291c`,
+      Authorization: `Bearer ${userToken}`,
     },
   })
   return response.data.data as getBarathonsType[]
