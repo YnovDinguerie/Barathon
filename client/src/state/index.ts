@@ -5,3 +5,9 @@ export const userAtom = atomWithStorage('user', {
   token: '',
   name: '',
 })
+
+export const toastAtom = atomWithStorage('toast', {
+  status: '',
+  msg: '',
+  isVisible: false,
+})

@@ -1,5 +1,6 @@
 import { LoginInputs } from '@/types/auth/inputs'
 import axios from 'axios'
+import config from '../config'
 
 type Data = {
   id: number
@@ -9,9 +10,7 @@ type Data = {
 }
 
 export default async function loginUser(loginData: LoginInputs) {
-  const response = await axios.post(
-    'http://127.0.0.1:8000/api/login',
-    loginData,
-  )
+  const url = `${config.backendApiUrl}/login`
+  const response = await axios.post(url, loginData)
   return response.data.data as Data
 }
