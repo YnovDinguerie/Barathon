@@ -5,19 +5,24 @@ import { useRouter } from 'next/navigation'
 import { useQuery } from '@tanstack/react-query'
 import { getBarathonsType } from '@/types/barathon/input'
 import BarathonCard from '@/components/barathon/BarathonCard'
-import { useAtomValue } from 'jotai'
-import { userAtom } from '@/state'
+import { useAtomValue, useSetAtom } from 'jotai'
+import { toastAtom, userAtom } from '@/state'
 
 const BarathonManagement = () => {
   const router = useRouter()
   const user = useAtomValue(userAtom)
-  const { data: barathons, error } = useQuery({
+  const setToast = useSetAtom(toastAtom)
+  const { data: barathons } = useQuery({
     queryKey: ['barathons'],
-    queryFn: () => getBarathons({ userToken: user.token }),
+    queryFn: () =>
+      getBarathons({ userToken: user.token }).catch((error) => {
+        setToast({
+          msg: error.response.data.message,
+          status: 'Error',
+          isVisible: true,
+        })
+      }),
   })
-  if (error) {
-    return <div>There was an error</div>
-  }
   return (
     <div>
       <div className="flex ml-3">

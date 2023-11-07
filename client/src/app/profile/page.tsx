@@ -1,6 +1,5 @@
 'use client'
 
-import Header from '@/components/home/Header'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 
@@ -8,7 +7,21 @@ const Profile = () => {
   const router = useRouter()
   return (
     <div>
-      <Header />
+      <div className="bg-[#FFFDF9] h-20 w-full p-5 border-b-2 shadow-sm">
+        <div className="flex ml-3">
+          <Image
+            src="/assets/arrow-left.svg"
+            onClick={() => router.push('/home')}
+            className="cursor-pointer"
+            alt="arrow"
+            height={20}
+            width={20}
+          />
+          <div className="text-center font-medium m-2 ml-3 text-xl">
+            Profile
+          </div>
+        </div>
+      </div>
       <div className="m-3">
         <div
           className="bg-[#FFFDF9] h-20 rounded border mb-2 p-2 flex items-center"

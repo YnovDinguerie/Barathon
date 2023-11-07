@@ -5,10 +5,9 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 import loginUser from '../../api/auth/login'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useAtom, useAtomValue, useSetAtom } from 'jotai'
+import { useSetAtom } from 'jotai'
 import { toastAtom, userAtom } from '@/state'
 import { useRouter } from 'next/navigation'
-import { useState } from 'react'
 
 const Login = () => {
   const {
@@ -20,26 +19,20 @@ const Login = () => {
   const router = useRouter()
 
   const setUser = useSetAtom(userAtom)
-  // const [toast, setToast] = useAtom(toastAtom)
-  // const toast = useAtomValue(toastAtom)
   const setToast = useSetAtom(toastAtom)
-
-  const [error, setIsError] = useState<boolean>(false)
 
   const onSubmit: SubmitHandler<LoginInputs> = (data: LoginInputs) => {
     loginUser({ email: data.email, password: data.password })
       .then((response) => {
-        console.log(response)
         setUser({
           email: response.email,
           name: response.name,
           token: response.token,
+          birtdate: response.birthdate,
         })
         router.push('/home')
       })
       .catch((err) => {
-        // console.log(err.response.data.message)
-        // setIsError(true)
         setToast({
           msg: err.response.data.message,
           status: 'Error',
@@ -58,11 +51,6 @@ const Login = () => {
           Please enter infos to log in
         </h2>
       </div>
-      {error && (
-        <div className="text-center bg-red-100 h-20 m-2 p-5 rounded-lg font-medium font-sans">
-          Une erreur est survenue, veuillez réessayer
-        </div>
-      )}
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="flex flex-col space-y-5"

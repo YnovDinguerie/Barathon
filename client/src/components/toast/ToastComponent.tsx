@@ -1,7 +1,7 @@
 'use client'
 import { toastAtom } from '@/state'
 import { useAtom } from 'jotai'
-import '../styles/Toast.scss'
+import '../../styles/Toast.scss'
 import { useEffect, useState } from 'react'
 import Image from 'next/image'
 
@@ -16,7 +16,6 @@ const ToastComponent = () => {
 
     setImageSrc(`/assets/${toast.status}.svg`)
   }, [toast])
-  console.log(toast)
   if (!toast.isVisible) {
     return null
   }

@@ -16,7 +16,7 @@ const ProfileInfos = () => {
     formState: { errors },
   } = useForm<ProfileInfo>()
 
-  const { name } = useAtomValue(userAtom)
+  const { name, email, birtdate } = useAtomValue(userAtom)
 
   const onSubmit: SubmitHandler<ProfileInfo> = (data: ProfileInfo) => {
     console.log(data)
@@ -71,6 +71,7 @@ const ProfileInfos = () => {
                 value: true,
               },
             })}
+            value={email}
             type="text"
             placeholder="email"
             className="border-2 bg-[#FFFDF9] rounded-lg h-10 ml-3 mt-5 focus:border-[#DF9928] mx-3"
@@ -88,7 +89,8 @@ const ProfileInfos = () => {
                 value: true,
               },
             })}
-            type="date"
+            value={birtdate}
+            type="text"
             placeholder="Birthday date"
             className="border-2 bg-[#FFFDF9] rounded-lg h-10 ml-3 mt-5 focus:border-[#DF9928] mx-3"
           />

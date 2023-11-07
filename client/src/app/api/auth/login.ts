@@ -7,6 +7,7 @@ type Data = {
   email: string
   name: string
   token: string
+  birthdate: string
 }
 
 export default async function loginUser(loginData: LoginInputs) {
