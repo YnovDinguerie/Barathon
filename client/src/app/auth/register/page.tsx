@@ -6,7 +6,7 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 import { RegisterInputs } from '@/types/auth/inputs'
 import registerUser from '../../api/auth/register'
 import { useSetAtom } from 'jotai'
-import { userAtom } from '@/state'
+import { toastAtom, userAtom } from '@/state'
 import { useRouter } from 'next/navigation'
 
 const Register = () => {
@@ -18,6 +18,7 @@ const Register = () => {
 
   const setUser = useSetAtom(userAtom)
   const router = useRouter()
+  const setToast = useSetAtom(toastAtom)
 
   const onSubmit: SubmitHandler<RegisterInputs> = (data: RegisterInputs) => {
     registerUser({
@@ -26,14 +27,22 @@ const Register = () => {
       password: data.password,
       c_password: data.c_password,
       birthdate: data.birthdate,
-    }).then((response) => {
-      setUser({
-        email: response.email,
-        name: response.name,
-        token: response.token,
-      })
-      router.push('/home')
     })
+      .then((response) => {
+        setUser({
+          email: response.email,
+          name: response.name,
+          token: response.token,
+        })
+        router.push('/home')
+      })
+      .catch((error) => {
+        setToast({
+          msg: error.response.data.message,
+          status: 'Error',
+          isVisible: true,
+        })
+      })
   }
 
   return (

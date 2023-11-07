@@ -11,7 +11,6 @@ import { userAtom } from '@/state'
 const BarathonManagement = () => {
   const router = useRouter()
   const user = useAtomValue(userAtom)
-  console.log(user)
   const { data: barathons, error } = useQuery({
     queryKey: ['barathons'],
     queryFn: () => getBarathons({ userToken: user.token }),

@@ -5,7 +5,7 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 import loginUser from '../../api/auth/login'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useAtom, useSetAtom } from 'jotai'
+import { useAtom, useAtomValue, useSetAtom } from 'jotai'
 import { toastAtom, userAtom } from '@/state'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
@@ -20,7 +20,9 @@ const Login = () => {
   const router = useRouter()
 
   const setUser = useSetAtom(userAtom)
-  const [toast, setToast] = useAtom(toastAtom)
+  // const [toast, setToast] = useAtom(toastAtom)
+  // const toast = useAtomValue(toastAtom)
+  const setToast = useSetAtom(toastAtom)
 
   const [error, setIsError] = useState<boolean>(false)
 
@@ -36,7 +38,7 @@ const Login = () => {
         router.push('/home')
       })
       .catch((err) => {
-        console.log(err.response.data.message)
+        // console.log(err.response.data.message)
         // setIsError(true)
         setToast({
           msg: err.response.data.message,

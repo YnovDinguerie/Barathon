@@ -22,7 +22,6 @@ const ProfileInfos = () => {
     console.log(data)
   }
 
-  console.log(errors.email?.message)
   return (
     <div className="bg-[#FFFDF9] flex flex-col space-y-7">
       <div className="flex ml-3">
