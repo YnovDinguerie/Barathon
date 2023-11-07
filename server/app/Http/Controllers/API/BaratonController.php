@@ -19,7 +19,7 @@ class BaratonController extends BaseController
 {
     public function __construct()
     {
-        $this->middleware('verified');
+        $this->middleware('auth:sanctum');
     }
 
     /**
