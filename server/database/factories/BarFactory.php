@@ -17,7 +17,13 @@ class BarFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'name' => fake()->name(),
+            'longitude' => fake()->longitude(),
+            'latitude' => fake()->latitude(),
+            'website' => fake()->url(),
+            'phone' => fake()->phoneNumber(),
+            'opening_hours' => fake()->name(),
+            'wheelchair' => fake()->boolean(),
         ];
     }
 }
