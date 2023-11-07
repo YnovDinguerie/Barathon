@@ -13,6 +13,7 @@
     "@mapbox/mapbox-gl-directions": "^4.1.1",
     "@react-google-maps/api": "^2.19.2",
     "@react-leaflet/core": "^2.1.0",
+    "@sentry/nextjs": "^7.77.0",
     "@types/googlemaps": "^3.43.3",
     "axios": "^1.5.1",
     "jotai": "^2.4.3",
