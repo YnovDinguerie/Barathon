@@ -51,6 +51,14 @@ const BarathonManagement = () => {
         )
       })}
       <div className="bg-gray-100 border text-center">il y a 2 jours</div>
+      <div className="mx-3">
+        <button
+          onClick={() => router.push('/barathon/create')}
+          className="bg-[#DF9928] w-full text-white rounded-lg h-10 px-3 mt-5"
+        >
+          Créer un Barathon
+        </button>
+      </div>
     </div>
   )
 }

@@ -54,9 +54,8 @@ const ProfileInfos = () => {
                 value: true,
               },
             })}
-            // placeholder={name}
-            value={name}
-            className="border-2 bg-[#FFFDF9] rounded-lg h-10 mx-3 mt-5 focus:border-[#DF9928]"
+            placeholder={name}
+            className="border-2 placeholder:text-black bg-[#FFFDF9] rounded-lg h-10 mx-3 mt-5 focus:border-[#DF9928]"
           />
           {errors?.name && (
             <span className="ml-3 text-red-800 ">{errors.name.message}</span>
@@ -71,10 +70,9 @@ const ProfileInfos = () => {
                 value: true,
               },
             })}
-            value={email}
             type="text"
-            placeholder="email"
-            className="border-2 bg-[#FFFDF9] rounded-lg h-10 ml-3 mt-5 focus:border-[#DF9928] mx-3"
+            placeholder={email}
+            className="border-2 bg-[#FFFDF9] placeholder:text-black rounded-lg h-10 ml-3 mt-5 focus:border-[#DF9928] mx-3"
           />
           {errors?.email && (
             <span className="m-3 text-red-800">{errors.email.message}</span>
@@ -89,10 +87,9 @@ const ProfileInfos = () => {
                 value: true,
               },
             })}
-            value={birtdate}
             type="text"
-            placeholder="Birthday date"
-            className="border-2 bg-[#FFFDF9] rounded-lg h-10 ml-3 mt-5 focus:border-[#DF9928] mx-3"
+            placeholder={birtdate}
+            className="border-2 bg-[#FFFDF9] placeholder:text-black rounded-lg h-10 ml-3 mt-5 focus:border-[#DF9928] mx-3"
           />
           {errors?.birthdate && (
             <span className="m-3 text-red-800">{errors.birthdate.message}</span>
