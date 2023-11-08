@@ -95,10 +95,10 @@ const ProfileInfos = () => {
             <span className="m-3 text-red-800">{errors.birthdate.message}</span>
           )}
         </div>
-        <div>
+        <div className="mx-3">
           <button
             type="submit"
-            className="bg-[#DF9928] rounded-lg h-10 p-2 font-sans mx-3"
+            className="bg-[#DF9928] w-full rounded-lg h-10 p-2 font-sans"
           >
             Modifier
           </button>

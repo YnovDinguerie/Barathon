@@ -1,13 +1,5 @@
-import { getBarathonsType } from '@/types/barathon/input'
+import { createBarathonType } from '@/types/barathon/input'
 import axios from 'axios'
-
-type createBarathonType = {
-  name: string
-  time: string
-  radius: number
-  city: string
-  token: string
-}
 
 export default async function createBarathon(barathonData: createBarathonType) {
   const token = barathonData.token
@@ -20,5 +12,5 @@ export default async function createBarathon(barathonData: createBarathonType) {
       },
     },
   )
-  return response.data.data as getBarathonsType
+  return response.data.data
 }
