@@ -4,6 +4,7 @@ import createBarathon from '@/app/api/barathon/createBarathon'
 import RangeInput from '@/components/Input/RangeInput'
 import { toastAtom, userAtom } from '@/state'
 import { useAtomValue, useSetAtom } from 'jotai'
+import { useRouter } from 'next/navigation'
 import { ChangeEvent, useState } from 'react'
 
 const CreateBarathon = () => {
@@ -11,6 +12,8 @@ const CreateBarathon = () => {
   const [barathonName, setBarathonName] = useState<string>('')
   const [barathonTime, setBarathonTime] = useState<string>('')
   const [barathonCity, setBarathonCity] = useState<string>('')
+
+  const router = useRouter()
 
   const { token } = useAtomValue(userAtom)
   const setToast = useSetAtom(toastAtom)
@@ -45,6 +48,7 @@ const CreateBarathon = () => {
           msg: 'Barahton successfuly created',
           status: 'Success',
         })
+        router.push('/home')
       })
       .catch((error) => {
         setToast({

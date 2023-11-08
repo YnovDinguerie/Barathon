@@ -9,6 +9,13 @@ export type getBarathonsType = {
   updated_at: string
 }
 
+export type GetBarathonInput = {
+  name: string
+  time: string
+  radius: string
+  city: string
+}
+
 export type createBarathonType = {
   name: string
   time: string

@@ -1,12 +1,24 @@
 'use client'
 
+import { userAtom } from '@/state'
+import { useSetAtom } from 'jotai'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 
 const Profile = () => {
   const router = useRouter()
+  const setUser = useSetAtom(userAtom)
+  const logoutUser = () => {
+    setUser({
+      birtdate: '',
+      email: '',
+      name: '',
+      token: '',
+    })
+    router.push('/')
+  }
   return (
-    <div>
+    <div className="h-screen">
       <div className="bg-[#FFFDF9] h-20 w-full p-5 border-b-2 shadow-sm">
         <div className="flex ml-3">
           <Image
@@ -61,6 +73,14 @@ const Profile = () => {
             height={20}
             className="flex"
           />
+        </div>
+        <div className="flex flex-col justify-end items-center">
+          <button
+            onClick={logoutUser}
+            className="bg-[#DF9928] w-full text-white rounded-lg h-10 px-3 mt-5"
+          >
+            Se déconnecter
+          </button>
         </div>
       </div>
     </div>

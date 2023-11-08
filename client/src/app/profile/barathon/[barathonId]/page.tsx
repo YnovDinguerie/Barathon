@@ -75,7 +75,10 @@ const BarathonIdPage = ({ params }: { params: { barathonId: string } }) => {
       {bars?.map((bar: any) => {
         return <div key={bar.id} className="bg-gray-100"></div>
       })}
-      <button className="bg-[#DF9928] w-full text-white rounded-lg h-10 px-3 mt-5">
+      <button
+        onClick={() => router.push(`${params.barathonId}/edit`)}
+        className="bg-[#DF9928] w-full text-white rounded-lg h-10 px-3 mt-5"
+      >
         Editer le barathon
       </button>
       <button
