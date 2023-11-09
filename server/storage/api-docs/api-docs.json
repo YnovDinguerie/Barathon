@@ -492,6 +492,34 @@
                 }
             }
         },
+        "/api/bars/{bar}": {
+            "get": {
+                "tags": [
+                    "Bars"
+                ],
+                "summary": "Get details of a specific bar.",
+                "operationId": "getBar",
+                "parameters": [
+                    {
+                        "name": "bar",
+                        "in": "path",
+                        "description": "Bar ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "404": {
+                        "description": "Bar not found"
+                    }
+                }
+            }
+        },
         "/api/bars-search/{latitude}&{longitude}&{name}": {
             "get": {
                 "tags": [
