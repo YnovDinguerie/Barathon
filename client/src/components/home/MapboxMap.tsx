@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import mapboxgl, { Marker } from 'mapbox-gl'
 import { useAtom } from 'jotai'
 import {
@@ -6,6 +6,7 @@ import {
   latitudeAtom,
   longitudeAtom,
   radiusAtom,
+  resizeMapAtom,
 } from '../../state/map/atoms'
 import '../../styles/MapboxMap.scss'
 import axios from 'axios'
@@ -19,58 +20,71 @@ const MapboxMap = () => {
   const [longitude] = useAtom(longitudeAtom)
   const [radius] = useAtom(radiusAtom)
   const [barsToVisit] = useAtom(barsToVisitAtom)
+  const [resizeMap] = useAtom(resizeMapAtom)
+  const [map, setMap] = useState<mapboxgl.Map>()
+
+  function calculateDistance(
+    lat1: number,
+    lon1: number,
+    lat2: number,
+    lon2: number,
+  ) {
+    const R = 6371
+    const dLat = (lat2 - lat1) * (Math.PI / 180)
+    const dLon = (lon2 - lon1) * (Math.PI / 180)
+    const a =
+      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.cos(lat1 * (Math.PI / 180)) *
+        Math.cos(lat2 * (Math.PI / 180)) *
+        Math.sin(dLon / 2) *
+        Math.sin(dLon / 2)
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
+    const distance = R * c
+    return distance
+  }
+  const getClosestBar = (
+    position: [number, number],
+    remainingBars: Array<any>,
+  ) => {
+    let minDistance = Number.MAX_VALUE
+    let closestBar = null
+
+    for (const bar of remainingBars) {
+      const distance = calculateDistance(
+        position[0],
+        position[1],
+        bar.longitude,
+        bar.latitude,
+      )
+      bar.distanceFromPreviousBar = distance
+      if (distance < minDistance) {
+        minDistance = distance
+        closestBar = bar
+      }
+    }
+
+    return closestBar
+  }
+
+  const createCustomMarker = (lngLat: any, imagePath: string) => {
+    const markerElement = document.createElement('div')
+    markerElement.className = 'custom-marker'
+    const markerImg = document.createElement('img')
+    markerImg.src = imagePath
+    markerElement.appendChild(markerImg)
+
+    return new Marker(markerElement).setLngLat(lngLat).addTo(map)
+  }
 
   useEffect(() => {
-    const map = new mapboxgl.Map({
-      container: 'map-container',
-      style: 'mapbox://styles/mapbox/streets-v12',
-      center: [longitude, latitude],
-      zoom: 12,
-    })
-
-    function calculateDistance(
-      lat1: number,
-      lon1: number,
-      lat2: number,
-      lon2: number,
-    ) {
-      const R = 6371
-      const dLat = (lat2 - lat1) * (Math.PI / 180)
-      const dLon = (lon2 - lon1) * (Math.PI / 180)
-      const a =
-        Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-        Math.cos(lat1 * (Math.PI / 180)) *
-          Math.cos(lat2 * (Math.PI / 180)) *
-          Math.sin(dLon / 2) *
-          Math.sin(dLon / 2)
-      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
-      const distance = R * c
-      return distance
-    }
-
-    const getClosestBar = (
-      position: [number, number],
-      remainingBars: Array<any>,
-    ) => {
-      let minDistance = Number.MAX_VALUE
-      let closestBar = null
-
-      for (const bar of remainingBars) {
-        const distance = calculateDistance(
-          position[0],
-          position[1],
-          bar.longitude,
-          bar.latitude,
-        )
-        bar.distanceFromPreviousBar = distance
-        if (distance < minDistance) {
-          minDistance = distance
-          closestBar = bar
-        }
-      }
-
-      return closestBar
-    }
+    setMap(
+      new mapboxgl.Map({
+        container: 'map-container',
+        style: 'mapbox://styles/mapbox/streets-v12',
+        center: [longitude, latitude],
+        zoom: 12,
+      }),
+    )
 
     const getBars = async () => {
       try {
@@ -152,18 +166,14 @@ const MapboxMap = () => {
       }
     }
 
-    const createCustomMarker = (lngLat: any, imagePath: string) => {
-      const markerElement = document.createElement('div')
-      markerElement.className = 'custom-marker'
-      const markerImg = document.createElement('img')
-      markerImg.src = imagePath
-      markerElement.appendChild(markerImg)
-
-      return new Marker(markerElement).setLngLat(lngLat).addTo(map)
-    }
-
     getBars()
   }, [latitude, longitude, radius, barsToVisit])
+
+  useEffect(() => {
+    if (map) {
+      map.resize()
+    }
+  }, [resizeMap])
 
   return <div id="map-container" className="map-container"></div>
 }
