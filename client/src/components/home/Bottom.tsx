@@ -31,23 +31,24 @@ const Bottom = () => {
 
   const setupBarathonFunction = () => {
     setSetupBarathon(true)
+    setresizeMap(!resizeMap)
   }
 
   const startBarathonFunction = () => {
     setSetupBarathon(false)
     setStartBarathon(true)
-    setresizeMap(true)
+    setresizeMap(!resizeMap)
   }
 
   const backToMenu = () => {
     setSetupBarathon(false)
-    setresizeMap(true)
+    setresizeMap(!resizeMap)
   }
 
   const stopGame = () => {
     setSetupBarathon(false)
     setStartBarathon(false)
-    setresizeMap(true)
+    setresizeMap(!resizeMap)
   }
 
   const handleRangeBarNumberChange = (barsToVisit: number) => {
