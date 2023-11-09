@@ -11,6 +11,7 @@ import { useAtomValue, useSetAtom } from 'jotai'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { latitudeAtom, longitudeAtom, radiusAtom } from '@/state/map/atoms'
+import LocalisationTracker from '@/components/home/LocalisationTracker'
 
 const BarathonIdPage = ({ params }: { params: { barathonId: string } }) => {
   const user = useAtomValue(userAtom)
@@ -55,9 +56,9 @@ const BarathonIdPage = ({ params }: { params: { barathonId: string } }) => {
     queryKey: ['bars'],
     queryFn: () =>
       getBars({
-        latitude: -0.5729089,
-        longitude: 44.8627513,
-        radius: 10,
+        latitude: longitude,
+        longitude: latitude,
+        radius: 2,
         token: user.token,
       }),
   })
@@ -88,27 +89,34 @@ const BarathonIdPage = ({ params }: { params: { barathonId: string } }) => {
         <div>Rayon séléctioné {barathon?.radius}</div>
       </div>
 
-      <div className="font-medium">Bars visités</div>
-
-      {bars?.map((bar: any) => {
-        return (
-          <div key={bar.id} className="bg-gray-100">
-            {bar.name}
-          </div>
-        )
-      })}
-      <button
-        onClick={() => router.push(`${params.barathonId}/edit`)}
-        className="bg-[#DF9928] w-full text-white rounded-lg h-10 px-3 mt-5"
-      >
-        Editer le barathon
-      </button>
-      <button
-        onClick={deleteABarathon}
-        className="bg-[#DF9928] w-full text-white rounded-lg h-10 px-3 mt-5"
-      >
-        Supprimer le barathon
-      </button>
+      <div className="font-medium ml-3 mb-2">Bars visités</div>
+      <LocalisationTracker />
+      <div className="mx-3">
+        {bars?.map((bar: any) => {
+          return (
+            <div key={bar.id} className="bg-gray-100">
+              {bar.name}
+            </div>
+          )
+        })}
+      </div>
+      <div className="mx-3">
+        <button className="bg-[#DF9928] text-[#FFFDF9] w-full rounded-lg h-10 px-3 mt-5">
+          Lancer le barathon
+        </button>
+        <button
+          onClick={() => router.push(`${params.barathonId}/edit`)}
+          className="bg-[#DF9928] w-full text-white rounded-lg h-10 px-3 mt-5"
+        >
+          Editer le barathon
+        </button>
+        <button
+          onClick={deleteABarathon}
+          className="bg-[#DF9928] w-full text-white rounded-lg h-10 px-3 mt-5"
+        >
+          Supprimer le barathon
+        </button>
+      </div>
     </div>
   )
 }

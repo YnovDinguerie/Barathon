@@ -130,10 +130,10 @@ const CreateBarathon = () => {
             <option>Bayonne</option>
           </select>
         </div>
-        <div className="ml-3 font-medium">
+        {/* <div className="ml-3 font-medium">
           Bars (sélectionner plusieurs bars)
-        </div>
-        <div>
+        </div> */}
+        {/* <div>
           {bars
             ?.filter((bar: any) => bar.name !== null)
             .map((bar) => {
@@ -152,7 +152,7 @@ const CreateBarathon = () => {
                 </div>
               )
             })}
-        </div>
+        </div> */}
         <button
           className="mx-3 bg-[#DF9928] rounded-lg p-2"
           onClick={submitCreateBarathon}
