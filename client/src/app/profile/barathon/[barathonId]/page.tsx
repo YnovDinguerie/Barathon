@@ -2,16 +2,21 @@
 
 import deleteBarathon from '@/app/api/barathon/deleteBarathon'
 import getBarathon from '@/app/api/barathon/getBarathon'
-import getBarathonBars from '@/app/api/bars/getBars'
+import getBarathonBars from '@/app/api/bars/getBrathonBars'
+import getBars from '@/app/api/bars/getBars'
 import { toastAtom, userAtom } from '@/state'
 import { useQuery } from '@tanstack/react-query'
 import { format } from 'date-fns'
 import { useAtomValue, useSetAtom } from 'jotai'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
+import { latitudeAtom, longitudeAtom, radiusAtom } from '@/state/map/atoms'
 
 const BarathonIdPage = ({ params }: { params: { barathonId: string } }) => {
   const user = useAtomValue(userAtom)
+  const longitude = useAtomValue(longitudeAtom)
+  const latitude = useAtomValue(latitudeAtom)
+  const radius = useAtomValue(radiusAtom)
   const setToast = useSetAtom(toastAtom)
   const { data: barathon } = useQuery({
     queryKey: ['barathon'],
@@ -40,10 +45,23 @@ const BarathonIdPage = ({ params }: { params: { barathonId: string } }) => {
       })
   }
 
+  const { data: barathonBars } = useQuery({
+    queryKey: ['barathonBars'],
+    queryFn: () =>
+      getBarathonBars({ id: params.barathonId, token: user.token }),
+  })
+
   const { data: bars } = useQuery({
     queryKey: ['bars'],
-    queryFn: () => getBarathonBars({ id: params.barathonId }),
+    queryFn: () =>
+      getBars({
+        latitude: -0.5729089,
+        longitude: 44.8627513,
+        radius: 10,
+        token: user.token,
+      }),
   })
+
   const router = useRouter()
   return (
     <div className="bg-[#FFFDF9]">
@@ -73,7 +91,11 @@ const BarathonIdPage = ({ params }: { params: { barathonId: string } }) => {
       <div className="font-medium">Bars visités</div>
 
       {bars?.map((bar: any) => {
-        return <div key={bar.id} className="bg-gray-100"></div>
+        return (
+          <div key={bar.id} className="bg-gray-100">
+            {bar.name}
+          </div>
+        )
       })}
       <button
         onClick={() => router.push(`${params.barathonId}/edit`)}

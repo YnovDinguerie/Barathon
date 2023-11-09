@@ -2,7 +2,7 @@
 
 import getBarathon from '@/app/api/barathon/getBarathon'
 import updateBarathon from '@/app/api/barathon/updateBarathon'
-import getBarathonBars from '@/app/api/bars/getBars'
+import getBarathonBars from '@/app/api/bars/getBrathonBars'
 import { toastAtom, userAtom } from '@/state'
 import { GetBarathonInput } from '@/types/barathon/input'
 import { useQuery } from '@tanstack/react-query'
@@ -35,7 +35,7 @@ const EditBarathon = ({ params }: { params: { barathonId: string } }) => {
 
   const { data: bars } = useQuery({
     queryKey: ['bars'],
-    queryFn: () => getBarathonBars({ id: params.barathonId }),
+    queryFn: () => getBarathonBars({ id: params.barathonId, token: token }),
   })
 
   const onSubmit: SubmitHandler<GetBarathonInput> = (

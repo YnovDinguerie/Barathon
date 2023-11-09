@@ -23,3 +23,17 @@ export type createBarathonType = {
   city: string
   token: string
 }
+
+export type BarType = {
+  id: number
+  name: string
+  longitude: string
+  latitude: string
+  website: null
+  phone: null
+  opening_hours: null
+  wheelchair: null
+  created_at: null
+  updated_at: null
+  distance: number
+}
