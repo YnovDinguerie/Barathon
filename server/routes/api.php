@@ -57,7 +57,6 @@ Route::controller(BarController::class)->group(function () {
     Route::get('bars-search/{userLatitude}&{userLongitude}&{name}', 'search');
     Route::get('bars/{bar}', 'show');
 
-
 });
 
 Route::controller(BaratonBarController::class)->group(function () {
