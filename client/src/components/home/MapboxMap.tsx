@@ -24,6 +24,12 @@ const MapboxMap = () => {
   const [resizeMap] = useAtom(resizeMapAtom)
   const [startBarathon] = useAtom(startBarathonAtom)
   const [map, setMap] = useState<mapboxgl.Map | null>()
+  const [markers, setMarkers] = useState<Marker[]>([])
+
+  const removeAllMarkers = () => {
+    markers.forEach((marker) => marker.remove())
+    setMarkers([])
+  }
 
   function calculateDistance(
     lat1: number,
@@ -44,6 +50,7 @@ const MapboxMap = () => {
     const distance = R * c
     return distance
   }
+
   const getClosestBar = (
     position: [number, number],
     remainingBars: Array<any>,
@@ -75,7 +82,10 @@ const MapboxMap = () => {
     markerImg.src = imagePath
     markerElement.appendChild(markerImg)
 
-    return new Marker(markerElement).setLngLat(lngLat).addTo(map)
+    const marker = new Marker(markerElement).setLngLat(lngLat).addTo(map)
+    setMarkers((prevMarkers) => [...prevMarkers, marker])
+
+    return marker
   }
 
   useEffect(() => {
@@ -121,55 +131,72 @@ const MapboxMap = () => {
         )
 
         const barsSliced = sortedBars.slice(0, barsToVisit)
+        const directions = new MapboxDirections({
+          accessToken: mapboxgl.accessToken,
+          unit: 'metric',
+          profile: 'mapbox/walking',
+          controls: {
+            instructions: false,
+            inputs: false,
+            profileSwitcher: false,
+          },
+          zoom: 1,
+        })
 
-        for (const bar of barsSliced) {
-          createCustomMarker(
-            [parseFloat(bar.longitude), parseFloat(bar.latitude)],
-            './assets/beer.svg',
-          )
-        }
-
-        if (barsSliced.length > 0) {
-          const directions = new MapboxDirections({
-            accessToken: mapboxgl.accessToken,
-            unit: 'metric',
-            profile: 'mapbox/walking',
-            controls: {
-              instructions: false,
-              inputs: false,
-              profileSwitcher: false,
-            },
-            zoom: 1,
-          })
-          directions.removeRoutes()
-          directions.removeWaypoint()
-          if (map) {
-            map.addControl(directions, 'top-left')
+        if (startBarathon) {
+          for (const bar of barsSliced) {
+            createCustomMarker(
+              [bar.longitude, bar.latitude],
+              './assets/beer.svg',
+            )
           }
-          directions.setOrigin([longitude, latitude])
 
-          let remainingBars = [...barsSliced]
-          let currentPosition: [number, number] = [longitude, latitude]
+          if (barsSliced.length > 0) {
+            directions.removeRoutes()
+            directions.removeWaypoint()
+            if (map) {
+              map.addControl(directions, 'top-left')
+            }
+            directions.setOrigin([longitude, latitude])
 
-          let i = 0
-          while (remainingBars.length > 0) {
-            const closestBar = getClosestBar(currentPosition, remainingBars)
+            let remainingBars = [...barsSliced]
+            let currentPosition: [number, number] = [longitude, latitude]
 
-            if (closestBar) {
-              currentPosition = [closestBar.longitude, closestBar.latitude]
-              directions.addWaypoint(i, currentPosition)
-              remainingBars = remainingBars.filter((bar) => bar !== closestBar)
+            let i = 0
+            while (remainingBars.length > 0) {
+              const closestBar = getClosestBar(currentPosition, remainingBars)
+
+              if (closestBar) {
+                currentPosition = [closestBar.longitude, closestBar.latitude]
+                directions.addWaypoint(i, currentPosition)
+                remainingBars = remainingBars.filter(
+                  (bar) => bar !== closestBar,
+                )
+              }
+
+              i++
             }
 
-            i++
-          }
+            directions.setDestination(currentPosition)
 
-          directions.setDestination(currentPosition)
+            if (map) {
+              map.flyTo({
+                center: [longitude, latitude],
+                zoom: 13,
+                speed: 2,
+                curve: 1,
+              })
+            }
+          }
+        } else {
+          directions.removeRoutes()
+          directions.removeWaypoint()
+          removeAllMarkers()
 
           if (map) {
             map.flyTo({
               center: [longitude, latitude],
-              zoom: 13,
+              zoom: 0.001,
               speed: 2,
               curve: 1,
             })

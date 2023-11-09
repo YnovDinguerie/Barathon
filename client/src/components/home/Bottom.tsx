@@ -51,7 +51,7 @@ const Bottom = () => {
   }, [])
 
   const minutes = Math.floor(seconds / 60)
-  const remainingSeconds = seconds % 60
+  const secondes = seconds % 60
 
   const setupBarathonFunction = () => {
     setSetupBarathon(true)
@@ -136,7 +136,7 @@ const Bottom = () => {
           <div>
             <p className="section-title">Temps total</p>
             <p className="total-time">
-              {minutes} min {remainingSeconds}
+              {minutes} min {secondes}
             </p>
           </div>
           <div onClick={stopGame} className="container-button-game">
