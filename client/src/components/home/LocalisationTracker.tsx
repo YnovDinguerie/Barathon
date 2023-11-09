@@ -11,8 +11,8 @@ const LocalisationTracker = () => {
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
           (position) => {
-            setLatitude(position.coords.latitude)
-            setLongitude(position.coords.longitude)
+            setLatitude(44.8585631)
+            setLongitude(-0.5541501)
           },
           (error) => {
             console.error('Error getting location:', error)

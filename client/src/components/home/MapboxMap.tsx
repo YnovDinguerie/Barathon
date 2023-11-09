@@ -21,7 +21,7 @@ const MapboxMap = () => {
   const [radius] = useAtom(radiusAtom)
   const [barsToVisit] = useAtom(barsToVisitAtom)
   const [resizeMap] = useAtom(resizeMapAtom)
-  const [map, setMap] = useState<mapboxgl.Map>()
+  const [map, setMap] = useState<mapboxgl.Map | null>(null)
 
   function calculateDistance(
     lat1: number,
@@ -35,9 +35,9 @@ const MapboxMap = () => {
     const a =
       Math.sin(dLat / 2) * Math.sin(dLat / 2) +
       Math.cos(lat1 * (Math.PI / 180)) *
-        Math.cos(lat2 * (Math.PI / 180)) *
-        Math.sin(dLon / 2) *
-        Math.sin(dLon / 2)
+      Math.cos(lat2 * (Math.PI / 180)) *
+      Math.sin(dLon / 2) *
+      Math.sin(dLon / 2)
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
     const distance = R * c
     return distance
@@ -77,14 +77,16 @@ const MapboxMap = () => {
   }
 
   useEffect(() => {
-    setMap(
-      new mapboxgl.Map({
-        container: 'map-container',
-        style: 'mapbox://styles/mapbox/streets-v12',
-        center: [longitude, latitude],
-        zoom: 12,
-      }),
-    )
+    if (!map) {
+      setMap(
+        new mapboxgl.Map({
+          container: 'map-container',
+          style: 'mapbox://styles/mapbox/streets-v12',
+          center: [longitude, latitude],
+          zoom: 12,
+        }),
+      )
+    }
 
     const getBars = async () => {
       try {
@@ -95,7 +97,7 @@ const MapboxMap = () => {
         const datas = res.data.data
 
         for (const data of datas) {
-          ;(data.latitude = parseFloat(data.latitude)),
+          ; (data.latitude = parseFloat(data.latitude)),
             (data.longitude = parseFloat(data.longitude))
         }
 
@@ -138,9 +140,9 @@ const MapboxMap = () => {
           })
           directions.removeRoutes()
           directions.removeWaypoint()
-
-          map.addControl(directions, 'top-left')
-
+          if (map) {
+            map.addControl(directions, 'top-left')
+          }
           directions.setOrigin([longitude, latitude])
 
           let remainingBars = [...barsSliced]
