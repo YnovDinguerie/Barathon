@@ -3,7 +3,7 @@ const nextConfig = {}
 
 module.exports = {
     images: {
-      domains: ['gifdb.com'],
+      domains: ['media.tenor.com'],
     },
     nextConfig
   };

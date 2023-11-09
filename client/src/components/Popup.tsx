@@ -11,7 +11,7 @@ interface PopupProps {
 
 const Popup: React.FC<PopupProps> = ({ isOpen, onRequestClose }) => {
   const gifUrl =
-    'https://gifdb.com/images/high/colorful-easter-egg-roll-hb7ervh5hnj1q9wn.gif'
+    'https://media.tenor.com/6jbruhnCclwAAAAj/canticos-chickies.gif'
 
   return (
     <Modal
@@ -23,7 +23,7 @@ const Popup: React.FC<PopupProps> = ({ isOpen, onRequestClose }) => {
     >
       <div className="pop-up">
         <Image src={gifUrl} alt="" width={400} height={400} />
-        <p>Ceci est un easter egg</p>
+        <p>Youhou ! Tu viens de trouver un Easter Egg!</p>
         <button onClick={onRequestClose}>Fermer</button>
       </div>
     </Modal>
