@@ -77,6 +77,35 @@ class BarController extends BaseController
 
     }
 
+    /**
+ * @OA\Get(
+ *     path="/api/bars/{bar}",
+ *     operationId="getBar",
+ *     tags={"Bars"},
+ *     summary="Get details of a specific bar.",
+ *
+ *     @OA\Parameter(
+ *         name="bar",
+ *         in="path",
+ *         description="Bar ID",
+ *         required=true,
+ *         @OA\Schema(type="integer")
+ *     ),
+ *
+ *     @OA\Response(
+ *         response=200,
+ *         description="Successful operation",
+ *     ),
+ *     @OA\Response(
+ *         response=404,
+ *         description="Bar not found",
+ *     )
+ * )
+ */
+    public function show(Bar $bar){
+        return $this->sendResponse($bar, 'success.');
+    }
+
 /**
  * @OA\Get(
  *     path="/api/bars-search/{latitude}&{longitude}&{name}",
