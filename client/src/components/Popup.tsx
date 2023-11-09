@@ -19,15 +19,10 @@ const Popup: React.FC<PopupProps> = ({ isOpen, onRequestClose }) => {
       isOpen={isOpen}
       onRequestClose={onRequestClose}
       contentLabel="Popup"
-      ariaHideApp={false} // Pour éviter une erreur de style
+      ariaHideApp={false}
     >
       <div className="pop-up">
-        <Image
-          src={gifUrl} //"../../public/assets/popup.svg"
-          alt=""
-          width={400}
-          height={400}
-        />
+        <Image src={gifUrl} alt="" width={400} height={400} />
         <p>Ceci est un easter egg</p>
         <button onClick={onRequestClose}>Fermer</button>
       </div>

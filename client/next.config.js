@@ -3,7 +3,7 @@ const nextConfig = {}
 
 module.exports = {
     images: {
-      domains: ['gifdb.com'], // Ajoutez ici le domaine du GIF externe
+      domains: ['gifdb.com'],
     },
     nextConfig
   };
