@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import '../../styles/Bottom.scss'
 import RangeInput from '../Input/RangeInput'
 import { useAtom } from 'jotai'
@@ -11,18 +11,6 @@ const Bottom = () => {
   const [startBarathon, setStartBarathon] = useState(false)
   const [barsToVisit, setBarsToVisit] = useAtom(barsToVisitAtom)
   const [radiusBars, setRadiusBars] = useAtom(radiusAtom)
-  const [seconds, setSeconds] = useState(0)
-
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      setSeconds((prevSeconds) => prevSeconds + 1)
-    }, 1000)
-
-    return () => clearInterval(intervalId)
-  }, [])
-
-  const minutes = Math.floor(seconds / 60)
-  const remainingSeconds = seconds % 60
 
   const setupBarathonFunction = () => {
     setSetupBarathon(true)
@@ -102,9 +90,7 @@ const Bottom = () => {
         <div className="section-container">
           <div>
             <p className="section-title">Temps total</p>
-            <p className="total-time">
-              {minutes} min {remainingSeconds}
-            </p>
+            <p className="total-time"> 2h30 </p>
           </div>
           <div onClick={stopGame} className="container-button-game">
             <Image
