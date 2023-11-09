@@ -2,7 +2,11 @@ import React, { useEffect, useState } from 'react'
 import '../../styles/Bottom.scss'
 import RangeInput from '../Input/RangeInput'
 import { useAtom } from 'jotai'
-import { barsToVisitAtom, radiusAtom } from '../../state/map/atoms'
+import {
+  barsToVisitAtom,
+  radiusAtom,
+  resizeMapAtom,
+} from '../../state/map/atoms'
 import Image from 'next/image'
 import '../../styles/Filter.scss'
 
@@ -11,6 +15,7 @@ const Bottom = () => {
   const [startBarathon, setStartBarathon] = useState(false)
   const [barsToVisit, setBarsToVisit] = useAtom(barsToVisitAtom)
   const [radiusBars, setRadiusBars] = useAtom(radiusAtom)
+  const [resizeMap, setresizeMap] = useAtom(resizeMapAtom)
   const [seconds, setSeconds] = useState(0)
 
   useEffect(() => {
@@ -31,15 +36,18 @@ const Bottom = () => {
   const startBarathonFunction = () => {
     setSetupBarathon(false)
     setStartBarathon(true)
+    setresizeMap(true)
   }
 
   const backToMenu = () => {
     setSetupBarathon(false)
+    setresizeMap(true)
   }
 
   const stopGame = () => {
     setSetupBarathon(false)
     setStartBarathon(false)
+    setresizeMap(true)
   }
 
   const handleRangeBarNumberChange = (barsToVisit: number) => {
