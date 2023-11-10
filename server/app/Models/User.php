@@ -10,10 +10,12 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
 use Laravel\Sanctum\HasApiTokens;
 use Staudenmeir\LaravelMergedRelations\Eloquent\HasMergedRelationships;
+use Laravel\Fortify\TwoFactorAuthenticatable;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, HasMergedRelationships,Notifiable;
+    use HasApiTokens, HasFactory, HasMergedRelationships,Notifiable
+    ,TwoFactorAuthenticatable;
 
     /**
      * The attributes that are mass assignable.

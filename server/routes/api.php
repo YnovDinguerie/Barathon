@@ -9,6 +9,7 @@ use App\Http\Controllers\API\FriendController;
 use App\Http\Controllers\API\SocketTestController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\LoginWithGoogleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -83,4 +84,11 @@ Route::controller(FriendController::class)->group(function () {
 
 Route::controller(SocketTestController::class)->group(function () {
     Route::get('test', 'index');
+});
+
+
+
+Route::controller(LoginWithGoogleController::class)->group(function(){
+    Route::get('authorized/google', 'redirectToGoogle')->name('auth.google');
+    Route::get('authorized/google/callback', 'handleGoogleCallback');
 });
