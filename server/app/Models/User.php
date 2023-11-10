@@ -10,12 +10,10 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
 use Laravel\Sanctum\HasApiTokens;
 use Staudenmeir\LaravelMergedRelations\Eloquent\HasMergedRelationships;
-use Laravel\Fortify\TwoFactorAuthenticatable;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, HasMergedRelationships,Notifiable
-    ,TwoFactorAuthenticatable;
+    use HasApiTokens, HasFactory, HasMergedRelationships,Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -28,6 +26,7 @@ class User extends Authenticatable
         'email',
         'password',
         'friend_code',
+        'google_id'
     ];
 
     /**

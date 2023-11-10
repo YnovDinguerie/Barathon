@@ -9,7 +9,7 @@ use App\Http\Controllers\API\FriendController;
 use App\Http\Controllers\API\SocketTestController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\LoginWithGoogleController;
+use App\Http\Controllers\API\LoginWithGoogleController;
 
 /*
 |--------------------------------------------------------------------------
