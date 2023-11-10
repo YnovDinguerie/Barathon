@@ -10,7 +10,7 @@ const Stats = () => {
     { name: '10/11/2023', value: 5 },
   ]
   return (
-    <div className="container">
+    <div>
       <Statistics data={data} />
     </div>
   )
