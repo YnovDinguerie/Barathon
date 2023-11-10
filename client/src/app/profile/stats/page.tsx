@@ -1,9 +1,11 @@
 'use client'
 
 import getBarathons from '@/app/api/barathon/getBarathons'
+import getBarathonBars from '@/app/api/bars/getBrathonBars'
 import Statistics from '@/components/stats/Statistics'
 import { toastAtom, userAtom } from '@/state'
 import { useQuery } from '@tanstack/react-query'
+import { format } from 'date-fns'
 import { useAtomValue, useSetAtom } from 'jotai'
 
 const Stats = () => {
@@ -20,15 +22,17 @@ const Stats = () => {
         })
       }),
   })
-  const data = [
-    { name: '01/11/2023', value: 5 },
-    { name: '05/11/2023', value: 10 },
-    { name: '06/11/2023', value: 3 },
-    { name: '10/11/2023', value: 5 },
-  ]
+
+  const data = barathons?.map((barathon) => {
+    return {
+      name: format(new Date(barathon.created_at), 'dd/MM/yyyy'),
+      value: Number(barathon.radius),
+    }
+  })
+
   return (
     <div>
-      <Statistics data={data} />
+      <Statistics data={data ?? []} />
     </div>
   )
 }

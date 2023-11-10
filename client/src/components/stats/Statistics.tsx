@@ -61,7 +61,7 @@ const Statistics = ({ data }: StatisticsProps) => {
           Statistiques
         </div>
       </div>
-      <div className="text-center font-medium">Bars visités</div>
+      <div className="text-center font-medium">Nombre de km parcouru</div>
       <ResponsiveContainer width="100%" height="40%">
         <PieChart width={200} height={100}>
           <Pie
@@ -79,12 +79,6 @@ const Statistics = ({ data }: StatisticsProps) => {
             ))}
           </Pie>
           <Legend verticalAlign="top" height={36} />
-          <Line
-            name="pv of pages"
-            type="natural"
-            dataKey="pv"
-            stroke="#8884d8"
-          />
         </PieChart>
       </ResponsiveContainer>
     </div>

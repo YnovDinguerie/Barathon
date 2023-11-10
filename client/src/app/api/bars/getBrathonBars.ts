@@ -4,7 +4,7 @@ export default async function getBarathonBars({
   id,
   token,
 }: {
-  id: string
+  id: number
   token: string
 }) {
   const response = await axios.get(
