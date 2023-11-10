@@ -42,16 +42,20 @@ const Bottom = () => {
   const [resizeMap, setresizeMap] = useAtom(resizeMapAtom)
   const [seconds, setSeconds] = useState(0)
 
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      setSeconds((prevSeconds) => prevSeconds + 1)
-    }, 1000)
-
-    return () => clearInterval(intervalId)
-  }, [])
-
   const minutes = Math.floor(seconds / 60)
   const secondes = seconds % 60
+
+  useEffect(() => {
+    if (startBarathon) {
+      const intervalId = setInterval(() => {
+        setSeconds((prevSeconds) => prevSeconds + 1)
+      }, 1000)
+
+      return () => clearInterval(intervalId)
+    } else {
+      setSeconds(0)
+    }
+  }, [startBarathon])
 
   const setupBarathonFunction = () => {
     setSetupBarathon(true)
