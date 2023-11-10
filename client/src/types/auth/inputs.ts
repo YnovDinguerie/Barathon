@@ -26,4 +26,5 @@ export type ProfileInfo = {
   name: string
   email: string
   birthdate: string
+  token?: string
 }

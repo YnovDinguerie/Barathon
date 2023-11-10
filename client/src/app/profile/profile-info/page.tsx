@@ -1,8 +1,9 @@
 'use client'
 
-import { userAtom } from '@/state'
+import modifyUser from '@/app/api/auth/modifyUser'
+import { toastAtom, userAtom } from '@/state'
 import { ProfileInfo } from '@/types/auth/inputs'
-import { useAtomValue } from 'jotai'
+import { useAtomValue, useSetAtom } from 'jotai'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
@@ -10,16 +11,53 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 
 const ProfileInfos = () => {
   const router = useRouter()
+
+  const { name, email, birtdate, token } = useAtomValue(userAtom)
+
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<ProfileInfo>()
+  } = useForm<ProfileInfo>({
+    defaultValues: {
+      name: name,
+      email: email,
+      birthdate: birtdate,
+    },
+  })
 
-  const { name, email, birtdate } = useAtomValue(userAtom)
+  const setToast = useSetAtom(toastAtom)
+  const setUser = useSetAtom(userAtom)
 
   const onSubmit: SubmitHandler<ProfileInfo> = (data: ProfileInfo) => {
-    console.log(data)
+    modifyUser({
+      name: data.name,
+      email: data.email,
+      birthdate: data.birthdate,
+      token: token,
+    })
+      .then((response) => {
+        console.log(response)
+        setUser({
+          email: response.email,
+          name: response.name,
+          birtdate: response.birthdate,
+          token: token,
+        })
+        setToast({
+          isVisible: true,
+          msg: `User ${response.name} has been successfuly modified`,
+          status: 'Success',
+        })
+        router.push('/home')
+      })
+      .catch((error) => {
+        setToast({
+          msg: error.response.data.message,
+          isVisible: true,
+          status: 'Error',
+        })
+      })
   }
 
   return (
@@ -48,52 +86,37 @@ const ProfileInfos = () => {
         <div className="flex flex-col space-y-2">
           <label className="ml-3">Name</label>
           <input
-            {...register('name', {
-              required: {
-                message: 'Input field must not be empty',
-                value: true,
-              },
-            })}
+            {...register('name')}
             placeholder={name}
             className="border-2 placeholder:text-black bg-[#FFFDF9] rounded-lg h-10 mx-3 mt-5 focus:border-[#DF9928]"
           />
-          {errors?.name && (
+          {/* {errors?.name && (
             <span className="ml-3 text-red-800 ">{errors.name.message}</span>
-          )}
+          )} */}
         </div>
         <div className="flex flex-col space-y-2">
           <label className="ml-3">Email</label>
           <input
-            {...register('email', {
-              required: {
-                message: 'Email must not be empty',
-                value: true,
-              },
-            })}
+            {...register('email')}
             type="text"
             placeholder={email}
             className="border-2 bg-[#FFFDF9] placeholder:text-black rounded-lg h-10 ml-3 mt-5 focus:border-[#DF9928] mx-3"
           />
-          {errors?.email && (
+          {/* {errors?.email && (
             <span className="m-3 text-red-800">{errors.email.message}</span>
-          )}
+          )} */}
         </div>
         <div className="flex flex-col space-y-2">
           <label className="ml-3">Birthdate</label>
           <input
-            {...register('birthdate', {
-              required: {
-                message: 'Birthdate must not be empty',
-                value: true,
-              },
-            })}
+            {...register('birthdate')}
             type="text"
             placeholder={birtdate}
             className="border-2 bg-[#FFFDF9] placeholder:text-black rounded-lg h-10 ml-3 mt-5 focus:border-[#DF9928] mx-3"
           />
-          {errors?.birthdate && (
+          {/* {errors?.birthdate && (
             <span className="m-3 text-red-800">{errors.birthdate.message}</span>
-          )}
+          )} */}
         </div>
         <div className="mx-3">
           <button
