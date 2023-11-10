@@ -1255,6 +1255,154 @@
                 ]
             }
         },
+        "/api/favorite-bars": {
+            "get": {
+                "tags": [
+                    "FavoriteBars"
+                ],
+                "summary": "Get a list of FavoriteBars",
+                "description": "Display a listing of the resource.",
+                "operationId": "getFavoriteBars",
+                "responses": {
+                    "200": {
+                        "description": "List of FavoriteBars"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "FavoriteBars"
+                ],
+                "summary": "Store a new FavoriteBar",
+                "description": "Store a newly created resource in storage.",
+                "operationId": "storeFavoriteBar",
+                "requestBody": {
+                    "description": "FavoriteBar data",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "bar_id"
+                                ],
+                                "properties": {
+                                    "bar_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "FavoriteBar created successfully"
+                    },
+                    "400": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Validation Error"
+                                        },
+                                        "errors": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/favorite-bars/{favoriteBar}": {
+            "delete": {
+                "tags": [
+                    "FavoriteBars"
+                ],
+                "summary": "Delete a FavoriteBar",
+                "description": "Remove the specified resource from storage.",
+                "operationId": "destroyFavoriteBar",
+                "parameters": [
+                    {
+                        "name": "favoriteBar",
+                        "in": "path",
+                        "description": "ID of the FavoriteBar to be deleted",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "FavoriteBar deleted successfully"
+                    },
+                    "403": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthorised"
+                                        },
+                                        "errors": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "FavoriteBar not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "FavoriteBar not found"
+                                        },
+                                        "errors": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
         "/api/friends": {
             "get": {
                 "tags": [
@@ -1421,6 +1569,10 @@
         {
             "name": "Baratons",
             "description": "Operations about Baratons"
+        },
+        {
+            "name": "FavoriteBars",
+            "description": "Operations about FavoriteBars"
         }
     ]
 }
