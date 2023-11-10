@@ -2,15 +2,44 @@ import React, { useEffect, useState } from 'react'
 import '../../styles/Bottom.scss'
 import RangeInput from '../Input/RangeInput'
 import { useAtom } from 'jotai'
-import { barsToVisitAtom, radiusAtom } from '../../state/map/atoms'
+import {
+  barsToVisitAtom,
+  radiusAtom,
+  resizeMapAtom,
+  startBarathonAtom,
+} from '../../state/map/atoms'
 import Image from 'next/image'
 import '../../styles/Filter.scss'
 
+const destinationInput = () => {
+  var destination = document.getElementById('destinationInput').value
+
+  if (destination.trim() !== '') {
+    // Remplacez 'URL_DE_VOTRE_API' par l'URL réelle de votre API
+    var apiUrl =
+      'URL_DE_VOTRE_API?destination=' + encodeURIComponent(destination)
+
+    fetch(apiUrl)
+      .then((response) => response.json())
+      .then((data) => {
+        // Traitement de la réponse de l'API
+        console.log(data)
+      })
+      .catch((error) => {
+        // Gérer les erreurs de l'API
+        console.error(error)
+      })
+  } else {
+    alert('Veuillez entrer une destination.')
+  }
+}
+
 const Bottom = () => {
   const [setupBarathon, setSetupBarathon] = useState(false)
-  const [startBarathon, setStartBarathon] = useState(false)
+  const [startBarathon, setStartBarathon] = useAtom(startBarathonAtom)
   const [barsToVisit, setBarsToVisit] = useAtom(barsToVisitAtom)
   const [radiusBars, setRadiusBars] = useAtom(radiusAtom)
+  const [resizeMap, setresizeMap] = useAtom(resizeMapAtom)
   const [seconds, setSeconds] = useState(0)
 
   useEffect(() => {
@@ -22,24 +51,28 @@ const Bottom = () => {
   }, [])
 
   const minutes = Math.floor(seconds / 60)
-  const remainingSeconds = seconds % 60
+  const secondes = seconds % 60
 
   const setupBarathonFunction = () => {
     setSetupBarathon(true)
+    setresizeMap(!resizeMap)
   }
 
   const startBarathonFunction = () => {
     setSetupBarathon(false)
     setStartBarathon(true)
+    setresizeMap(!resizeMap)
   }
 
   const backToMenu = () => {
     setSetupBarathon(false)
+    setresizeMap(!resizeMap)
   }
 
   const stopGame = () => {
     setSetupBarathon(false)
     setStartBarathon(false)
+    setresizeMap(!resizeMap)
   }
 
   const handleRangeBarNumberChange = (barsToVisit: number) => {
@@ -103,7 +136,7 @@ const Bottom = () => {
           <div>
             <p className="section-title">Temps total</p>
             <p className="total-time">
-              {minutes} min {remainingSeconds}
+              {minutes} min {secondes}
             </p>
           </div>
           <div onClick={stopGame} className="container-button-game">
@@ -141,8 +174,9 @@ const Bottom = () => {
             alt="search icon"
             width={20}
             height={20}
+            onClick={() => destinationInput()}
           />
-          <input type="text" placeholder="Où va t-on ?" />
+          <input type="text" id="destinationInput" placeholder="Où va t-on ?" />
           <Image
             src="/assets/microphone.svg"
             className="microphone-icon"
