@@ -6,9 +6,9 @@ import loginUser from '../../api/auth/login'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useSetAtom } from 'jotai'
-import axios from 'axios'
 import { toastAtom, userAtom } from '@/state'
 import { useRouter } from 'next/navigation'
+import axios from 'axios'
 
 const Login = () => {
   const {
@@ -23,43 +23,6 @@ const Login = () => {
   const setToast = useSetAtom(toastAtom)
 
   const onSubmit: SubmitHandler<LoginInputs> = (data: LoginInputs) => {
-    loginFn({
-      email: data.email,
-      password: data.password,
-    }).then((response) => {
-      setUser(response)
-    })
-  }
-
-  const googleAuth = async () => {
-    const res = await axios
-      .get('http://127.0.0.1:8000/api/authorized/google', {
-        headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
-        },
-      })
-      .then((res) => {
-        const redirectUrl = res.data.redirect_url
-        console.log(res.data.redirect_url)
-        window.location = redirectUrl
-      })
-  }
-
-  if (isError) {
-    return (
-      <>
-        <div className="flex flex-col items-center">
-          <h1 className="font-medium tracking-wider flex justify-center text-2xl mt-14 font-sans text-[#DF9928]">
-            Log in into you account
-          </h1>
-          <h2 className="text-md font-light text-[#DF9928]">
-            Please enter infos to log in
-          </h2>
-        </div>
-        <div>An errror occured</div>
-      </>
-    )
     loginUser({ email: data.email, password: data.password })
       .then((response) => {
         setUser({
@@ -76,6 +39,21 @@ const Login = () => {
           status: 'Error',
           isVisible: true,
         })
+      })
+  }
+
+  const googleAuth = async () => {
+    const res = await axios
+      .get('http://127.0.0.1:8000/api/authorized/google', {
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+      })
+      .then((res) => {
+        const redirectUrl = res.data.redirect_url
+        console.log(res.data.redirect_url)
+        window.location = redirectUrl
       })
   }
 
