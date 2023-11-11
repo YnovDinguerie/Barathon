@@ -21,3 +21,10 @@ export type UpdatePasswordInputs = {
   password: string
   c_password: string
 }
+
+export type ProfileInfo = {
+  name: string
+  email: string
+  birthdate: string
+  token?: string
+}

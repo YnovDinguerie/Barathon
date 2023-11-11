@@ -2,13 +2,13 @@
 
 import { LoginInputs } from '@/types/auth/inputs'
 import { SubmitHandler, useForm } from 'react-hook-form'
-import { useMutation } from 'react-query'
 import loginUser from '../../api/auth/login'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useSetAtom } from 'jotai'
-import { userAtom } from '@/state'
 import axios from 'axios'
+import { toastAtom, userAtom } from '@/state'
+import { useRouter } from 'next/navigation'
 
 const Login = () => {
   const {
@@ -17,11 +17,10 @@ const Login = () => {
     formState: { errors },
   } = useForm<LoginInputs>()
 
-  const setUser = useSetAtom(userAtom)
+  const router = useRouter()
 
-  const { isError, mutateAsync: loginFn } = useMutation({
-    mutationFn: loginUser,
-  })
+  const setUser = useSetAtom(userAtom)
+  const setToast = useSetAtom(toastAtom)
 
   const onSubmit: SubmitHandler<LoginInputs> = (data: LoginInputs) => {
     loginFn({
@@ -61,6 +60,23 @@ const Login = () => {
         <div>An errror occured</div>
       </>
     )
+    loginUser({ email: data.email, password: data.password })
+      .then((response) => {
+        setUser({
+          email: response.email,
+          name: response.name,
+          token: response.token,
+          birtdate: response.birthdate,
+        })
+        router.push('/home')
+      })
+      .catch((err) => {
+        setToast({
+          msg: err.response.data.message,
+          status: 'Error',
+          isVisible: true,
+        })
+      })
   }
 
   return (
