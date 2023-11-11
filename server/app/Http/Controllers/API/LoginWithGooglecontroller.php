@@ -30,7 +30,7 @@ class LoginWithGoogleController extends BaseController
             if ($findUser) {
                 Auth::login($findUser);
                 $token = $findUser->createToken('API Token')->plainTextToken;
-                return redirect('http://localhost:3000/auth/google-auth/?token='.$token);
+                return redirect(env('FRONT_URL').'auth/google-auth/?token='.$token);
 
 
             } else {
@@ -44,7 +44,7 @@ class LoginWithGoogleController extends BaseController
 
                 Auth::login($newUser);
                 $token = $newUser->createToken('API Token')->plainTextToken;
-                return redirect('http://localhost:3000/auth/google-auth/?token='.$token);
+                return redirect(env('FRONT_URL').'auth/google-auth/?token='.$token);
 
 
 
