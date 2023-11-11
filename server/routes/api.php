@@ -8,7 +8,6 @@ use App\Http\Controllers\API\BarOpinionController;
 use App\Http\Controllers\API\FavoriteBarController;
 use App\Http\Controllers\API\FriendController;
 use App\Http\Controllers\API\LoginWithGoogleController;
-use App\Http\Controllers\API\SocketTestController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -79,10 +78,6 @@ Route::controller(FavoriteBarController::class)->group(function () {
     Route::get('favorite-bars', 'index');
     Route::post('favorite-bars', 'store');
     Route::delete('favorite-bars/{favoriteBar}', 'destroy');
-});
-
-Route::controller(SocketTestController::class)->group(function () {
-    Route::get('test', 'index');
 });
 
 Route::controller(LoginWithGoogleController::class)->group(function () {

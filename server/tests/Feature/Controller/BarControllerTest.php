@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Controller;
 
 use App\Models\Bar;
 use Illuminate\Foundation\Testing\RefreshDatabase;

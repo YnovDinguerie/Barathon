@@ -1,5 +1,7 @@
 <?php
 
+namespace Tests\Feature\Controller;
+
 use App\Models\Bar;
 use App\Models\Baraton;
 use App\Models\BaratonBar;
