@@ -2,14 +2,11 @@
 
 namespace App\Http\Controllers\API;
 
-use Illuminate\Http\Request;
-use Laravel\Socialite\Facades\Socialite;
-use App\Models\User;
-use Illuminate\Support\Facades\Auth;
-use Exception;
 use App\Http\Controllers\API\BaseController as BaseController;
-use Validator;
-use GuzzleHttp\Client;
+use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Laravel\Socialite\Facades\Socialite;
 
 class LoginWithGoogleController extends BaseController
 {
@@ -30,8 +27,8 @@ class LoginWithGoogleController extends BaseController
             if ($findUser) {
                 Auth::login($findUser);
                 $token = $findUser->createToken('API Token')->plainTextToken;
-                return redirect(env('FRONT_URL').'auth/google-auth/?token='.$token);
 
+                return redirect(env('FRONT_URL').'auth/google-auth/?token='.$token);
 
             } else {
                 $newUser = User::create([
@@ -44,9 +41,8 @@ class LoginWithGoogleController extends BaseController
 
                 Auth::login($newUser);
                 $token = $newUser->createToken('API Token')->plainTextToken;
+
                 return redirect(env('FRONT_URL').'auth/google-auth/?token='.$token);
-
-
 
             }
         } catch (\Exception $e) {
