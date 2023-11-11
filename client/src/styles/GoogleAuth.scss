@@ -1,0 +1,27 @@
+.google-auth-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
+    min-height: 100vh;
+    gap: 2rem;
+
+    p {
+        animation: blink 2s ease infinite;
+
+        @keyframes blink {
+            0% {
+                opacity: 0.3;
+            }
+
+            66% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 0.3;
+            }
+        }
+    }
+}
