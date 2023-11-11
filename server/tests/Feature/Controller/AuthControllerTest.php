@@ -65,10 +65,8 @@ class AuthControllerTest extends TestCase
         ]);
 
         $token = $user->createToken('MyApp')->plainTextToken;
-        // Exécutez la méthode verify avec le bon token
         $response = $this->withHeaders(['Authorization' => 'Bearer '.$token])->post('/api/verify-email/'.$token);
 
-        // Assurez-vous que la réponse a un code de statut 200
         $response->assertStatus(200);
 
     }
@@ -81,13 +79,10 @@ class AuthControllerTest extends TestCase
             'password' => bcrypt('Password123'),
         ]);
 
-        // Préparez les données de la requête
         $data = ['email' => $user['email']];
 
-        // Exécutez la méthode sendPasswordResetEmail
         $response = $this->post('/api/send-password-reset-email', $data);
 
-        // Assurez-vous que la réponse a un code de statut 200
         $response->assertStatus(200);
     }
 
@@ -107,18 +102,15 @@ class AuthControllerTest extends TestCase
             'created_at' => Carbon::now(),
         ]);
 
-        // Préparez les données de la requête
         $data = [
-            'token' => $token, // Remplacez par le bon jeton
-            'email' => $user['email'], // Remplacez par le bon e-mail
+            'token' => $token,
+            'email' => $user['email'],
             'password' => 'NewPassword123',
             'c_password' => 'NewPassword123',
         ];
 
-        // Exécutez la méthode resetPassword
         $response = $this->post('/api/reset-password', $data);
 
-        // Assurez-vous que la réponse a un code de statut 200
         $response->assertStatus(200);
 
     }

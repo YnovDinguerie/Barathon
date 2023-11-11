@@ -26,7 +26,6 @@ class UserTest extends TestCase
         $user1 = User::factory()->create();
         $user2 = User::factory()->create();
 
-        // Generate unique friend codes for each user
         $friendCode1 = $user1::generateUniqueFriendCode();
         $friendCode2 = $user2::generateUniqueFriendCode();
 
@@ -38,7 +37,6 @@ class UserTest extends TestCase
         $user1 = User::factory()->create();
         $user2 = User::factory()->create();
 
-        // Make user1 friends with user2
         $user1->friendsTo()->attach($user2, ['accepted' => true]);
 
         $this->assertTrue($user1->friends()->where('id', $user2->id)->exists());
@@ -50,7 +48,6 @@ class UserTest extends TestCase
         $user1 = User::factory()->create();
         $user2 = User::factory()->create();
 
-        // Make user1 friends with user2, but not accepted yet
         $user1->friendsTo()->attach($user2, ['accepted' => false]);
 
         $this->assertTrue($user1->pendingFriends()->where('id', $user2->id)->exists());
@@ -62,7 +59,6 @@ class UserTest extends TestCase
         $user1 = User::factory()->create();
         $user2 = User::factory()->create();
 
-        // Make user1 friends with user2, and accepted
         $user1->friendsTo()->attach($user2, ['accepted' => true]);
 
         $this->assertTrue($user1->friends()->where('id', $user2->id)->exists());
@@ -74,7 +70,6 @@ class UserTest extends TestCase
         $user1 = User::factory()->create();
         $user2 = User::factory()->create();
 
-        // Make user1 friends with user2, and accepted
         $user1->friendsTo()->attach($user2, ['accepted' => true]);
 
         $this->assertTrue($user1->friends()->where('id', $user2->id)->exists());
@@ -86,7 +81,6 @@ class UserTest extends TestCase
         $user1 = User::factory()->create();
         $user2 = User::factory()->create();
 
-        // Make user1 friends with user2, but not accepted yet
         $user1->friendsTo()->attach($user2, ['accepted' => false]);
 
         $this->assertTrue($user1->pendingFriends()->where('id', $user2->id)->exists());
