@@ -5,6 +5,5 @@ module.exports = {
     images: {
       domains: ['media.tenor.com'],
     },
-    nextConfig
   };
   
