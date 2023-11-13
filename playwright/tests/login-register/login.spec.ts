@@ -12,6 +12,8 @@ test('Check wrong login', async ({ page }) => {
     await page.locator('input[name="password"]').fill(account.password)
     await page.locator('button').getByText(LOGIN).click()
     await expect(page.locator('.toast-Error')).toBeVisible()
+    await page.locator('.toast-Error .close').click()
+    await expect(page.locator('.toast-Error')).not.toBeVisible()
   });
 
   test('Check correct login', async ({ page }) => {
