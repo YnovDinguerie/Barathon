@@ -42,6 +42,14 @@ const Bottom = () => {
     })
   }
 
+  const deleteFavoriteBar = (barID: string) => {
+    console.log(barID)
+    apiFetch('DELETE', `/favorite-bars/${barID}`).then((response) => {
+      console.log(response)
+      setAllFavoriteBars(allFavoriteBars.filter((x) => x.id !== barID))
+    })
+  }
+
   const destinationInput = () => {
     var barName = document.getElementById('destinationInput').value
 
@@ -81,10 +89,10 @@ const Bottom = () => {
 
       response.data.data.map(
         async (bar) =>
-          (bar.bar.address = await reverseGeocode(
-            bar.bar.longitude,
-            bar.bar.latitude,
-          )),
+        (bar.bar.address = await reverseGeocode(
+          bar.bar.longitude,
+          bar.bar.latitude,
+        )),
       )
       setAllFavoriteBars(response.data.data)
     })
@@ -336,6 +344,9 @@ const Bottom = () => {
                 <p> {bar.bar.address} </p>
               </div>
               <div>10 mins</div>
+              <button onClick={() => deleteFavoriteBar(bar.id)}>
+                <img width={20} height={20} src="/assets/close.svg" alt="" />
+              </button>
             </div>
           </>
         ))}
