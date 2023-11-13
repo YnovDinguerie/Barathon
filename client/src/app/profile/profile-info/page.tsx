@@ -12,7 +12,7 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 const ProfileInfos = () => {
   const router = useRouter()
 
-  const { name, email, birtdate, token } = useAtomValue(userAtom)
+  const { name, email, birthdate, token } = useAtomValue(userAtom)
 
   const {
     register,
@@ -22,7 +22,7 @@ const ProfileInfos = () => {
     defaultValues: {
       name: name,
       email: email,
-      birthdate: birtdate,
+      birthdate: birthdate,
     },
   })
 
@@ -41,7 +41,7 @@ const ProfileInfos = () => {
         setUser({
           email: response.email,
           name: response.name,
-          birtdate: response.birthdate,
+          birthdate: response.birthdate,
           token: token,
         })
         setToast({
@@ -111,7 +111,7 @@ const ProfileInfos = () => {
           <input
             {...register('birthdate')}
             type="text"
-            placeholder={birtdate}
+            placeholder={birthdate}
             className="border-2 bg-[#FFFDF9] placeholder:text-black rounded-lg h-10 ml-3 mt-5 focus:border-[#DF9928] mx-3"
           />
           {/* {errors?.birthdate && (

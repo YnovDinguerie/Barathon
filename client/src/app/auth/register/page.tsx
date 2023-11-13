@@ -33,7 +33,7 @@ const Register = () => {
           email: response.email,
           name: response.name,
           token: response.token,
-          birtdate: response.birthdate,
+          birthdate: response.birthdate,
         })
         router.push('/home')
       })

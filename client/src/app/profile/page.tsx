@@ -10,7 +10,7 @@ const Profile = () => {
   const setUser = useSetAtom(userAtom)
   const logoutUser = () => {
     setUser({
-      birtdate: '',
+      birthdate: '',
       email: '',
       name: '',
       token: '',

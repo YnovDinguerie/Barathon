@@ -4,7 +4,7 @@ export const userAtom = atomWithStorage('user', {
   email: '',
   token: '',
   name: '',
-  birtdate: '',
+  birthdate: '',
 })
 
 export const toastAtom = atomWithStorage('toast', {
