@@ -4,43 +4,114 @@ import RangeInput from '../Input/RangeInput'
 import { useAtom } from 'jotai'
 import {
   barsToVisitAtom,
+  latitudeAtom,
+  longitudeAtom,
   radiusAtom,
   resizeMapAtom,
   startBarathonAtom,
 } from '../../state/map/atoms'
 import Image from 'next/image'
 import '../../styles/Filter.scss'
-
-const destinationInput = () => {
-  var destination = document.getElementById('destinationInput').value
-
-  if (destination.trim() !== '') {
-    // Remplacez 'URL_DE_VOTRE_API' par l'URL réelle de votre API
-    var apiUrl =
-      'URL_DE_VOTRE_API?destination=' + encodeURIComponent(destination)
-
-    fetch(apiUrl)
-      .then((response) => response.json())
-      .then((data) => {
-        // Traitement de la réponse de l'API
-        console.log(data)
-      })
-      .catch((error) => {
-        // Gérer les erreurs de l'API
-        console.error(error)
-      })
-  } else {
-    alert('Veuillez entrer une destination.')
-  }
-}
+import mapboxgl from 'mapbox-gl'
 
 const Bottom = () => {
   const [setupBarathon, setSetupBarathon] = useState(false)
   const [startBarathon, setStartBarathon] = useAtom(startBarathonAtom)
   const [barsToVisit, setBarsToVisit] = useAtom(barsToVisitAtom)
   const [radiusBars, setRadiusBars] = useAtom(radiusAtom)
+  const [longitude, setLongitude] = useAtom(longitudeAtom)
+  const [latitude, setLatitude] = useAtom(latitudeAtom)
   const [resizeMap, setresizeMap] = useAtom(resizeMapAtom)
   const [seconds, setSeconds] = useState(0)
+  const [searchBars, setSearchBars] = useState<[any]>()
+
+  const distanceRound = (nombre: number) => {
+    const partieDecimale = nombre - Math.floor(nombre)
+    return Math.round(nombre + partieDecimale)
+  }
+
+  const getFavoriteBars = () => {
+    const url = 'http://127.0.0.1:8000/api/favorite-bars/'
+    fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    }).then((response) => {
+      if (!response.ok) {
+        throw new Error(`Échec de la requête avec le code ${response.status}`)
+      }
+      console.log(response)
+    })
+  }
+
+  const addFavorite = (barID: string) => {
+    const url = 'http://127.0.0.1:8000/api/favorite-bars/'
+    const data = {
+      bar_id: 3268,
+    }
+
+    fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`Échec de la requête avec le code ${response.status}`)
+        }
+        return response.json()
+      })
+      .then((data) => {
+        console.log('Requête réussie !', data)
+      })
+      .catch((error) => {
+        console.error('Erreur lors de la requête :', error)
+      })
+  }
+
+  const destinationInput = () => {
+    var barName = document.getElementById('destinationInput').value
+
+    if (barName.trim() !== '') {
+      var apiUrl = `http://127.0.0.1:8000/api/bars-search/${latitude}&${longitude}&${barName}`
+
+      fetch(apiUrl)
+        .then((response) => response.json())
+        .then((data) => {
+          const barsWithAddresses = []
+
+          Promise.all(
+            data.data.map(async (bar) => {
+              const address = await reverseGeocode(bar.longitude, bar.latitude)
+              barsWithAddresses.push({ ...bar, address })
+            }),
+          )
+            .then(() => {
+              setSearchBars(barsWithAddresses)
+              console.log(barsWithAddresses)
+            })
+            .catch((error) => {
+              console.error('Erreur de géocodage inversé:', error)
+            })
+        })
+        .catch((error) => {
+          console.error(error)
+        })
+    } else {
+      setSearchBars([])
+    }
+  }
+
+  useEffect(() => {
+    if (searchBars && searchBars.length > 0) {
+      openResultSearch()
+    } else {
+      closeResultSearch()
+    }
+  }, [searchBars])
 
   const minutes = Math.floor(seconds / 60)
   const secondes = seconds % 60
@@ -77,6 +148,44 @@ const Bottom = () => {
     setSetupBarathon(false)
     setStartBarathon(false)
     setresizeMap(!resizeMap)
+  }
+
+  async function reverseGeocode(longitude: number, latitude: number) {
+    try {
+      const response = await fetch(
+        `https://api.mapbox.com/geocoding/v5/mapbox.places/${longitude},${latitude}.json?access_token=${mapboxgl.accessToken}`,
+      )
+
+      if (!response.ok) {
+        throw new Error('Erreur de réseau ou de requête')
+      }
+
+      const data = await response.json()
+
+      if (data.features.length === 0) {
+        throw new Error('Aucun résultat trouvé')
+      }
+
+      const address = data.features[0].place_name
+      return address
+    } catch (error) {
+      console.error('Erreur de géocodage inverse')
+      return null
+    }
+  }
+
+  const searchBar = document.querySelector('.search-bar')
+
+  function openResultSearch() {
+    if (searchBar) {
+      searchBar.classList.add('menu-opened')
+    }
+  }
+
+  function closeResultSearch() {
+    if (searchBar) {
+      searchBar.classList.remove('menu-opened')
+    }
   }
 
   const handleRangeBarNumberChange = (barsToVisit: number) => {
@@ -162,7 +271,7 @@ const Bottom = () => {
                 width={20}
                 height={20}
               />
-              <p className="count-bar-left"> 2 </p>
+              <p className="count-bar-left"> {barsToVisit} </p>
             </div>
           </div>
         </div>
@@ -172,6 +281,7 @@ const Bottom = () => {
   } else {
     content = (
       <div>
+        <div onClick={getFavoriteBars}>getFavoriteBars</div>
         <div className="filter-container">
           <Image
             src="/assets/search.svg"
@@ -188,6 +298,42 @@ const Bottom = () => {
             width={20}
             height={20}
           />
+
+          <div className="search-bar">
+            {searchBars && (
+              <div>
+                <div className="close-item">
+                  <img
+                    onClick={closeResultSearch}
+                    src="/assets/close.svg"
+                    alt="close"
+                  />
+                </div>
+                {searchBars.map((bar) => (
+                  <div className="result-bar-container" key={bar.id}>
+                    <div className="container-img-bar-name-address">
+                      <div
+                        onClick={() => addFavorite(bar.id)}
+                        className="img-favorite"
+                      >
+                        <img
+                          src="/assets/favorite.svg"
+                          alt="Add to favorite"
+                        ></img>
+                      </div>
+                      <div>
+                        <div className="bar-name">{bar.name}</div>
+                        <div className="bar-min-size">{bar.address}</div>
+                      </div>
+                    </div>
+                    <div className="bar-min-size">
+                      {distanceRound(bar.distance)} Km
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
         <h2 className="section"> Favories </h2>
         <div className="section-container">
