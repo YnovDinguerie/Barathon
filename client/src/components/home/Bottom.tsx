@@ -34,7 +34,7 @@ const Bottom = () => {
 
   const addFavorite = (barID: string) => {
     const data = {
-      bar_id: 3268,
+      bar_id: barID,
     }
 
     apiFetch('POST', '/favorite-bars/', data).then((response) => {
@@ -85,8 +85,6 @@ const Bottom = () => {
 
   useEffect(() => {
     apiFetch('GET', '/favorite-bars/').then((response) => {
-      console.log(response.data.data)
-
       response.data.data.map(
         async (bar) =>
         (bar.bar.address = await reverseGeocode(
@@ -95,6 +93,7 @@ const Bottom = () => {
         )),
       )
       setAllFavoriteBars(response.data.data)
+      setresizeMap(!resizeMap)
     })
   }, [])
 
@@ -327,10 +326,14 @@ const Bottom = () => {
             )}
           </div>
         </div>
-        <h2 className="section"> Favories </h2>
+        {allFavoriteBars.length > 0 ? (
+          <h2 className="section"> Favories </h2>
+        ) : (
+          <p> Commencer par ajouter des favories </p>
+        )}
 
-        {allFavoriteBars.map((bar, index) => (
-          <>
+        <div className="favorites-bar-container">
+          {allFavoriteBars.map((bar, index) => (
             <div key={index} className="section-container">
               <Image
                 src="/assets/beer.svg"
@@ -341,29 +344,14 @@ const Bottom = () => {
               />
               <div className="localisation-container">
                 <h3 className="bar-name">{bar.bar.name}</h3>
-                <p> {bar.bar.address} </p>
+                <p>{bar.bar.address}</p>
               </div>
               <div>10 mins</div>
               <button onClick={() => deleteFavoriteBar(bar.id)}>
                 <img width={20} height={20} src="/assets/close.svg" alt="" />
               </button>
             </div>
-          </>
-        ))}
-        <h2 className="section"> Récents </h2>
-        <div className="section-container">
-          <Image
-            src="/assets/beer.svg"
-            alt="beer icon"
-            className="beer-icon"
-            width={20}
-            height={20}
-          />
-          <div className="localisation-container">
-            <h3 className="bar-name"> La Cervoiserie </h3>
-            <p> 17 Pl. du Palais, 33000 Bordeaux </p>
-          </div>
-          <div>10 mins</div>
+          ))}
         </div>
         <button
           onClick={setupBarathonFunction}
