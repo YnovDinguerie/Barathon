@@ -2,12 +2,12 @@
 
 import { LoginInputs } from '@/types/auth/inputs'
 import { SubmitHandler, useForm } from 'react-hook-form'
-import { useMutation } from 'react-query'
 import loginUser from '../../api/auth/login'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useSetAtom } from 'jotai'
-import { userAtom } from '@/state'
+import { toastAtom, userAtom } from '@/state'
+import { useRouter } from 'next/navigation'
 
 const Login = () => {
   const {
@@ -16,35 +16,29 @@ const Login = () => {
     formState: { errors },
   } = useForm<LoginInputs>()
 
-  const setUser = useSetAtom(userAtom)
+  const router = useRouter()
 
-  const { isError, mutateAsync: loginFn } = useMutation({
-    mutationFn: loginUser,
-  })
+  const setUser = useSetAtom(userAtom)
+  const setToast = useSetAtom(toastAtom)
 
   const onSubmit: SubmitHandler<LoginInputs> = (data: LoginInputs) => {
-    loginFn({
-      email: data.email,
-      password: data.password,
-    }).then((response) => {
-      setUser(response)
-    })
-  }
-
-  if (isError) {
-    return (
-      <>
-        <div className="flex flex-col items-center">
-          <h1 className="font-medium tracking-wider flex justify-center text-2xl mt-14 font-sans text-[#DF9928]">
-            Log in into you account
-          </h1>
-          <h2 className="text-md font-light text-[#DF9928]">
-            Please enter infos to log in
-          </h2>
-        </div>
-        <div>An errror occured</div>
-      </>
-    )
+    loginUser({ email: data.email, password: data.password })
+      .then((response) => {
+        setUser({
+          email: response.email,
+          name: response.name,
+          token: response.token,
+          birtdate: response.birthdate,
+        })
+        router.push('/home')
+      })
+      .catch((err) => {
+        setToast({
+          msg: err.response.data.message,
+          status: 'Error',
+          isVisible: true,
+        })
+      })
   }
 
   return (
