@@ -117,6 +117,15 @@ class FavoriteBarController extends BaseController
         $input = $request->all();
         $input['user_id'] = $user['id'];
 
+        $checkIfAlreadyExist = Favorite::where([
+            ['user_id', $user['id']],
+            ['bar_id', $request['bar_id']],
+        ])->count();
+
+        if ($checkIfAlreadyExist === 0) {
+            return $this->sendError('Vous avez déjà ce bar en favoris', ['error' => 'Unauthorised']);
+        }
+
         $favoriteBar = FavoriteBar::create($input);
 
         return $this->sendResponse($favoriteBar, 'favoriteBar created successfully.');
