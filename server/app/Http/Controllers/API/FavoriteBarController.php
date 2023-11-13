@@ -122,7 +122,7 @@ class FavoriteBarController extends BaseController
             ['bar_id', $request['bar_id']],
         ])->count();
 
-        if ($checkIfAlreadyExist === 0) {
+        if ($checkIfAlreadyExist === 1) {
             return $this->sendError('Vous avez déjà ce bar en favoris', ['error' => 'Unauthorised']);
         }
 
