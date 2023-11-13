@@ -117,7 +117,7 @@ class FavoriteBarController extends BaseController
         $input = $request->all();
         $input['user_id'] = $user['id'];
 
-        $checkIfAlreadyExist = Favorite::where([
+        $checkIfAlreadyExist = FavoriteBar::where([
             ['user_id', $user['id']],
             ['bar_id', $request['bar_id']],
         ])->count();
