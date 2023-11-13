@@ -13,6 +13,7 @@ import {
 import Image from 'next/image'
 import '../../styles/Filter.scss'
 import mapboxgl from 'mapbox-gl'
+import { apiFetch } from '@/app/api/utils'
 
 const Bottom = () => {
   const [setupBarathon, setSetupBarathon] = useState(false)
@@ -24,52 +25,21 @@ const Bottom = () => {
   const [resizeMap, setresizeMap] = useAtom(resizeMapAtom)
   const [seconds, setSeconds] = useState(0)
   const [searchBars, setSearchBars] = useState<[any]>()
+  const [allFavoriteBars, setAllFavoriteBars] = useState([])
 
   const distanceRound = (nombre: number) => {
     const partieDecimale = nombre - Math.floor(nombre)
     return Math.round(nombre + partieDecimale)
   }
 
-  const getFavoriteBars = () => {
-    const url = 'http://127.0.0.1:8000/api/favorite-bars/'
-    fetch(url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    }).then((response) => {
-      if (!response.ok) {
-        throw new Error(`Échec de la requête avec le code ${response.status}`)
-      }
-      console.log(response)
-    })
-  }
-
   const addFavorite = (barID: string) => {
-    const url = 'http://127.0.0.1:8000/api/favorite-bars/'
     const data = {
       bar_id: 3268,
     }
 
-    fetch(url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
+    apiFetch('POST', '/favorite-bars/', data).then((response) => {
+      console.log(response)
     })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(`Échec de la requête avec le code ${response.status}`)
-        }
-        return response.json()
-      })
-      .then((data) => {
-        console.log('Requête réussie !', data)
-      })
-      .catch((error) => {
-        console.error('Erreur lors de la requête :', error)
-      })
   }
 
   const destinationInput = () => {
@@ -104,6 +74,21 @@ const Bottom = () => {
       setSearchBars([])
     }
   }
+
+  useEffect(() => {
+    apiFetch('GET', '/favorite-bars/').then((response) => {
+      console.log(response.data.data)
+
+      response.data.data.map(
+        async (bar) =>
+          (bar.bar.address = await reverseGeocode(
+            bar.bar.longitude,
+            bar.bar.latitude,
+          )),
+      )
+      setAllFavoriteBars(response.data.data)
+    })
+  }, [])
 
   useEffect(() => {
     if (searchBars && searchBars.length > 0) {
@@ -281,7 +266,6 @@ const Bottom = () => {
   } else {
     content = (
       <div>
-        <div onClick={getFavoriteBars}>getFavoriteBars</div>
         <div className="filter-container">
           <Image
             src="/assets/search.svg"
@@ -336,20 +320,25 @@ const Bottom = () => {
           </div>
         </div>
         <h2 className="section"> Favories </h2>
-        <div className="section-container">
-          <Image
-            src="/assets/beer.svg"
-            className="beer-icon"
-            alt="beer icon"
-            width={20}
-            height={20}
-          />
-          <div className="localisation-container">
-            <h3 className="bar-name"> La Cervoiserie </h3>
-            <p> 17 Pl. du Palais, 33000 Bordeaux </p>
-          </div>
-          <div>10 mins</div>
-        </div>
+
+        {allFavoriteBars.map((bar, index) => (
+          <>
+            <div key={index} className="section-container">
+              <Image
+                src="/assets/beer.svg"
+                className="beer-icon"
+                alt="beer icon"
+                width={20}
+                height={20}
+              />
+              <div className="localisation-container">
+                <h3 className="bar-name">{bar.bar.name}</h3>
+                <p> {bar.bar.address} </p>
+              </div>
+              <div>10 mins</div>
+            </div>
+          </>
+        ))}
         <h2 className="section"> Récents </h2>
         <div className="section-container">
           <Image
