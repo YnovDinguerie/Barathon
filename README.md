@@ -19,3 +19,7 @@ L'application Back-end est une application Laravel PHP
 Hotfix Branches: When dealing with hotfixes, consider names like hotfix/issue-456.
 
 Prefixes: Using prefixes like feature/, bugfix/, release/, and hotfix/ can help categorize and distinguish the type of branch.
+
+## Start Playwright tests
+npx playwright test --ui
+https://playwright.dev/
