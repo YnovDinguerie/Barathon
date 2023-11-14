@@ -1,1 +1,5 @@
 export const LOGIN = 'Login'
+export const TEXTERROR = 'Email ou mot de passe incorrect.'
+// export const TEXTAPPROVE = ''
+export const HOMEURL = 'http://localhost:3000/home'
+export const REGISTERURL = 'http://localhost:3000/auth/register'
