@@ -138,7 +138,7 @@ const Register = () => {
           <input
             {...register('birthdate', { required: true })}
             type="date"
-            placeholder="Confirm password"
+            placeholder="birthdate"
             className="bg-[#FFFDF9] text-gray-400 text- w-full py-2 pl-10 pr-4 leading-5 transition-colors duration-150 ease-in-out border-b-2 focus:outline-none"
           />
           <Image
