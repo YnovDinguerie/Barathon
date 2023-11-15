@@ -2,8 +2,7 @@
 const nextConfig = {}
 
 module.exports = {
-    images: {
-      domains: ['media.tenor.com'],
-    },
-  };
-  
+  images: {
+    domains: ['media.tenor.com'],
+  },
+}
