@@ -82,7 +82,7 @@ const MapboxMap = () => {
     markerImg.src = imagePath
     markerElement.appendChild(markerImg)
 
-    const marker = new Marker(markerElement).setLngLat(lngLat).addTo(map)
+    const marker = new Marker(markerElement).setLngLat(lngLat).addTo(map!)
     setMarkers((prevMarkers) => [...prevMarkers, marker])
 
     return marker

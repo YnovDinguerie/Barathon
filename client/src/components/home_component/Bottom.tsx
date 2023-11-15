@@ -12,6 +12,7 @@ import Image from 'next/image'
 import '../../styles/Filter.scss'
 
 const destinationInput = () => {
+  // @ts-ignore
   var destination = document.getElementById('destinationInput').value
 
   if (destination.trim() !== '') {

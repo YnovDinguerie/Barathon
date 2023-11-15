@@ -2,7 +2,6 @@
 
 import getBarathon from '@/app/api/barathon/getBarathon'
 import updateBarathon from '@/app/api/barathon/updateBarathon'
-import getBarathonBars from '@/app/api/bars/getBrathonBars'
 import { toastAtom, userAtom } from '@/state'
 import { GetBarathonInput } from '@/types/barathon/input'
 import { useQuery } from '@tanstack/react-query'
@@ -33,10 +32,10 @@ const EditBarathon = ({ params }: { params: { barathonId: string } }) => {
     },
   })
 
-  const { data: bars } = useQuery({
-    queryKey: ['bars'],
-    queryFn: () => getBarathonBars({ id: params.barathonId, token: token }),
-  })
+  // const { data: bars } = useQuery({
+  //   queryKey: ['bars'],
+  //   queryFn: () => getBarathonBars({ id: params.barathonId, token: token }),
+  // })
 
   const onSubmit: SubmitHandler<GetBarathonInput> = (
     data: GetBarathonInput,
@@ -129,9 +128,9 @@ const EditBarathon = ({ params }: { params: { barathonId: string } }) => {
         <h2 className="font-medium text-md text-center mt-10 mb-5">
           Liste des bars visités
         </h2>
-        {bars?.map((bar: any) => {
+        {/* {bars?.map((bar: any) => {
           return <div key={bar.id} className="bg-gray-100"></div>
-        })}
+        })} */}
         <div className="mx-3">
           <button
             type="submit"

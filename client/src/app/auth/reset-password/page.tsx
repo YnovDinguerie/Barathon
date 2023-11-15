@@ -17,14 +17,14 @@ const ResetPassword = () => {
 
   const setToast = useSetAtom(toastAtom)
 
-  const { isError, mutateAsync: resetFn } = useMutation({
-    mutationFn: resetPassword,
-  })
+  // const { isError, mutateAsync: resetFn } = useMutation({
+  //   mutationFn: resetPassword,
+  // })
 
   const onSubmit: SubmitHandler<ResetPasswordInputs> = (
     data: ResetPasswordInputs,
   ) => {
-    resetFn({
+    resetPassword({
       email: data.email,
     }).catch((error) => {
       setToast({
@@ -33,10 +33,6 @@ const ResetPassword = () => {
         isVisible: true,
       })
     })
-  }
-
-  if (isError) {
-    return <div>An error occured</div>
   }
 
   return (

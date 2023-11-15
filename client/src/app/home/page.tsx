@@ -1,13 +1,13 @@
 'use client'
-import React, { useState, useEffect } from 'react'
-import { Provider } from 'jotai'
-import Map from '@/components/home/MapboxMap'
-import '../../styles/App.scss'
-import 'mapbox-gl/dist/mapbox-gl.css'
-import Bottom from '@/components/home/Bottom'
-import Header from '@/components/home/Header'
-import LocalisationTracker from '@/components/home/LocalisationTracker'
 import Popup from '@/components/Popup'
+import Bottom from '@/components/home_component/Bottom'
+import Header from '@/components/home_component/Header'
+import LocalisationTracker from '@/components/home_component/LocalisationTracker'
+import Map from '@/components/home_component/MapboxMap'
+import { Provider } from 'jotai'
+import 'mapbox-gl/dist/mapbox-gl.css'
+import React, { useEffect, useState } from 'react'
+import '../../styles/App.scss'
 
 const Home: React.FC = () => {
   const [isPopupOpen, setIsPopupOpen] = useState(false)

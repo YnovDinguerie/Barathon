@@ -2,16 +2,15 @@
 
 import deleteBarathon from '@/app/api/barathon/deleteBarathon'
 import getBarathon from '@/app/api/barathon/getBarathon'
-import getBarathonBars from '@/app/api/bars/getBrathonBars'
 import getBars from '@/app/api/bars/getBars'
+import LocalisationTracker from '@/components/home_component/LocalisationTracker'
 import { toastAtom, userAtom } from '@/state'
+import { latitudeAtom, longitudeAtom, radiusAtom } from '@/state/map/atoms'
 import { useQuery } from '@tanstack/react-query'
 import { format } from 'date-fns'
 import { useAtomValue, useSetAtom } from 'jotai'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
-import { latitudeAtom, longitudeAtom, radiusAtom } from '@/state/map/atoms'
-import LocalisationTracker from '@/components/home/LocalisationTracker'
 
 const BarathonIdPage = ({ params }: { params: { barathonId: string } }) => {
   const user = useAtomValue(userAtom)
@@ -46,11 +45,11 @@ const BarathonIdPage = ({ params }: { params: { barathonId: string } }) => {
       })
   }
 
-  const { data: barathonBars } = useQuery({
-    queryKey: ['barathonBars'],
-    queryFn: () =>
-      getBarathonBars({ id: params.barathonId, token: user.token }),
-  })
+  // const { data: barathonBars } = useQuery({
+  //   queryKey: ['barathonBars'],
+  //   queryFn: () =>
+  //     getBarathonBars({ id: params.barathonId, token: user.token }),
+  // })
 
   const { data: bars } = useQuery({
     queryKey: ['bars'],
