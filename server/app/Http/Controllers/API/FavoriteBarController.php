@@ -126,6 +126,7 @@ class FavoriteBarController extends BaseController
         }
 
         $favoriteBar = FavoriteBar::create($input);
+        $favoriteBar['bar'] = $favoriteBar->bar;
 
         return $this->sendResponse($favoriteBar, 'favoriteBar created successfully.');
 
