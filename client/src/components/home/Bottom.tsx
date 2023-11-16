@@ -42,6 +42,14 @@ const Bottom = () => {
     })
   }
 
+  const deleteFavoriteBar = (barID: string) => {
+    console.log(barID)
+    apiFetch('DELETE', `/favorite-bars/${barID}`).then((response) => {
+      console.log(response)
+      setAllFavoriteBars(allFavoriteBars.filter((x) => x.id !== barID))
+    })
+  }
+
   const destinationInput = () => {
     var barName = document.getElementById('destinationInput').value
 
