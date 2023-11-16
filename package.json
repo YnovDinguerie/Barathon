@@ -6,6 +6,7 @@
   },
   "devDependencies": {
     "@playwright/test": "^1.39.0",
+    "@types/jest": "^29.5.8",
     "@types/react-modal": "^3.16.3"
   }
 }
