@@ -42,25 +42,6 @@ const Bottom = () => {
     })
   }
 
-  const startDestination = (bar) => {
-    console.log(bar)
-
-    const userConfirmed = window.confirm(
-      'Lancer la navigation sur Google Maps ?',
-    )
-
-    if (userConfirmed) {
-      // Code à exécuter si l'utilisateur a cliqué sur "OK"
-      const googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${bar.bar.latitude},${bar.bar.longitude}`
-
-      // Redirigez l'utilisateur vers Google Maps
-      window.location.href = googleMapsUrl
-    } else {
-      // Code à exécuter si l'utilisateur a cliqué sur "Annuler"
-      alert('Navigation annulée.')
-    }
-  }
-
   const destinationInput = () => {
     var barName = document.getElementById('destinationInput').value
 

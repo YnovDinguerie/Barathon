@@ -38,6 +38,19 @@ const FavoriteBars = () => {
 
 	}
 
+	const startDestination = (bar) => {
+		const userConfirmed = window.confirm(
+		  'Lancer la navigation sur Google Maps ?',
+		)
+	
+		if (userConfirmed) {
+		  const googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${bar.bar.latitude},${bar.bar.longitude}`
+		  window.location.href = googleMapsUrl
+		} else {
+		  alert('Navigation annulée.')
+		}
+	  }
+
 	useEffect(() => {
 		getfavoriteBar()
 	}, [])
@@ -54,7 +67,7 @@ const FavoriteBars = () => {
 			{isLoaded ? (
 				<div className="favorites-bar-container">
 					{allFavoriteBars.map((bar, index) => (
-						<div key={index} className="section-container">
+						<div onClick={() => startDestination(bar)} key={index} className="section-container">
 							<Image
 								src="/assets/beer.svg"
 								className="beer-icon"
