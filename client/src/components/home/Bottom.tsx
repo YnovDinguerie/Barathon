@@ -50,6 +50,25 @@ const Bottom = () => {
     })
   }
 
+  const startDestination = (bar) => {
+    console.log(bar)
+
+    const userConfirmed = window.confirm(
+      'Lancer la navigation sur Google Maps ?',
+    )
+
+    if (userConfirmed) {
+      // Code à exécuter si l'utilisateur a cliqué sur "OK"
+      const googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${bar.bar.latitude},${bar.bar.longitude}`
+
+      // Redirigez l'utilisateur vers Google Maps
+      window.location.href = googleMapsUrl
+    } else {
+      // Code à exécuter si l'utilisateur a cliqué sur "Annuler"
+      alert('Navigation annulée.')
+    }
+  }
+
   const destinationInput = () => {
     var barName = document.getElementById('destinationInput').value
 
@@ -220,7 +239,6 @@ const Bottom = () => {
           />
           <p className="number-information">{radiusBars} km </p>
         </div>
-        <h2 className="section">Paramètres avancés</h2>
         <button
           onClick={startBarathonFunction}
           className="bg-orange text-white start-barathon"
@@ -290,13 +308,6 @@ const Bottom = () => {
             onClick={() => destinationInput()}
           />
           <input type="text" id="destinationInput" placeholder="Où va t-on ?" />
-          <Image
-            src="/assets/microphone.svg"
-            className="microphone-icon"
-            alt="Microphone"
-            width={20}
-            height={20}
-          />
 
           <div className="search-bar">
             {searchBars && (
@@ -344,7 +355,11 @@ const Bottom = () => {
         {!isLoading ? (
           <div className="favorites-bar-container">
             {allFavoriteBars.map((bar, index) => (
-              <div key={index} className="section-container">
+              <div
+                onClick={() => startDestination(bar)}
+                key={index}
+                className="section-container"
+              >
                 <Image
                   src="/assets/beer.svg"
                   className="beer-icon"
