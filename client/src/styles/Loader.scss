@@ -1,27 +1,26 @@
 .loader-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
 
-    .loader {
-        min-width: 30px;
-        min-height: 30px;
-        border-top: 3px solid;
-        border-color: #DF9928;
-        border-radius: 50%;
-        animation: rotate 1s linear infinite;
+  .loader {
+    min-width: 30px;
+    min-height: 30px;
+    border-top: 3px solid;
+    border-color: #df9928;
+    border-radius: 50%;
+    animation: rotate 1s linear infinite;
 
+    @keyframes rotate {
+      from {
+        rotate: 0;
+      }
 
-        @keyframes rotate {
-            from {
-                rotate: 0;
-            }
-
-            to {
-                rotate: 360deg;
-            }
-        }
+      to {
+        rotate: 360deg;
+      }
     }
+  }
 }

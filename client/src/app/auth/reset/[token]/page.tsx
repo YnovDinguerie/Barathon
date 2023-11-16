@@ -28,20 +28,22 @@ const ChangePassword = ({ params }: { params: { token: string } }) => {
       email: data.email,
       password: data.password,
       c_password: data.c_password,
-    }).then((response) => {
-      setToast({
-        msg: response.data.message,
-        status: 'Success',
-        isVisible: true,
-      })
-      router.push('/')
-    }).catch((error) => {
-      setToast({
-        msg: error.response.data.message,
-        status: 'Error',
-        isVisible: true,
-      })
     })
+      .then((response) => {
+        setToast({
+          msg: response.data.message,
+          status: 'Success',
+          isVisible: true,
+        })
+        router.push('/')
+      })
+      .catch((error) => {
+        setToast({
+          msg: error.response.data.message,
+          status: 'Error',
+          isVisible: true,
+        })
+      })
   }
 
   return (
