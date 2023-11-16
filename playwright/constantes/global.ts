@@ -20,13 +20,32 @@ export const TEMPS_TOTAL = 'Temps total';
 export const ARRETER = 'Arrêter';
 export const BARS_RESTANT = 'Bars restant';
 export const REVENIR_ARRIERE = 'Revenir en arrière';
+export const PROFIL = 'Profil';
+export const MODIFICATION_PROFIL = 'Modification du profil';
+export const GESTION_BARATHONS = 'Gestion des Barathons';
+export const STATISTIQUES = 'Statistiques';
+export const DECONNECTER = 'Se déconnecter';
+
+
+
+
 export const VALID_ACCOUNT = {
     email: 'loicbozon@gmail.com',
     password: '1234A!aa'
 };
+
+
 export async function CONNEXION(page: Page): Promise<void> {
     await page.goto('http://localhost:3000/auth/login');
     await page.locator('input[name="email"]').fill(VALID_ACCOUNT.email)
     await page.locator('input[name="password"]').fill(VALID_ACCOUNT.password)
     await page.locator('button').getByText(LOGIN).click()
+};
+
+export async function NAV_PROFIL(page: Page): Promise<void> {
+    await page.goto('http://localhost:3000/auth/login');
+    await page.locator('input[name="email"]').fill(VALID_ACCOUNT.email)
+    await page.locator('input[name="password"]').fill(VALID_ACCOUNT.password)
+    await page.locator('button').getByText(LOGIN).click()
+    await page.locator('.user-profile').click()
 };

@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { ARRETER, BARS_RESTANT, CONNEXION, DEMARRER_BARATHON, DEMARRER_PARTIE, NOMBRE_BAR_VISITER, RAYON_BARATHON, REVENIR_ARRIERE, TEMPS_TOTAL } from '../constantes/global';
+import { ARRETER, BARS_RESTANT, CONNEXION, DECONNECTER, DEMARRER_BARATHON, DEMARRER_PARTIE, GESTION_BARATHONS, MODIFICATION_PROFIL, NAV_PROFIL, NOMBRE_BAR_VISITER, PROFIL, RAYON_BARATHON, REVENIR_ARRIERE, STATISTIQUES, TEMPS_TOTAL } from '../constantes/global';
 
 const numberOfClick = 4;
 const delayBetweenClicks = 200;
@@ -51,6 +51,13 @@ test('Easter Egg', async ({ page }) => {
   await expect(page.locator('.pop-up')).toBeVisible()
   await page.locator('button').getByText('Fermer').click()
   await expect(page.locator('.pop-up')).not.toBeVisible()
-  
 });
 
+test('Tester le profil', async ({ page }) => {
+  NAV_PROFIL(page)
+  await expect(page.getByText(PROFIL)).toBeVisible()
+  await expect(page.getByText(MODIFICATION_PROFIL)).toBeVisible()
+  await expect(page.getByText(GESTION_BARATHONS)).toBeVisible()
+  await expect(page.getByText(STATISTIQUES)).toBeVisible()
+  await expect(page.getByText(DECONNECTER)).toBeVisible()
+});
