@@ -4,9 +4,15 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\API\BaseController as BaseController;
 use App\Models\Bar;
+use Illuminate\Support\Facades\Auth;
 
 class BarController extends BaseController
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth:sanctum')->except(['index','show']);
+    }
     /**
      * Display a listing of the resource.
      */
@@ -154,13 +160,16 @@ class BarController extends BaseController
      */
     public function search($latitude, $longitude, $name)
     {
-
+        $user = Auth::user();
         if (strlen($name) < 3) {
             return $this->sendError('Unauthorized', ['error' => 'Merci rentrer au moins 3 caractères']);
         }
         $latitude = deg2rad($latitude);
         $longitude = deg2rad($longitude);
-        $bars = Bar::select('bars.*')
+        $bars = Bar::with(['favoriteBars' => function ($query) use ($user) {
+            $query->where('user_id', $user->id);
+        }])
+        ->select('bars.*')
             ->selectRaw('(
             6371 * 2 * asin(
                 sqrt(
@@ -171,7 +180,11 @@ class BarController extends BaseController
             )
         ) AS distance', [$latitude, $latitude, $longitude])
             ->where('name', 'like', '%'.$name.'%')
-            ->get();
+            ->get()
+            ->map(function ($bar) {
+                $bar->isFavorite = $bar->favoriteBars->isNotEmpty();
+                return $bar;
+            });
 
         return $this->sendResponse($bars, 'success.');
 

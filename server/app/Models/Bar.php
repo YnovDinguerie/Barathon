@@ -24,4 +24,9 @@ class Bar extends Model
     {
         return $this->hasMany(BaratonBar::class);
     }
+
+    public function favoriteBars(): HasMany
+    {
+        return $this->hasMany(FavoriteBar::class);
+    }
 }
