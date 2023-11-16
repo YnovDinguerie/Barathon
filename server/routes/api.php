@@ -5,7 +5,9 @@ use App\Http\Controllers\API\BaratonBarController;
 use App\Http\Controllers\API\BaratonController;
 use App\Http\Controllers\API\BarController;
 use App\Http\Controllers\API\BarOpinionController;
+use App\Http\Controllers\API\FavoriteBarController;
 use App\Http\Controllers\API\FriendController;
+use App\Http\Controllers\API\LoginWithGoogleController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -22,14 +24,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
-});
-
-use App\Models\User;
-
-Route::get('users', function () {
-    $users = User::all();
-
-    return response()->json(['users' => $users], 200);
 });
 
 Route::controller(AuthController::class)->group(function () {
@@ -53,6 +47,9 @@ Route::controller(BaratonController::class)->group(function () {
 Route::controller(BarController::class)->group(function () {
 
     Route::get('bars/{userLatitude}&{userLongitude}&{radius}', 'index');
+    Route::get('bars-search/{userLatitude}&{userLongitude}&{name}', 'search');
+    Route::get('bars/{bar}', 'show');
+
 });
 
 Route::controller(BaratonBarController::class)->group(function () {
@@ -75,4 +72,15 @@ Route::controller(FriendController::class)->group(function () {
     Route::post('friends', 'store');
     Route::put('friends/{id}', 'update');
     Route::delete('friends/{id}', 'destroy');
+});
+
+Route::controller(FavoriteBarController::class)->group(function () {
+    Route::get('favorite-bars', 'index');
+    Route::post('favorite-bars', 'store');
+    Route::delete('favorite-bars/{favoriteBar}', 'destroy');
+});
+
+Route::controller(LoginWithGoogleController::class)->group(function () {
+    Route::get('authorized/google', 'redirectToGoogle')->name('auth.google');
+    Route::get('authorized/google/callback', 'handleGoogleCallback');
 });

@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
         \App\Models\User::factory(10)->create();
 
         $command = 'python '.'database/seeders/get_bars.py';
+
         exec($command, $output, $return_var);
 
         // Vérifiez si l'exécution a réussi

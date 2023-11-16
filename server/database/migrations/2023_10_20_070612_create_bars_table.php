@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('latitude');
             $table->string('website')->nullable();
             $table->string('phone')->nullable();
-            $table->string('opening_hours')->nullable();
+            $table->text('opening_hours')->nullable();
             $table->string('wheelchair')->nullable();
             $table->timestamps();
         });

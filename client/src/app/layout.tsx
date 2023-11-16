@@ -3,6 +3,7 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import { Providers } from './providers'
 import { init } from '@sentry/nextjs'
+import ToastComponent from '@/components/toast/ToastComponent'
 
 init({
   dsn: 'https://80e2c68e14cba2bceb53a94315877a98@o4506186000498688.ingest.sentry.io/4506186003382272',
@@ -23,6 +24,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
+        <ToastComponent />
         <Providers>{children}</Providers>
       </body>
     </html>

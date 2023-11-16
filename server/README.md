@@ -25,3 +25,19 @@ To run seeder you need some python package
 
 # Generate swagger
 ```php artisan l5-swagger:generate```
+```http://127.0.0.1:8000/api/documentation```
+
+
+
+# Run Test
+```php artisan test```
+
+```http://127.0.0.1:8000/api/documentation```
+
+
+
+# Run Test
+```php artisan test```
+```php artisan test --coverage```
+
+

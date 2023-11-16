@@ -6,5 +6,5 @@ export default async function registerUser(registerData: RegisterInputs) {
     'http://127.0.0.1:8000/api/register',
     registerData,
   )
-  return response
+  return response.data.data
 }

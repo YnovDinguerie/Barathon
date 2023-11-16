@@ -5,6 +5,8 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 import resetPassword from '../../api/auth/resetPassword'
 import { useMutation } from 'react-query'
 import Image from 'next/image'
+import { useSetAtom } from 'jotai'
+import { toastAtom } from '@/state'
 
 const ResetPassword = () => {
   const {
@@ -12,6 +14,8 @@ const ResetPassword = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<ResetPasswordInputs>()
+
+  const setToast = useSetAtom(toastAtom)
 
   const { isError, mutateAsync: resetFn } = useMutation({
     mutationFn: resetPassword,
@@ -22,6 +26,12 @@ const ResetPassword = () => {
   ) => {
     resetFn({
       email: data.email,
+    }).catch((error) => {
+      setToast({
+        msg: error.response.data.message,
+        status: 'Error',
+        isVisible: true,
+      })
     })
   }
 

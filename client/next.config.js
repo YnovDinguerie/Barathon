@@ -82,3 +82,10 @@ module.exports = withSentryConfig(
         disableLogger: true,
     }
 )
+module.exports = {
+    images: {
+        domains: ['media.tenor.com'],
+    },
+    nextConfig
+};
+
