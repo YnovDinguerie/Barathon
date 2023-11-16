@@ -75,18 +75,26 @@ const Bottom = () => {
     }
   }
 
+  const [isLoading, setIsLoading] = useState(true)
+  const getfavoriteBar = async () => {
+    setIsLoading(true)
+    const res = await apiFetch('GET', '/favorite-bars/')
+
+    const bars = res.data.data
+    bars.map(
+      async (bar) =>
+        (bar.bar.address = await reverseGeocode(
+          bar.bar.longitude,
+          bar.bar.latitude,
+        )),
+    )
+    console.log(bars)
+    setAllFavoriteBars(bars)
+    setresizeMap(!resizeMap)
+    setIsLoading(false)
+  }
   useEffect(() => {
-    apiFetch('GET', '/favorite-bars/').then((response) => {
-      response.data.data.map(
-        async (bar) =>
-          (bar.bar.address = await reverseGeocode(
-            bar.bar.longitude,
-            bar.bar.latitude,
-          )),
-      )
-      setAllFavoriteBars(response.data.data)
-      setresizeMap(!resizeMap)
-    })
+    getfavoriteBar()
   }, [])
 
   useEffect(() => {
@@ -321,27 +329,32 @@ const Bottom = () => {
         {allFavoriteBars.length > 0 ? (
           <h2 className="section"> Favories </h2>
         ) : (
-          <p> Commencer par ajouter des favories </p>
+          <p className="start-add-favorite">
+            Commencer par ajouter des favories à l'aide de la barre de recherche
+          </p>
         )}
-
-        <div className="favorites-bar-container">
-          {allFavoriteBars.map((bar, index) => (
-            <div key={index} className="section-container">
-              <Image
-                src="/assets/beer.svg"
-                className="beer-icon"
-                alt="beer icon"
-                width={20}
-                height={20}
-              />
-              <div className="localisation-container">
-                <h3 className="bar-name">{bar.bar.name}</h3>
-                <p>{bar.bar.address}</p>
+        {!isLoading ? (
+          <div className="favorites-bar-container">
+            {allFavoriteBars.map((bar, index) => (
+              <div key={index} className="section-container">
+                <Image
+                  src="/assets/beer.svg"
+                  className="beer-icon"
+                  alt="beer icon"
+                  width={20}
+                  height={20}
+                />
+                <div className="localisation-container">
+                  <h3 className="bar-name">{bar.bar.name}</h3>
+                  <p>{bar.bar.address}</p>
+                </div>
+                <div>10 mins</div>
               </div>
-              <div>10 mins</div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        ) : (
+          isLoading
+        )}
         <button
           onClick={setupBarathonFunction}
           className="bg-orange text-white start-barathon"
