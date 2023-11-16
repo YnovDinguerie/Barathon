@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { navProfil, ACCOUNT_INFO, USER_NAME, EMAIL, EDIT, EDIT_MDP, BIRTHDATE, INFORMATIONS, PROFIL, RANDOM_ACCOUNT, ERROR404 } from '../../constantes/global';
+import { navProfil, ACCOUNT_INFO, USER_NAME, EMAIL, EDIT, EDIT_MDP, BIRTHDATE, INFORMATIONS, PROFIL, RANDOM_ACCOUNT, RESET_PWD } from '../../constantes/global';
 
 test('modification du profil', async ({ page }) => {
     navProfil(page)
@@ -41,5 +41,8 @@ test('modification mot de passe', async ({ page }) => {
     navProfil(page)
     await page.locator('img[alt="arrow"]').nth(1).click()
     await expect(page.getByText(ACCOUNT_INFO)).toBeVisible()
-    await page.locator('a[href="/auth/reset-password"]').getByText(ERROR404).click()
+    await page.locator('a[href="/auth/reset"]').getByText(EDIT_MDP).click()
+    await expect(page.getByText(RESET_PWD)).toBeVisible()
+    await page.locator('input[name="email"]').fill(RANDOM_ACCOUNT.email)
+    await expect(page.locator('.toast-Error')).not.toBeVisible()
 });
