@@ -121,7 +121,7 @@ const Login = () => {
         </button>
         <div className="flex justify-center">
           <div className="text-sm mr-3  text-[#DF9928]">
-            You don&apos;t have an account ? {''}
+            You don t have an account ? {''}
             <Link href="/auth/register" className="underline">
               Register
             </Link>
