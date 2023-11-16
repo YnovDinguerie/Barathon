@@ -8,6 +8,7 @@ import registerUser from '../../api/auth/register'
 import { useSetAtom } from 'jotai'
 import { toastAtom, userAtom } from '@/state'
 import { useRouter } from 'next/navigation'
+import logger from '@/utils/logger'
 
 const Register = () => {
   const {
@@ -35,6 +36,7 @@ const Register = () => {
           token: response.token,
           birtdate: response.birthdate,
         })
+        logger.error('user register success', response)
         router.push('/home')
       })
       .catch((error) => {

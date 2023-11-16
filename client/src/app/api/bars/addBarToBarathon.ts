@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-export default async function addBarathonToBars({
+export default async function addBarToBarathonBars({
   barathonId,
   barId,
   token,

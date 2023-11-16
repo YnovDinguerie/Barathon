@@ -1,4 +1,5 @@
 import log from 'loglevel'
+import * as Sentry from '@sentry/nextjs'
 
 const logger = log.getLogger('NextJSApp')
 log.setLevel('info') // Set the default log level

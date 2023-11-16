@@ -1,7 +1,7 @@
 'use client'
 
 import createBarathon from '@/app/api/barathon/createBarathon'
-import addBarathonToBars from '@/app/api/bars/addBarToBarathon'
+import addBarToBarathonBars from '@/app/api/bars/addBarToBarathon'
 import getBars from '@/app/api/bars/getBars'
 import RangeInput from '@/components/Input/RangeInput'
 import { toastAtom, userAtom } from '@/state'
@@ -16,7 +16,7 @@ const CreateBarathon = () => {
   const [barathonName, setBarathonName] = useState<string>('')
   const [barathonTime, setBarathonTime] = useState<string>('')
   const [barathonCity, setBarathonCity] = useState<string>('')
-  const [barSelected, setBarSelected] = useState<BarType[]>([])
+  const [barSelected, setBarSelected] = useState<any[]>([])
 
   const router = useRouter()
 
@@ -39,15 +39,11 @@ const CreateBarathon = () => {
     setBarathonCity(e.target.value)
   }
 
-  const selectBar = (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.checked) {
-      setBarSelected([...barSelected, e.target.value as unknown as BarType])
+  const selectBar = (bar: BarType) => {
+    if (bar) {
+      setBarSelected([...barSelected, bar])
     } else {
-      setBarSelected(
-        barSelected.filter(
-          (bar) => bar !== (e.target.value as unknown as BarType),
-        ),
-      )
+      setBarSelected(barSelected.filter((bar) => bar.bar.id !== bar.id))
     }
   }
 
@@ -71,6 +67,7 @@ const CreateBarathon = () => {
       radius: barRadius,
       time: barathonTime,
       token: token,
+      barathonBars: barSelected,
     })
       .then(() => {
         setToast({
@@ -126,14 +123,14 @@ const CreateBarathon = () => {
             onChange={saveBarathonCity}
             className="border rounded-lg mx-3 bg-[#FFFDF9]"
           >
-            <option>Bordeaux</option>
+            <option selected>Bordeaux</option>
             <option>Bayonne</option>
           </select>
         </div>
-        {/* <div className="ml-3 font-medium">
+        <div className="ml-3 font-medium">
           Bars (sélectionner plusieurs bars)
-        </div> */}
-        {/* <div>
+        </div>
+        <div>
           {bars
             ?.filter((bar: any) => bar.name !== null)
             .map((bar) => {
@@ -145,14 +142,14 @@ const CreateBarathon = () => {
                       name="bar"
                       type="checkbox"
                       value={bar.name}
-                      onChange={selectBar}
+                      onChange={() => selectBar(bar)}
                     />
                     <label htmlFor="bar">{bar.name}</label>
                   </div>
                 </div>
               )
             })}
-        </div> */}
+        </div>
         <button
           className="mx-3 bg-[#DF9928] rounded-lg p-2"
           onClick={submitCreateBarathon}
