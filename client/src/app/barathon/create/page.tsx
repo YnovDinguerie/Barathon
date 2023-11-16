@@ -16,7 +16,7 @@ const CreateBarathon = () => {
   const [barathonName, setBarathonName] = useState<string>('')
   const [barathonTime, setBarathonTime] = useState<string>('')
   const [barathonCity, setBarathonCity] = useState<string>('')
-  const [barSelected, setBarSelected] = useState<BarType[]>([])
+  const [barSelected, setBarSelected] = useState<any[]>([])
 
   const router = useRouter()
 
@@ -43,7 +43,7 @@ const CreateBarathon = () => {
     if (bar) {
       setBarSelected([...barSelected, bar])
     } else {
-      setBarSelected(barSelected.filter((bar) => bar.id !== bar.id))
+      setBarSelected(barSelected.filter((bar) => bar.bar.id !== bar.id))
     }
   }
 
