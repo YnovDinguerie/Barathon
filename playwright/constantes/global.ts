@@ -1,3 +1,5 @@
+import { Page } from "playwright-core";
+
 export const LOGIN = 'Login'
 export const REGISTER = 'Register'
 export const TEXT_ERROR = 'Error'
@@ -21,4 +23,10 @@ export const REVENIR_ARRIERE = 'Revenir en arrière';
 export const VALID_ACCOUNT = {
     email: 'loicbozon@gmail.com',
     password: '1234A!aa'
-  }
+};
+export async function CONNEXION(page: Page): Promise<void> {
+    await page.goto('http://localhost:3000/auth/login');
+    await page.locator('input[name="email"]').fill(VALID_ACCOUNT.email)
+    await page.locator('input[name="password"]').fill(VALID_ACCOUNT.password)
+    await page.locator('button').getByText(LOGIN).click()
+};

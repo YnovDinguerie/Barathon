@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { CONNECT_WITH_GOOGLE, CREATE_YOUR_ACCOUNT, HOME_URL, LOGIN, LOGIN_INTO_ACCOUNT, LOGIN_URL, REGISTER, TEXT_ERROR } from '../../constantes/global';
+import { CONNECT_WITH_GOOGLE, CREATE_YOUR_ACCOUNT, LOGIN, LOGIN_INTO_ACCOUNT, REGISTER, TEXT_ERROR } from '../../constantes/global';
 import { faker } from '@faker-js/faker/locale/en'
 
 const account = {
