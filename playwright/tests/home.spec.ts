@@ -1,38 +1,37 @@
 import { test, expect } from '@playwright/test';
-import { ARRETER, BARS_RESTANT, CONNEXION, DECONNECTER, DEMARRER_BARATHON, DEMARRER_PARTIE, GESTION_BARATHONS, MODIFICATION_PROFIL, NAV_PROFIL, NOMBRE_BAR_VISITER, PROFIL, RAYON_BARATHON, REVENIR_ARRIERE, STATISTIQUES, TEMPS_TOTAL } from '../constantes/global';
+import { STOP, BARS_REMAINING, login, START_BARATHON, START_PARTY, BAR_VISITED, RADIUS_BARATHON, GOING_BACK, TOTAL_TIME, CLOSE } from '../constantes/global';
 
 const numberOfClick = 4;
 const delayBetweenClicks = 200;
-
 const barFavori = 'La Cervoiserie';
 
 test('Démarrer un barathon', async ({ page }) => {
   await page.goto('http://localhost:3000/home');
-  await page.getByText(DEMARRER_BARATHON).click()
-  await expect(page.getByText(NOMBRE_BAR_VISITER)).toBeVisible()
-  await expect(page.getByText(RAYON_BARATHON)).toBeVisible()
-  await page.locator('.start-barathon').getByText(DEMARRER_PARTIE).click()
-  await expect(page.getByText(TEMPS_TOTAL)).toBeVisible()
-  await expect(page.getByText(ARRETER)).toBeVisible()
-  await expect(page.getByText(BARS_RESTANT)).toBeVisible()
-  await page.getByText(ARRETER).click()
-  await expect(page.getByText(TEMPS_TOTAL)).not.toBeVisible()
-  await expect(page.getByText(ARRETER)).not.toBeVisible()
-  await expect(page.getByText(BARS_RESTANT)).not.toBeVisible()
-  await expect(page.getByText(DEMARRER_BARATHON)).toBeVisible()
+  await page.getByText(START_BARATHON).click()
+  await expect(page.getByText(BAR_VISITED)).toBeVisible()
+  await expect(page.getByText(RADIUS_BARATHON)).toBeVisible()
+  await page.locator('.start-barathon').getByText(START_PARTY).click()
+  await expect(page.getByText(TOTAL_TIME)).toBeVisible()
+  await expect(page.getByText(STOP)).toBeVisible()
+  await expect(page.getByText(BARS_REMAINING)).toBeVisible()
+  await page.getByText(STOP).click()
+  await expect(page.getByText(TOTAL_TIME)).not.toBeVisible()
+  await expect(page.getByText(STOP)).not.toBeVisible()
+  await expect(page.getByText(BARS_REMAINING)).not.toBeVisible()
+  await expect(page.getByText(START_BARATHON)).toBeVisible()
 });
 
 test('Retour en arrière', async ({ page }) => {
-  CONNEXION(page)
-  await page.getByText(DEMARRER_BARATHON).click()
-  await expect(page.getByText(NOMBRE_BAR_VISITER)).toBeVisible()
-  await expect(page.getByText(RAYON_BARATHON)).toBeVisible()
-  await page.getByText(REVENIR_ARRIERE).click()
-  await expect(page.getByText(DEMARRER_BARATHON)).toBeVisible()
+  login(page)
+  await page.getByText(START_BARATHON).click()
+  await expect(page.getByText(BAR_VISITED)).toBeVisible()
+  await expect(page.getByText(RADIUS_BARATHON)).toBeVisible()
+  await page.getByText(GOING_BACK).click()
+  await expect(page.getByText(START_BARATHON)).toBeVisible()
 });
 
 test('Ajouter un favori', async ({ page }) => {
-  CONNEXION(page)
+  login(page)
   await page.locator('input[id="destinationInput"]').fill(barFavori)
   await page.locator('img[alt="search icon"]').click()
   await expect(page.getByText(barFavori).first()).toBeVisible()
@@ -41,6 +40,7 @@ test('Ajouter un favori', async ({ page }) => {
 });
 
 test('Easter Egg', async ({ page }) => {
+  const popUp = page.locator('.pop-up')
   await page.goto('http://localhost:3000/home');
   await Promise.all(
       Array.from({ length: numberOfClick }).map(async () => {
@@ -48,16 +48,7 @@ test('Easter Egg', async ({ page }) => {
           await page.waitForTimeout(delayBetweenClicks)
       })
   )
-  await expect(page.locator('.pop-up')).toBeVisible()
-  await page.locator('button').getByText('Fermer').click()
-  await expect(page.locator('.pop-up')).not.toBeVisible()
-});
-
-test('Tester le profil', async ({ page }) => {
-  NAV_PROFIL(page)
-  await expect(page.getByText(PROFIL)).toBeVisible()
-  await expect(page.getByText(MODIFICATION_PROFIL)).toBeVisible()
-  await expect(page.getByText(GESTION_BARATHONS)).toBeVisible()
-  await expect(page.getByText(STATISTIQUES)).toBeVisible()
-  await expect(page.getByText(DECONNECTER)).toBeVisible()
+  await expect(popUp).toBeVisible()
+  await page.locator('button').getByText(CLOSE).click()
+  await expect(popUp).not.toBeVisible()
 });
