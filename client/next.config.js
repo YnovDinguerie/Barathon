@@ -3,8 +3,7 @@
 module.exports = {
     images: {
       domains: ['media.tenor.com'],
-    },
-    nextConfig
+    }
   };
   
 // This file sets a custom webpack configuration to use your Next.js app

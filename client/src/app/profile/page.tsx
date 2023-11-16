@@ -29,9 +29,7 @@ const Profile = () => {
             height={20}
             width={20}
           />
-          <div className="text-center font-medium m-2 ml-3 text-xl">
-            Profile
-          </div>
+          <div className="text-center font-medium m-2 ml-3 text-xl">Profil</div>
         </div>
       </div>
       <div className="m-3">
