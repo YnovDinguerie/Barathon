@@ -9,6 +9,7 @@ import { useSetAtom } from 'jotai'
 import { toastAtom, userAtom } from '@/state'
 import { useRouter } from 'next/navigation'
 import axios from 'axios'
+import logger from '@/utils/logger'
 
 const Login = () => {
   const {
@@ -31,6 +32,7 @@ const Login = () => {
           token: response.token,
           birtdate: response.birthdate,
         })
+        logger.info({ message: 'user login success', data: response })
         router.push('/home')
       })
       .catch((err) => {
@@ -39,6 +41,7 @@ const Login = () => {
           status: 'Error',
           isVisible: true,
         })
+        logger.error('user login failed', err.response.data.message)
       })
   }
 
