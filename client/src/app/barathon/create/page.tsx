@@ -47,9 +47,6 @@ const CreateBarathon = () => {
     }
   }
 
-
-  console.log(barSelected)
-
   const { data: bars } = useQuery({
     queryKey: ['bars'],
     queryFn: () =>

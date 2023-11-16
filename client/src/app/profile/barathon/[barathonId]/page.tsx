@@ -52,19 +52,6 @@ const BarathonIdPage = ({ params }: { params: { barathonId: string } }) => {
       getBarathonBars({ id: Number(params.barathonId), token: user.token }),
   })
 
-  console.log(barathonBars)
-
-  // const { data: bars } = useQuery({
-  //   queryKey: ['bars'],
-  //   queryFn: () =>
-  //     getBars({
-  //       latitude: longitude,
-  //       longitude: latitude,
-  //       radius: 2,
-  //       token: user.token,
-  //     }),
-  // })
-
   const router = useRouter()
   return (
     <div className="bg-[#FFFDF9]">
