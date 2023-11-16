@@ -5,6 +5,7 @@ namespace Tests\Feature\Controller;
 use App\Models\Bar;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
+use App\Models\User;
 
 class BarControllerTest extends TestCase
 {
@@ -14,6 +15,14 @@ class BarControllerTest extends TestCase
     use RefreshDatabase;
 
     protected $dropViews = true;
+
+
+    protected function getToken($user)
+    {
+        $token = $user->createToken('test-token')->plainTextToken;
+
+        return $token;
+    }
 
     public function testIndex()
     {
@@ -46,12 +55,14 @@ class BarControllerTest extends TestCase
             'latitude' => -44,
             'longitude' => 0.6,
         ]);
+        $user = User::factory()->create();
+
 
         $latitude = -44;
         $longitude = 0.6;
         $name = 'Example';
 
-        $response = $this->get("/api/bars-search/$latitude&$longitude&$name");
+        $response = $this->withHeaders(['Authorization' => 'Bearer '.$this->getToken($user)])->get("/api/bars-search/$latitude&$longitude&$name");
 
         $response->assertStatus(200);
 
@@ -71,12 +82,14 @@ class BarControllerTest extends TestCase
             'latitude' => -44,
             'longitude' => 0.6,
         ]);
+        $user = User::factory()->create();
+
 
         $latitude = -44;
         $longitude = 0.6;
         $name = 'Ex';
 
-        $response = $this->get("/api/bars-search/$latitude&$longitude&$name");
+        $response = $this->withHeaders(['Authorization' => 'Bearer '.$this->getToken($user)])->get("/api/bars-search/$latitude&$longitude&$name");
 
         $response->assertStatus(404);
     }
