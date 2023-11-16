@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import { apiFetch, reverseGeocode } from '@/app/api/utils'
-import { resizeMapAtom } from '@/state/map/atoms'
+import { favoriteBarsAtom, resizeMapAtom } from '@/state/map/atoms'
 import { useAtom } from 'jotai'
 import React, { useEffect, useState } from 'react'
 import Image from 'next/image'
@@ -8,6 +8,12 @@ import Image from 'next/image'
 const FavoriteBars = () => {
 	const [allFavoriteBars, setAllFavoriteBars] = useState([])
 	const [resizeMap, setResizeMap] = useAtom(resizeMapAtom)
+
+	const [favoriteBars, setFavoriteBars] = useAtom(
+		favoriteBarsAtom,
+	)
+
+
 
 	const [isLoaded, setIsLoaded] = useState(false)
 	const getfavoriteBar = async () => {
@@ -25,17 +31,16 @@ const FavoriteBars = () => {
 				return bar
 			}),
 		)
-
 		setAllFavoriteBars(barsWithAddresses)
+		setFavoriteBars(barsWithAddresses)
 		setResizeMap(!resizeMap)
 		setIsLoaded(true)
 	}
 
 	const deleteFavoriteBar = async (barID: string) => {
-		console.log(barID)
 		await apiFetch('DELETE', `/favorite-bars/${barID}`).then((response) => {
-			console.log(response)
-			setAllFavoriteBars(allFavoriteBars.filter((x) => x.id !== barID))
+			setFavoriteBars(favoriteBars.filter((x) => x.id !== barID))
+
 		})
 		setResizeMap(!resizeMap)
 	}
@@ -55,22 +60,44 @@ const FavoriteBars = () => {
 
 	useEffect(() => {
 		getfavoriteBar()
+
 	}, [])
+
+	const setAddressToNewBars = async () => {
+		const barsWithAddresses = await Promise.all(
+			favoriteBars.map(async (bar) => {
+				bar.bar.address = await reverseGeocode(
+					bar.bar.longitude,
+					bar.bar.latitude,
+				)
+				return bar
+			}),
+		)
+		setAllFavoriteBars(barsWithAddresses)
+	}
+	useEffect(() => {
+		setAddressToNewBars()
+		setResizeMap(!resizeMap)
+
+
+	}, [favoriteBars])
+
+
 
 	return (
 		<div className="favorite-bars-container">
-			{allFavoriteBars.length > 0 ? (
-				<h2 className="section"> Favories </h2>
+			{favoriteBars.length > 0 ? (
+				<h2 className="section"> Favoris </h2>
 			) : (
 				<p className="start-add-favorite">
-					Commencer par ajouter des favories à l aide de la barre de recherche
+					Commencer par ajouter des favoris à l aide de la barre de recherche
 				</p>
 			)}
 			{isLoaded ? (
 				<div className="favorites-bar-container">
-					{allFavoriteBars.map((bar, index) => (
+					{favoriteBars.map((bar, index) => (
 						<div
-							
+
 							key={index}
 							className="section-container"
 						>

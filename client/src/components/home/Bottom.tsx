@@ -1,20 +1,24 @@
 import React, { useEffect, useState } from 'react'
 import '../../styles/Bottom.scss'
 import RangeInput from '../Input/RangeInput'
-import { useAtom } from 'jotai'
+import { useAtom, useAtomValue } from 'jotai'
 import {
   barsToVisitAtom,
   latitudeAtom,
   longitudeAtom,
   radiusAtom,
   resizeMapAtom,
+  refreshFavoriteBarsAtom,
   startBarathonAtom,
+  favoriteBarsAtom,
 } from '../../state/map/atoms'
 import Image from 'next/image'
 import '../../styles/Filter.scss'
 import mapboxgl from 'mapbox-gl'
 import { apiFetch } from '@/app/api/utils'
 import FavoriteBars from './FavoriteBars'
+import axios from 'axios'
+import { userAtom } from '@/state'
 
 const Bottom = () => {
   const [setupBarathon, setSetupBarathon] = useState(false)
@@ -24,8 +28,11 @@ const Bottom = () => {
   const [longitude, setLongitude] = useAtom(longitudeAtom)
   const [latitude, setLatitude] = useAtom(latitudeAtom)
   const [resizeMap, setresizeMap] = useAtom(resizeMapAtom)
+  const [favoriteBars, setFavoriteBars] = useAtom(favoriteBarsAtom)
+
   const [seconds, setSeconds] = useState(0)
   const [searchBars, setSearchBars] = useState<[any]>()
+  const user = useAtomValue(userAtom)
 
   const distanceRound = (nombre: number) => {
     const partieDecimale = nombre - Math.floor(nombre)
@@ -37,9 +44,32 @@ const Bottom = () => {
       bar_id: barID,
     }
 
-    apiFetch('POST', '/favorite-bars/', data).then((response) => {
-      console.log(response)
-    })
+    // Copie de la liste des bars
+    const updatedBars = [...searchBars]
+
+    const barIndex = updatedBars.findIndex((x) => x.id === barID)
+    const bar = updatedBars[barIndex]
+
+    if (!bar.isFavorite) {
+      apiFetch('POST', '/favorite-bars/', data).then((res) => {
+        bar.isFavorite = true
+        updatedBars[barIndex] = bar
+
+        setFavoriteBars([...favoriteBars, res.data.data])
+        setSearchBars(updatedBars)
+      })
+    } else {
+      apiFetch('DELETE', `/favorite-bars/${bar.favorite_bars[0].id}`).then(
+        () => {
+          bar.isFavorite = false
+          updatedBars[barIndex] = bar
+          setFavoriteBars(
+            favoriteBars.filter((x) => x.id !== bar.favorite_bars[0].id),
+          )
+          setSearchBars(updatedBars)
+        },
+      )
+    }
   }
 
   const destinationInput = () => {
@@ -48,13 +78,19 @@ const Bottom = () => {
     if (barName.trim() !== '') {
       var apiUrl = `http://127.0.0.1:8000/api/bars-search/${latitude}&${longitude}&${barName}`
 
-      fetch(apiUrl)
-        .then((response) => response.json())
-        .then((data) => {
+      axios
+        .get(apiUrl, {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        })
+
+        .then((res) => {
+          const bars = res.data.data
           const barsWithAddresses = []
 
           Promise.all(
-            data.data.map(async (bar) => {
+            bars.map(async (bar) => {
               const address = await reverseGeocode(bar.longitude, bar.latitude)
               barsWithAddresses.push({ ...bar, address })
             }),
@@ -264,7 +300,9 @@ const Bottom = () => {
             {searchBars && (
               <div>
                 <div className="close-item">
-                  <img
+                  <Image
+                    width="20"
+                    height="20"
                     onClick={closeResultSearch}
                     src="/assets/close.svg"
                     alt="close"
@@ -277,10 +315,16 @@ const Bottom = () => {
                         onClick={() => addFavorite(bar.id)}
                         className="img-favorite"
                       >
-                        <img
-                          src="/assets/favorite.svg"
+                        <Image
+                          width="20"
+                          height="20"
+                          src={
+                            bar.isFavorite
+                              ? '/assets/favorite-filled.svg'
+                              : '/assets/favorite.svg'
+                          }
                           alt="Add to favorite"
-                        ></img>
+                        />
                       </div>
                       <div>
                         <div className="bar-name">{bar.name}</div>
