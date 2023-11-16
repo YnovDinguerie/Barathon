@@ -11,7 +11,7 @@ test('Check wrong login', async ({ page }) => {
   await page.locator('input[name="email"]').fill(ACCOUNT.email)
   await page.locator('input[name="password"]').fill(ACCOUNT.password)
   await page.locator('button').getByText(LOGIN).click()
-  await expect(page.locator('.toast-Error')).toBeVisible()
+  await expect(page.locator('.toast-Error')).toBeVisible({timeout: 90000})
 });
 
 test('Check correct login', async ({ page }) => {

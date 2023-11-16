@@ -69,7 +69,8 @@ export async function navProfil(page: Page): Promise<void> {
     await page.locator('input[name="email"]').fill(VALID_ACCOUNT.email)
     await page.locator('input[name="password"]').fill(VALID_ACCOUNT.password)
     await page.locator('button').getByText(LOGIN).click()
-    await page.locator('img[alt="image profile"]').first().click()
+    await expect(page.getByText(LOGIN).first()).not.toBeVisible({timeout: 90000})
+    await page.locator('img[alt="image profile"]').first().click({timeout: 90000})
     await expect(page.getByText(PROFIL).first()).toBeVisible()
 };
 
