@@ -22,6 +22,7 @@ export type createBarathonType = {
   radius: number
   city: string
   token: string
+  barathonBars: BarType[]
 }
 
 export type BarType = {

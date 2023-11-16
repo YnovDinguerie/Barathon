@@ -49,19 +49,21 @@ const BarathonIdPage = ({ params }: { params: { barathonId: string } }) => {
   const { data: barathonBars } = useQuery({
     queryKey: ['barathonBars'],
     queryFn: () =>
-      getBarathonBars({ id: params.barathonId, token: user.token }),
+      getBarathonBars({ id: Number(params.barathonId), token: user.token }),
   })
 
-  const { data: bars } = useQuery({
-    queryKey: ['bars'],
-    queryFn: () =>
-      getBars({
-        latitude: longitude,
-        longitude: latitude,
-        radius: 2,
-        token: user.token,
-      }),
-  })
+  console.log(barathonBars)
+
+  // const { data: bars } = useQuery({
+  //   queryKey: ['bars'],
+  //   queryFn: () =>
+  //     getBars({
+  //       latitude: longitude,
+  //       longitude: latitude,
+  //       radius: 2,
+  //       token: user.token,
+  //     }),
+  // })
 
   const router = useRouter()
   return (
@@ -86,16 +88,16 @@ const BarathonIdPage = ({ params }: { params: { barathonId: string } }) => {
         </div>
         <div>Ville : {barathon?.city}</div>
         <div>Heure : {barathon?.time}</div>
-        <div>Rayon séléctioné {barathon?.radius}</div>
+        <div>Rayon séléctioné : {barathon?.radius}</div>
       </div>
 
       <div className="font-medium ml-3 mb-2">Bars visités</div>
       <LocalisationTracker />
       <div className="mx-3">
-        {bars?.map((bar: any) => {
+        {barathonBars?.map((bar: any) => {
           return (
             <div key={bar.id} className="bg-gray-100">
-              {bar.name}
+              {bar.bar.name}
             </div>
           )
         })}
