@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Controller;
 
 use App\Models\Bar;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -22,24 +22,19 @@ class BarControllerTest extends TestCase
             'longitude' => 0.6,
         ]);
 
-        // Simulez des valeurs de latitude, de longitude et de rayon
-        $latitude = -44; // Exemple de latitude
-        $longitude = 0.6; // Exemple de longitude
-        $radius = 2; // Exemple de rayon
+        $latitude = -44;
+        $longitude = 0.6;
+        $radius = 2;
 
-        // Effectuez la requête GET vers votre endpoint
         $response = $this->get("/api/bars/$latitude&$longitude&$radius");
 
-        // Vérifiez si la réponse HTTP est un succès (code 200)
         $response->assertStatus(200);
 
-        // Vérifiez la structure de la réponse JSON (adapté à votre application)
         $response->assertJsonStructure([
             'data' => [
                 '*' => [
                     'id',
                     'name',
-                    // Ajoutez d'autres clés que vous attendez dans la réponse JSON
                 ],
             ],
         ]);
@@ -52,24 +47,19 @@ class BarControllerTest extends TestCase
             'longitude' => 0.6,
         ]);
 
-        // Simulez des valeurs de latitude, de longitude et de rayon
-        $latitude = -44; // Exemple de latitude
-        $longitude = 0.6; // Exemple de longitude
-        $name = 'Example'; // Exemple de nom
+        $latitude = -44;
+        $longitude = 0.6;
+        $name = 'Example';
 
-        // Effectuez la requête GET vers votre endpoint
         $response = $this->get("/api/bars-search/$latitude&$longitude&$name");
 
-        // Vérifiez si la réponse HTTP est un succès (code 200)
         $response->assertStatus(200);
 
-        // Vérifiez la structure de la réponse JSON (adapté à votre application)
         $response->assertJsonStructure([
             'data' => [
                 '*' => [
                     'id',
                     'name',
-                    // Ajoutez d'autres clés que vous attendez dans la réponse JSON
                 ],
             ],
         ]);
@@ -82,15 +72,12 @@ class BarControllerTest extends TestCase
             'longitude' => 0.6,
         ]);
 
-        // Simulez des valeurs de latitude, de longitude et de rayon
-        $latitude = -44; // Exemple de latitude
-        $longitude = 0.6; // Exemple de longitude
-        $name = 'Ex'; // Nom trop court
+        $latitude = -44;
+        $longitude = 0.6;
+        $name = 'Ex';
 
-        // Effectuez la requête GET vers votre endpoint
         $response = $this->get("/api/bars-search/$latitude&$longitude&$name");
 
-        // Vérifiez si la réponse HTTP est une erreur (code 400)
         $response->assertStatus(404);
     }
 }

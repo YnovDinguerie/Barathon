@@ -4,7 +4,6 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\API\BaseController as BaseController;
 use App\Http\Requests\StoreFavoriteBarRequest;
-use App\Http\Requests\UpdateFavoriteBarRequest;
 use App\Models\FavoriteBar;
 use Illuminate\Support\Facades\Auth;
 use Validator;
@@ -135,14 +134,6 @@ class FavoriteBarController extends BaseController
      * Show the form for editing the specified resource.
      */
     public function edit(FavoriteBar $favoriteBar)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateFavoriteBarRequest $request, FavoriteBar $favoriteBar)
     {
         //
     }
