@@ -70,7 +70,6 @@ const FavoriteBars = () => {
 				<div className="favorites-bar-container">
 					{allFavoriteBars.map((bar, index) => (
 						<div
-							onClick={() => startDestination(bar)}
 							key={index}
 							className="section-container"
 						>
@@ -81,7 +80,7 @@ const FavoriteBars = () => {
 								width={20}
 								height={20}
 							/>
-							<div className="localisation-container">
+							<div onClick={() => startDestination(bar)} className="localisation-container">
 								<h3 className="bar-name">{bar.bar.name}</h3>
 								<p>{bar.bar.address}</p>
 							</div>

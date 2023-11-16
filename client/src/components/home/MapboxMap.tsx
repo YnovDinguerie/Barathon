@@ -196,7 +196,7 @@ const MapboxMap = () => {
           if (map) {
             map.flyTo({
               center: [longitude, latitude],
-              zoom: 0.001,
+              zoom: 10,
               speed: 2,
               curve: 1,
             })

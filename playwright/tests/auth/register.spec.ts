@@ -39,7 +39,7 @@ test('Check wrong register', async ({ page }) => {
     await page.locator('input[name="c_password"]').fill(VALID_ACCOUNT.confirmpwd)
     await page.locator('input[name="birthdate"]').fill(VALID_ACCOUNT.birthdate)
     await page.locator('button').getByText(REGISTER).click()
-    await expect(page.getByText(CREATE_YOUR_ACCOUNT)).not.toBeVisible()
+    await expect(page.getByText(CREATE_YOUR_ACCOUNT)).toBeVisible()
   });
 
   test('Check Navigation', async ({ page }) => { 

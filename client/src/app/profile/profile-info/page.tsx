@@ -94,18 +94,7 @@ const ProfileInfos = () => {
             <span className="ml-3 text-red-800 ">{errors.name.message}</span>
           )} */}
         </div>
-        <div className="flex flex-col space-y-2">
-          <label className="ml-3">Email</label>
-          <input
-            {...register('email')}
-            type="text"
-            placeholder={email}
-            className="border-2 bg-[#FFFDF9] placeholder:text-black rounded-lg h-10 ml-3 mt-5 focus:border-[#DF9928] mx-3"
-          />
-          {/* {errors?.email && (
-            <span className="m-3 text-red-800">{errors.email.message}</span>
-          )} */}
-        </div>
+
         <div className="flex flex-col space-y-2">
           <label className="ml-3">Birthdate</label>
           <input
@@ -127,10 +116,7 @@ const ProfileInfos = () => {
           </button>
         </div>
       </form>
-      <Link
-        href="/auth/reset-password"
-        className="underline cursor-pointer ml-3"
-      >
+      <Link href="/auth/reset" className="underline cursor-pointer ml-3">
         Modifier le mot de passe{' '}
       </Link>
     </div>

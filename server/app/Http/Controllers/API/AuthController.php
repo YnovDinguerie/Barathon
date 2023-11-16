@@ -426,7 +426,6 @@ class AuthController extends BaseController
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'birthdate' => 'required|date',
-            'email' => 'required|email|unique:users',
         ]);
 
         if ($validator->fails()) {

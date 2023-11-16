@@ -34,6 +34,7 @@ test('Ajouter un favori', async ({ page }) => {
   login(page)
   await page.locator('input[id="destinationInput"]').fill(barFavori)
   await page.locator('img[alt="search icon"]').click()
+  await expect(page.locator('.search-bar')).toBeVisible()
   await expect(page.getByText(barFavori).first()).toBeVisible()
   await page.locator('img[alt="Add to favorite"]').first().click()
 // a finir avec l'ajout de favori pleinement fonctionnel

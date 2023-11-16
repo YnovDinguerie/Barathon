@@ -20,21 +20,22 @@ export const BARS_REMAINING = 'Bars restant';
 export const GOING_BACK = 'Revenir en arrière';
 export const EDIT_PROFIL = 'Modification du profil';
 export const CREATE_BARATHONS = 'Créer un Barathon';
-export const USER_NAME = 'Nom d\'utilisateur';
+export const USER_NAME = 'Name';
 export const EMAIL = 'Email';
 export const DISCONNECT = 'Se déconnecter';
-export const BIRTHDATE = 'Date de naissance';
+export const BIRTHDATE = 'Birthdate';
 export const EDIT = 'Modifier';
 export const EDIT_MDP = 'Modifier le mot de passe';
 export const CLOSE = 'Fermer';
-export const INFORMATIONS = 'Vous pouvez modifier les informations de votre compte en changeant votre nom d\'utilisateur et mot de passe';
+export const INFORMATIONS = 'Here you can modify your account infos by changing your username and/or password';
 export const KM = 'Nombre de km parcouru';
 export const RESET_PWD = 'Reset your password'
 export const RANDOM_EMAIL = faker.internet.email();
 export const RANDOM_USERNAME = faker.lorem.words(1);
-export const RANDOM_BIRTHDATE = faker.date.between(
-    new Date(new Date().setFullYear(new Date().getFullYear() - 80)),
-    new Date(new Date().setFullYear(new Date().getFullYear() - 18))
+export const RANDOM_BIRTHDATE = faker.date.between({
+    from: new Date(new Date().setFullYear(new Date().getFullYear() - 80)),
+    to: new Date(new Date().setFullYear(new Date().getFullYear() - 18))
+}
 );
 
 export const FORMATTED_DATE = {
@@ -72,9 +73,9 @@ export async function navProfil(page: Page): Promise<void> {
     await expect(page.getByText(PROFIL).first()).toBeVisible()
 };
 
-export const ACCOUNT_INFO = 'Informations du compte';
+export const ACCOUNT_INFO = 'Account informations';
 export async function navProfilInfo(page: Page): Promise<void> {
-    navProfil(page)
+    await navProfil(page)
     await expect(page.getByText(PROFIL).first()).toBeVisible()
     await page.locator('img[alt="arrow"]').nth(1).click()
     await expect(page.getByText(ACCOUNT_INFO)).toBeVisible()
@@ -82,7 +83,7 @@ export async function navProfilInfo(page: Page): Promise<void> {
 
 export const GESTION_BARATHONS = 'Gestion des Barathons';
 export async function navProfilBarathons(page: Page): Promise<void> {
-    navProfil(page)
+    await navProfil(page)
     await expect(page.getByText(PROFIL).first()).toBeVisible()
     await page.locator('img[alt="arrow"]').nth(2).click()
     await expect(page.getByText(GESTION_BARATHONS).first()).toBeVisible()
@@ -90,7 +91,7 @@ export async function navProfilBarathons(page: Page): Promise<void> {
 
 export const STATISTICS = 'Statistiques'
 export async function navProfilStats(page: Page): Promise<void> {
-    navProfil(page)
+    await navProfil(page)
     await expect(page.getByText(PROFIL).first()).toBeVisible()
     await page.locator('img[alt="arrow"]').last().click()
     await expect(page.getByText(STATISTICS)).toBeVisible()
