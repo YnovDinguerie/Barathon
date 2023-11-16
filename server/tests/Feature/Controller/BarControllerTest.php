@@ -3,9 +3,9 @@
 namespace Tests\Feature\Controller;
 
 use App\Models\Bar;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
-use App\Models\User;
 
 class BarControllerTest extends TestCase
 {
@@ -15,7 +15,6 @@ class BarControllerTest extends TestCase
     use RefreshDatabase;
 
     protected $dropViews = true;
-
 
     protected function getToken($user)
     {
@@ -57,7 +56,6 @@ class BarControllerTest extends TestCase
         ]);
         $user = User::factory()->create();
 
-
         $latitude = -44;
         $longitude = 0.6;
         $name = 'Example';
@@ -83,7 +81,6 @@ class BarControllerTest extends TestCase
             'longitude' => 0.6,
         ]);
         $user = User::factory()->create();
-
 
         $latitude = -44;
         $longitude = 0.6;

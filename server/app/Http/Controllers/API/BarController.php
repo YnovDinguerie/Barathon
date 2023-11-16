@@ -8,10 +8,9 @@ use Illuminate\Support\Facades\Auth;
 
 class BarController extends BaseController
 {
-
     public function __construct()
     {
-        $this->middleware('auth:sanctum')->except(['index','show']);
+        $this->middleware('auth:sanctum')->except(['index', 'show']);
     }
     /**
      * Display a listing of the resource.
@@ -169,7 +168,7 @@ class BarController extends BaseController
         $bars = Bar::with(['favoriteBars' => function ($query) use ($user) {
             $query->where('user_id', $user->id);
         }])
-        ->select('bars.*')
+            ->select('bars.*')
             ->selectRaw('(
             6371 * 2 * asin(
                 sqrt(
@@ -183,6 +182,7 @@ class BarController extends BaseController
             ->get()
             ->map(function ($bar) {
                 $bar->isFavorite = $bar->favoriteBars->isNotEmpty();
+
                 return $bar;
             });
 
