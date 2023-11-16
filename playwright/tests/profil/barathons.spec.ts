@@ -1,10 +1,19 @@
 import { test, expect } from '@playwright/test';
-import { navProfil, PROFIL, EDIT_PROFIL, GESTION_BARATHONS, CREATE_BARATHONS } from '../../constantes/global';
+import { PROFIL, CREATE_BARATHONS, navProfilBarathons } from '../../constantes/global';
+
+test('acceder aux barathons', async ({ page }) => {
+    navProfilBarathons(page)
+})
 
 test('Tester la gestion des barathons', async ({ page }) => {
-    navProfil(page)
-    await page.locator('img[alt="arrow"]').nth(1).click()
-    await expect(page.getByText(GESTION_BARATHONS)).toBeVisible()
+    navProfilBarathons(page)
+    await expect(page.getByText(CREATE_BARATHONS).last()).toBeVisible()
+    // await page.locator('img[alt="arrow"]').click()
+    // await expect(page.getByText(PROFIL).first()).toBeVisible()
+});
+
+test('Tester la création des barathons', async ({ page }) => {
+    navProfilBarathons(page)
     await expect(page.getByText(CREATE_BARATHONS).last()).toBeVisible()
     await page.locator('img[alt="arrow"]').click()
     await expect(page.getByText(PROFIL).first()).toBeVisible()

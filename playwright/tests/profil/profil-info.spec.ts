@@ -1,10 +1,12 @@
 import { test, expect } from '@playwright/test';
-import { navProfil, ACCOUNT_INFO, USER_NAME, EMAIL, EDIT, EDIT_MDP, BIRTHDATE, INFORMATIONS, PROFIL, RANDOM_ACCOUNT, RESET_PWD } from '../../constantes/global';
+import { navProfilInfo, ACCOUNT_INFO, USER_NAME, EMAIL, EDIT, EDIT_MDP, BIRTHDATE, INFORMATIONS, RANDOM_ACCOUNT, RESET_PWD, PROFIL } from '../../constantes/global';
+
+test('acceder aux infos profil', async ({ page }) => {
+    navProfilInfo(page)
+})
 
 test('modification du profil', async ({ page }) => {
-    navProfil(page)
-    await page.locator('img[alt="arrow"]').nth(1).click()
-    await expect(page.getByText(ACCOUNT_INFO)).toBeVisible()
+    navProfilInfo(page)
     await expect(page.getByText(USER_NAME).last()).toBeVisible()
     await expect(page.getByText(EMAIL)).toBeVisible()
     await expect(page.getByText(BIRTHDATE)).toBeVisible()
@@ -16,9 +18,7 @@ test('modification du profil', async ({ page }) => {
 });
 
 test('modification des infos du compte', async ({ page }) => {
-    navProfil(page)
-    await page.locator('img[alt="arrow"]').nth(1).click()
-    await expect(page.getByText(ACCOUNT_INFO)).toBeVisible()
+    navProfilInfo(page)
     await page.locator('input[name="name"]').fill(RANDOM_ACCOUNT.username)
     await page.locator('input[name="email"]').fill(RANDOM_ACCOUNT.email)
     await page.locator('input[name="birthdate"]').fill(RANDOM_ACCOUNT.birthdate)
@@ -27,9 +27,7 @@ test('modification des infos du compte', async ({ page }) => {
 });
 
 test('Erreur modification des infos du compte', async ({ page }) => {
-    navProfil(page)
-    await page.locator('img[alt="arrow"]').nth(1).click()
-    await expect(page.getByText(ACCOUNT_INFO)).toBeVisible()
+    navProfilInfo(page)
     await page.locator('input[name="name"]').fill(RANDOM_ACCOUNT.username)
     await page.locator('input[name="email"]').fill(RANDOM_ACCOUNT.email)
     await page.locator('input[name="birthdate"]').fill(RANDOM_ACCOUNT.email)
@@ -38,9 +36,7 @@ test('Erreur modification des infos du compte', async ({ page }) => {
 });
 
 test('modification mot de passe', async ({ page }) => {
-    navProfil(page)
-    await page.locator('img[alt="arrow"]').nth(1).click()
-    await expect(page.getByText(ACCOUNT_INFO)).toBeVisible()
+    navProfilInfo(page)
     await page.locator('a[href="/auth/reset"]').getByText(EDIT_MDP).click()
     await expect(page.getByText(RESET_PWD)).toBeVisible()
     await page.locator('input[name="email"]').fill(RANDOM_ACCOUNT.email)
