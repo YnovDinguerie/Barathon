@@ -1,6 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { Page } from "playwright-core";
-import { ARRETER, BARS_RESTANT, CONNEXION, DEMARRER_BARATHON, DEMARRER_PARTIE, LOGIN, NOMBRE_BAR_VISITER, RAYON_BARATHON, REVENIR_ARRIERE, TEMPS_TOTAL, connexion } from '../constantes/global';
+import { ARRETER, BARS_RESTANT, CONNEXION, DEMARRER_BARATHON, DEMARRER_PARTIE, NOMBRE_BAR_VISITER, RAYON_BARATHON, REVENIR_ARRIERE, TEMPS_TOTAL } from '../constantes/global';
 
 const numberOfClick = 4;
 const delayBetweenClicks = 200;
