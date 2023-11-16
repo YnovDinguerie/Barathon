@@ -30,7 +30,7 @@ const GoogleAuth = () => {
           const user = { ...res.data, token }
           setUser(user)
           router.push('/home')
-        } catch (err) {
+        } catch (err: any) {
           setToast({
             msg: err.response.data.message,
             status: 'Error',
