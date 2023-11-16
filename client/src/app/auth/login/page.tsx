@@ -111,7 +111,7 @@ const Login = () => {
           )}
         </div>
         <div className="flex justify-end mr-3 font-light text-[#DF9928] text-sm">
-          <Link href="/auth/reset-password">Forgot password ?</Link>
+          <Link href="/auth/reset">Forgot password ?</Link>
         </div>
         <button
           type="submit"
