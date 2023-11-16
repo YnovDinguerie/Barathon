@@ -14,6 +14,7 @@ import Image from 'next/image'
 import '../../styles/Filter.scss'
 import mapboxgl from 'mapbox-gl'
 import { apiFetch } from '@/app/api/utils'
+import FavoriteBars from './FavoriteBars'
 
 const Bottom = () => {
   const [setupBarathon, setSetupBarathon] = useState(false)
@@ -25,7 +26,6 @@ const Bottom = () => {
   const [resizeMap, setresizeMap] = useAtom(resizeMapAtom)
   const [seconds, setSeconds] = useState(0)
   const [searchBars, setSearchBars] = useState<[any]>()
-  const [allFavoriteBars, setAllFavoriteBars] = useState([])
 
   const distanceRound = (nombre: number) => {
     const partieDecimale = nombre - Math.floor(nombre)
@@ -39,14 +39,6 @@ const Bottom = () => {
 
     apiFetch('POST', '/favorite-bars/', data).then((response) => {
       console.log(response)
-    })
-  }
-
-  const deleteFavoriteBar = (barID: string) => {
-    console.log(barID)
-    apiFetch('DELETE', `/favorite-bars/${barID}`).then((response) => {
-      console.log(response)
-      setAllFavoriteBars(allFavoriteBars.filter((x) => x.id !== barID))
     })
   }
 
@@ -82,28 +74,6 @@ const Bottom = () => {
       setSearchBars([])
     }
   }
-
-  const [isLoading, setIsLoading] = useState(true)
-  const getfavoriteBar = async () => {
-    setIsLoading(true)
-    const res = await apiFetch('GET', '/favorite-bars/')
-
-    const bars = res.data.data
-    bars.map(
-      async (bar) =>
-        (bar.bar.address = await reverseGeocode(
-          bar.bar.longitude,
-          bar.bar.latitude,
-        )),
-    )
-    console.log(bars)
-    setAllFavoriteBars(bars)
-    setresizeMap(!resizeMap)
-    setIsLoading(false)
-  }
-  useEffect(() => {
-    getfavoriteBar()
-  }, [])
 
   useEffect(() => {
     if (searchBars && searchBars.length > 0) {
@@ -334,35 +304,8 @@ const Bottom = () => {
             )}
           </div>
         </div>
-        {allFavoriteBars.length > 0 ? (
-          <h2 className="section"> Favories </h2>
-        ) : (
-          <p className="start-add-favorite">
-            Commencer par ajouter des favories à l'aide de la barre de recherche
-          </p>
-        )}
-        {!isLoading ? (
-          <div className="favorites-bar-container">
-            {allFavoriteBars.map((bar, index) => (
-              <div key={index} className="section-container">
-                <Image
-                  src="/assets/beer.svg"
-                  className="beer-icon"
-                  alt="beer icon"
-                  width={20}
-                  height={20}
-                />
-                <div className="localisation-container">
-                  <h3 className="bar-name">{bar.bar.name}</h3>
-                  <p>{bar.bar.address}</p>
-                </div>
-                <div>10 mins</div>
-              </div>
-            ))}
-          </div>
-        ) : (
-          isLoading
-        )}
+        <FavoriteBars />
+
         <button
           onClick={setupBarathonFunction}
           className="bg-orange text-white start-barathon"
