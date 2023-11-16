@@ -11,8 +11,6 @@ const validAccount = {
   password: '1234A!aa'
 }
 
-const linkSelector = 'a[href="/auth/register"]';
-
 test('Check wrong login', async ({ page }) => {
     await page.goto('http://localhost:3000/');
     await page.locator('input[name="email"]').fill(account.email)
@@ -35,7 +33,7 @@ test('Check wrong login', async ({ page }) => {
 
   test('Check Navigation', async ({ page }) => { 
     await page.goto('http://localhost:3000/');
-    await page.locator(linkSelector).getByText('Register').click()
+    await page.getByText('Register').click()
     await page.waitForNavigation()
     await expect(page.url()).toBe(REGISTERURL)
   });

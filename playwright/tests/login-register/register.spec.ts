@@ -1,5 +1,6 @@
 import { test, expect } from '@playwright/test';
-import { HOMEURL, LOGIN, LOGINURL, REGISTER, REGISTERERROR, REGISTERURL, TEXTERROR } from '../../constantes/global';
+import { HOMEURL, LOGINURL, REGISTER, TEXTERROR } from '../../constantes/global';
+import { faker } from '@faker-js/faker/locale/en'
 
 const account = {
     name: 'leo',
@@ -9,9 +10,11 @@ const account = {
     birthdate : '1933-04-04',
 }
 
+const randomEmail = faker.internet.email()
+
 const validAccount = {
     name: 'loic bozon',
-    email: 'loicbozon@gmail.Com',
+    email: randomEmail,
     password: '1234A!aa',
     confirmpwd : '1234A!aa',
     birthdate : '1927-04-04',
@@ -28,13 +31,13 @@ test('Check wrong register', async ({ page }) => {
     await page.locator('input[name="c_password"]').fill(account.wrongconfirmpwd)
     await page.locator('input[name="birthdate"]').fill(account.birthdate)
     await page.locator('button').getByText(REGISTER).click()
-    await expect(page.locator('.toast toast-Error')).toBeVisible()
-    await expect(page.textContent('.toast toast-Error')).toBe(REGISTERERROR)
-    await page.locator('.toast toast-Error .close').click()
-    await expect(page.locator('.toast toast-Error')).not.toBeVisible()
+    await expect(page.locator('.toast-Error')).toBeVisible()
+    await expect(page.textContent('.toast-Error .msg')).toBe(TEXTERROR)
+    await page.locator('.toast-Error .close').click()
+    await expect(page.locator('.toast-Error')).not.toBeVisible()
   });
 
-  test('Check wrong register', async ({ page }) => {
+  test('Check good register', async ({ page }) => {
     await page.goto('http://localhost:3000/auth/register');
     await page.locator('input[name="name"]').fill(validAccount.name)
     await page.locator('input[name="email"]').fill(validAccount.email)

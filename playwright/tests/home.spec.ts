@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 import { PROFILEURL } from '../constantes/global';
 
 
-const imageSelector = 'img[class="user-profile"]';
+const imageSelector = '.user-profile';
 const button = 'Démarrer un barathon';
 const numberOfClick = 4;
 const delayBetweenClicks = 200;
