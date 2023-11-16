@@ -1,105 +1,101 @@
 .toast {
-    position: fixed;
-    bottom: 0;
-    margin-bottom: 1rem;
-    width: 90%;
-    translate: -50%;
-    left: 50%;
-    padding: 1rem;
-    border-radius: 1rem;
-    z-index: 50;
-    background-color: #fff;
-    overflow: hidden;
-    -webkit-box-shadow: 0px 0px 9px 0px rgba(0, 0, 0, 0.35);
-    box-shadow: 0px 0px 9px 0px rgba(0, 0, 0, 0.35);
-    display: flex;
-    align-items: center;
-    gap: 1rem;
+  position: fixed;
+  bottom: 0;
+  margin-bottom: 1rem;
+  width: 90%;
+  translate: -50%;
+  left: 50%;
+  padding: 1rem;
+  border-radius: 1rem;
+  z-index: 50;
+  background-color: #fff;
+  overflow: hidden;
+  -webkit-box-shadow: 0px 0px 9px 0px rgba(0, 0, 0, 0.35);
+  box-shadow: 0px 0px 9px 0px rgba(0, 0, 0, 0.35);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 
-    animation: slide-in .4s ease forwards;
+  animation: slide-in 0.4s ease forwards;
 
-    @keyframes slide-in {
-        from {
-            bottom: -20vh;
-        }
-
-        to {
-            bottom: 0;
-        }
+  @keyframes slide-in {
+    from {
+      bottom: -20vh;
     }
 
-    &.close {
-        animation: slide-out .4s ease forwards;
-
-        @keyframes slide-out {
-            from {
-                bottom: 0;
-            }
-
-            to {
-                bottom: -20vh;
-            }
-        }
+    to {
+      bottom: 0;
     }
+  }
 
+  &.close {
+    animation: slide-out 0.4s ease forwards;
+
+    @keyframes slide-out {
+      from {
+        bottom: 0;
+      }
+
+      to {
+        bottom: -20vh;
+      }
+    }
+  }
+
+  &::before {
+    content: '';
+    width: 5px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+  }
+
+  &.toast-Error {
     &::before {
-        content: '';
-        width: 5px;
-        position: absolute;
-        left: 0;
-        top: 0;
-        height: 100%;
+      background-color: red;
     }
+  }
 
-    &.toast-Error {
-        &::before {
-            background-color: red;
-        }
+  &.toast-Warning {
+    &::before {
+      background-color: rgb(255, 196, 0);
     }
+  }
 
-    &.toast-Warning {
-        &::before {
-            background-color: rgb(255, 196, 0);
-        }
+  &.toast-Success {
+    &::before {
+      background-color: rgb(54, 207, 54);
     }
+  }
 
-    &.toast-Success {
-        &::before {
-            background-color: rgb(54, 207, 54);
-        }
+  .status-img {
+    width: 30px;
+  }
+
+  .text-container {
+    width: calc(100% - 50px - 2rem);
+
+    p {
+      font-size: 0.875rem;
+
+      &.status {
+        font-weight: 700;
+        color: black;
+      }
+
+      &.msg {
+        color: #919191;
+      }
     }
+  }
 
-
-
-    .status-img {
-        width: 30px;
-    }
-
-    .text-container {
-        width: calc(100% - 50px - 2rem);
-
-        p {
-            font-size: 0.875rem;
-
-            &.status {
-                font-weight: 700;
-                color: black;
-            }
-
-            &.msg {
-                color: #919191;
-            }
-
-        }
-
-    }
-
-    .close {
-        position: absolute;
-        top: 0;
-        width: 20px;
-        right: 0;
-        margin-top: 1rem;
-        margin-right: 1rem;
-    }
+  .close {
+    position: absolute;
+    top: 0;
+    width: 20px;
+    right: 0;
+    margin-top: 1rem;
+    margin-right: 1rem;
+  }
 }

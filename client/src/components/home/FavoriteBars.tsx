@@ -18,10 +18,13 @@ const FavoriteBars = () => {
 
 		const barsWithAddresses = await Promise.all(
 			bars.map(async (bar) => {
-				bar.bar.address = await reverseGeocode(bar.bar.longitude, bar.bar.latitude);
-				return bar;
-			}));
-
+				bar.bar.address = await reverseGeocode(
+					bar.bar.longitude,
+					bar.bar.latitude,
+				)
+				return bar
+			}),
+		)
 
 		setAllFavoriteBars(barsWithAddresses)
 		setResizeMap(!resizeMap)
@@ -35,21 +38,20 @@ const FavoriteBars = () => {
 			setAllFavoriteBars(allFavoriteBars.filter((x) => x.id !== barID))
 		})
 		setResizeMap(!resizeMap)
-
 	}
 
 	const startDestination = (bar) => {
 		const userConfirmed = window.confirm(
-		  'Lancer la navigation sur Google Maps ?',
+			'Lancer la navigation sur Google Maps ?',
 		)
-	
+
 		if (userConfirmed) {
-		  const googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${bar.bar.latitude},${bar.bar.longitude}`
-		  window.location.href = googleMapsUrl
+			const googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${bar.bar.latitude},${bar.bar.longitude}`
+			window.location.href = googleMapsUrl
 		} else {
-		  alert('Navigation annulée.')
+			alert('Navigation annulée.')
 		}
-	  }
+	}
 
 	useEffect(() => {
 		getfavoriteBar()
@@ -61,13 +63,17 @@ const FavoriteBars = () => {
 				<h2 className="section"> Favories </h2>
 			) : (
 				<p className="start-add-favorite">
-					Commencer par ajouter des favories à l'aide de la barre de recherche
+					Commencer par ajouter des favories à l aide de la barre de recherche
 				</p>
 			)}
 			{isLoaded ? (
 				<div className="favorites-bar-container">
 					{allFavoriteBars.map((bar, index) => (
-						<div onClick={() => startDestination(bar)} key={index} className="section-container">
+						<div
+							onClick={() => startDestination(bar)}
+							key={index}
+							className="section-container"
+						>
 							<Image
 								src="/assets/beer.svg"
 								className="beer-icon"
@@ -79,11 +85,16 @@ const FavoriteBars = () => {
 								<h3 className="bar-name">{bar.bar.name}</h3>
 								<p>{bar.bar.address}</p>
 							</div>
-							<button><Image src="/assets/close.svg" onClick={() => deleteFavoriteBar(bar.id)}
-								className="close"
-								alt=""
-								width={30}
-								height={30} /></button>
+							<button>
+								<Image
+									src="/assets/close.svg"
+									onClick={() => deleteFavoriteBar(bar.id)}
+									className="close"
+									alt=""
+									width={30}
+									height={30}
+								/>
+							</button>
 						</div>
 					))}
 				</div>

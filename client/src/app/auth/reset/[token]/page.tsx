@@ -7,6 +7,7 @@ import { useMutation } from 'react-query'
 import Image from 'next/image'
 import { useSetAtom } from 'jotai'
 import { toastAtom } from '@/state'
+import { useRouter } from 'next/navigation'
 
 const ChangePassword = ({ params }: { params: { token: string } }) => {
   const {
@@ -17,29 +18,32 @@ const ChangePassword = ({ params }: { params: { token: string } }) => {
 
   const setToast = useSetAtom(toastAtom)
 
-  const { isError, mutateAsync: updateFn } = useMutation({
-    mutationFn: changePassword,
-  })
+  const router = useRouter()
 
   const onSubmit: SubmitHandler<UpdatePasswordInputs> = (
     data: UpdatePasswordInputs,
   ) => {
-    updateFn({
+    changePassword({
       token: params.token,
       email: data.email,
       password: data.password,
       c_password: data.c_password,
-    }).catch((error) => {
-      setToast({
-        msg: error.response.data.message,
-        status: 'Error',
-        isVisible: true,
-      })
     })
-  }
-
-  if (isError) {
-    return <div>An error occured</div>
+      .then((response) => {
+        setToast({
+          msg: response.data.message,
+          status: 'Success',
+          isVisible: true,
+        })
+        router.push('/')
+      })
+      .catch((error) => {
+        setToast({
+          msg: error.response.data.message,
+          status: 'Error',
+          isVisible: true,
+        })
+      })
   }
 
   return (

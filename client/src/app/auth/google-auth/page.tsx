@@ -10,53 +10,53 @@ import '../../../styles/GoogleAuth.scss'
 import { useRouter } from 'next/navigation'
 
 const GoogleAuth = () => {
-    const setUser = useSetAtom(userAtom)
-    const setToast = useSetAtom(toastAtom)
-    const router = useRouter()
+  const setUser = useSetAtom(userAtom)
+  const setToast = useSetAtom(toastAtom)
+  const router = useRouter()
 
-    useEffect(() => {
-        const handleGoogleCallback = async () => {
-            const urlParams = new URLSearchParams(window.location.search)
-            const token = urlParams.get('token')
+  useEffect(() => {
+    const handleGoogleCallback = async () => {
+      const urlParams = new URLSearchParams(window.location.search)
+      const token = urlParams.get('token')
 
-            if (token) {
-                try {
-                    const res = await axios.get('http://127.0.0.1:8000/api/user', {
-                        headers: {
-                            Authorization: `Bearer ${token}`,
-                        },
-                    })
+      if (token) {
+        try {
+          const res = await axios.get('http://127.0.0.1:8000/api/user', {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          })
 
-                    const user = { ...res.data, token }
-                    setUser(user)
-                    router.push('/home')
-                } catch (err) {
-                    setToast({
-                        msg: err.response.data.message,
-                        status: 'Error',
-                        isVisible: true,
-                    })
-                    return router.push('/')
-                }
-            } else {
-                setToast({
-                    msg: 'Token manquant',
-                    status: 'Error',
-                    isVisible: true,
-                })
-                return router.push('/')
-            }
+          const user = { ...res.data, token }
+          setUser(user)
+          router.push('/home')
+        } catch (err: any) {
+          setToast({
+            msg: err.response.data.message,
+            status: 'Error',
+            isVisible: true,
+          })
+          return router.push('/')
         }
+      } else {
+        setToast({
+          msg: 'Token manquant',
+          status: 'Error',
+          isVisible: true,
+        })
+        return router.push('/')
+      }
+    }
 
-        handleGoogleCallback()
-    }, [setUser])
+    handleGoogleCallback()
+  }, [setUser])
 
-    return (
-        <div className="google-auth-container">
-            <Loader />
-            <p>Redirection en cours</p>
-        </div>
-    )
+  return (
+    <div className="google-auth-container">
+      <Loader />
+      <p>Redirection en cours</p>
+    </div>
+  )
 }
 
 export default GoogleAuth
