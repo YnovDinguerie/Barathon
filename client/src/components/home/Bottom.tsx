@@ -171,7 +171,7 @@ const Bottom = () => {
   if (setupBarathon) {
     content = (
       <div>
-        <h1 className="title">Démarrer le Barathon</h1>
+        <h1 className="title">Démarrer le barathon</h1>
         <h2 className="section">Nombre de bars à visiter</h2>
         <div className="container-slider">
           <RangeInput
