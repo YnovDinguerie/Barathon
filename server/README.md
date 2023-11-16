@@ -38,4 +38,6 @@ To run seeder you need some python package
 
 # Run Test
 ```php artisan test```
+```php artisan test --coverage```
+
 

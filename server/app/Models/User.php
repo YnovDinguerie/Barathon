@@ -26,6 +26,7 @@ class User extends Authenticatable
         'email',
         'password',
         'friend_code',
+        'google_id',
     ];
 
     /**
@@ -50,7 +51,7 @@ class User extends Authenticatable
 
     public function baratons(): HasMany
     {
-        return $this->hasMany(Baratons::class);
+        return $this->hasMany(Baraton::class);
     }
 
     // Friend system

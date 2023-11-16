@@ -1,5 +1,7 @@
 <?php
 
+namespace Tests\Feature\Controller;
+
 use App\Models\Bar;
 use App\Models\Baraton;
 use App\Models\BaratonBar;
@@ -22,26 +24,19 @@ class BaratonBarControllerTest extends TestCase
 
     public function testStore()
     {
-        // Créez un utilisateur de test
         $user = User::factory()->create(['email_verified_at' => now()]);
 
-        // Créez un baraton associé à l'utilisateur
         $baraton = Baraton::factory()->create(['user_id' => $user->id]);
 
-        // Créez un bar fictif
         $bar = Bar::factory()->create();
 
-        // Préparez les données de la requête
         $data = [
             'baraton_id' => $baraton->id,
             'bar_id' => $bar->id,
         ];
 
-        // Exécutez la requête pour la méthode store
         $response = $this->withHeaders(['Authorization' => 'Bearer '.$this->getToken($user)])->post('/api/baraton-bars', $data);
 
-        // Assurez-vous que la réponse a un code de statut 201 (Created)
-        // et vérifiez la structure JSON de la réponse
         $response->assertStatus(200)
             ->assertJsonStructure([
                 'success',

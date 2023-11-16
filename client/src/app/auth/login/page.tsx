@@ -8,6 +8,7 @@ import Link from 'next/link'
 import { useSetAtom } from 'jotai'
 import { toastAtom, userAtom } from '@/state'
 import { useRouter } from 'next/navigation'
+import axios from 'axios'
 
 const Login = () => {
   const {
@@ -38,6 +39,21 @@ const Login = () => {
           status: 'Error',
           isVisible: true,
         })
+      })
+  }
+
+  const googleAuth = async () => {
+    const res = await axios
+      .get('http://127.0.0.1:8000/api/authorized/google', {
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+      })
+      .then((res) => {
+        const redirectUrl = res.data.redirect_url
+        console.log(res.data.redirect_url)
+        window.location = redirectUrl
       })
   }
 
@@ -112,7 +128,10 @@ const Login = () => {
           <div>Or login via</div>
         </div>
         <div className="flex flex-col space-y-3 mx-3">
-          <button className="rounded-full p-3 w-full text-white bg-red-400 font-medium">
+          <button
+            onClick={googleAuth}
+            className="rounded-full p-3 w-full text-white bg-red-400 font-medium"
+          >
             Connect with Google
           </button>
           <button className="rounded-full bg-blue-400 w-full p-3 text-white font-medium">

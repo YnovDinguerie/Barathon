@@ -7,7 +7,7 @@ use App\Http\Controllers\API\BarController;
 use App\Http\Controllers\API\BarOpinionController;
 use App\Http\Controllers\API\FavoriteBarController;
 use App\Http\Controllers\API\FriendController;
-use App\Http\Controllers\API\SocketTestController;
+use App\Http\Controllers\API\LoginWithGoogleController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -24,14 +24,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
-});
-
-use App\Models\User;
-
-Route::get('users', function () {
-    $users = User::all();
-
-    return response()->json(['users' => $users], 200);
 });
 
 Route::controller(AuthController::class)->group(function () {
@@ -88,6 +80,7 @@ Route::controller(FavoriteBarController::class)->group(function () {
     Route::delete('favorite-bars/{favoriteBar}', 'destroy');
 });
 
-Route::controller(SocketTestController::class)->group(function () {
-    Route::get('test', 'index');
+Route::controller(LoginWithGoogleController::class)->group(function () {
+    Route::get('authorized/google', 'redirectToGoogle')->name('auth.google');
+    Route::get('authorized/google/callback', 'handleGoogleCallback');
 });
