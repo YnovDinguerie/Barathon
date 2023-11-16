@@ -4,7 +4,7 @@ import getBarathon from '@/app/api/barathon/getBarathon'
 import updateBarathon from '@/app/api/barathon/updateBarathon'
 import getBarathonBars from '@/app/api/bars/getBrathonBars'
 import { toastAtom, userAtom } from '@/state'
-import { GetBarathonInput } from '@/types/barathon/input'
+import { BarType, GetBarathonInput } from '@/types/barathon/input'
 import { useQuery } from '@tanstack/react-query'
 import { useAtomValue, useSetAtom } from 'jotai'
 import Image from 'next/image'
@@ -35,7 +35,7 @@ const EditBarathon = ({ params }: { params: { barathonId: string } }) => {
 
   const { data: bars } = useQuery({
     queryKey: ['bars'],
-    queryFn: () => getBarathonBars({ id: params.barathonId, token: token }),
+    queryFn: () => getBarathonBars({ id: Number(params.barathonId), token: token }),
   })
 
   const onSubmit: SubmitHandler<GetBarathonInput> = (
@@ -130,7 +130,7 @@ const EditBarathon = ({ params }: { params: { barathonId: string } }) => {
           Liste des bars visités
         </h2>
         {bars?.map((bar: any) => {
-          return <div key={bar.id} className="bg-gray-100"></div>
+          return <div key={bar.bar.id} className="bg-gray-100">{bar.bar.name}</div>
         })}
         <div className="mx-3">
           <button
